@@ -1,0 +1,46 @@
+---
+title: "Scootersim: a barebones scooter tamagotchi sim"
+output: html_notebook
+---
+
+Scootersim simulates a bike and bike maintenance. Here, I describe in detail how the sim app works
+
+This explores elements of app creation. Touched-on themes include plot auto-updating and interplay of classes, functions, and probabilistic models. All of this will be performed within the confines of base R and several key dependencies.
+
+Wheee!
+
+~~~ =__%
+     O O
+
+# Outline
+
+The gist of this app is as follows:
+
+1. 
+
+
+# Interplay of classes and functions
+
+The meat of the simulation is the properties of the `scooter` class. Subclasses of `scooter` include properties in `bike` and other physical properties (fuel and weight).
+
+
+in the scooter class and its components, contained in the "bike" subclass.
+
+# Scheduled plot updates
+
+The simulation part of this app 
+
+# Scheduled element updates
+
+R is object-oriented, but we'll use functions and classes to make the bike "run". 
+
+
+```{r}
+plot(cars)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.

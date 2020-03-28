@@ -3,6 +3,14 @@ title: "Scootersim: basic scooter simulation"
 output: html_notebook
 ---
 
+<!-- # 
+
+https://stackoverflow.com/questions/13143801/update-plots-during-for-loop-from-within-rstudio 
+
+https://stackoverflow.com/questions/8772630/plotting-during-a-loop-in-rstudio
+
+-->
+
 Remember tamagotchis? Those little electronic monsters you had to feed and maintain? 
 
 # Scootersim intro
@@ -17,6 +25,10 @@ This explores elements of app creation. Touched-on themes include plot auto-upda
 ~~~ =__%
      O O
 ```
+
+# rapidly updating  scooter ascii thing
+
+
 
 
 # Outline

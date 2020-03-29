@@ -4,6 +4,37 @@
 # O O
 
 
+# obstacles
+# grid.text() overlay frames
+# use sample to assess obstacle presence
+get_omod <- function(set.omod = 2){
+  if(is.null(set.omomd)){
+    # assess things and get modified omod
+  }
+  return(omod)
+}
+o.mod <- get_omod(2)
+o.chance <- sample(c(1, o.mod), 1)
+
+
+# obstacle data
+otop <- paste0(rep(" ", 7), collapse = "")
+omid <- paste0(rep(" ", 7), collapse = "")
+o1 <- paste0(c(otop, omid, "      #"), collapse = "\n")
+o2 <- paste0(c(otop, omid, "    #  "), collapse = "\n")
+o3 <- paste0(c(otop, omid, "  ,    "), collapse = "\n")
+o4 <- paste0(c(otop, omid, ",      "), collapse = "\n")
+
+fv <- c(o1, o2, o3, o4)
+
+for(i in seq(1,10,1)){
+  for(f in fv){
+    grid.newpage()
+    grid.text(f)
+    Sys.sleep(0.2)
+  }
+}
+
 sleepint <- 0.1
 
 #--------

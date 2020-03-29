@@ -16,23 +16,38 @@ o.num <- sample(max.o, 1)
 o.seq <- sample(ride.seq, o.num)
 
 # ride function
-ride <- function("ride", framevector){
-  for(c in ride.seq){
-    if(c %in% o.seq){
-      
-    } else{
-      
+
+obstacle.uifun <- function(){
+  ui.msg <- dlg_message("cancel ride?", "yesno")$res
+  return(ifelse(ui.msg == "yes", 0, 1))
+}
+
+
+ride <- function(){
+  ride.finished <- 0
+  ride.status <- 1
+  while(ride.status > 1){
+    for(c in ride.seq){
+      if(c %in% o.seq){
+        ride.obstacle()
+        ride.status <- obstacle.uifun()
+      } else{
+        
+      }
+      if(ride.status){
+        
+      }
     }
   }
 }
 
-ride.normal <- function(scenelabel = "ride: normal", framevector, 
+ride.normal <- function(alabel = "ride: normal", framevector, 
                             ssint = 0.1, loops = 100){
   grid.newpage()
   c = 1
   while(c < loops){
-    for(f in fv){
-      framewithlabel <- paste0(c(scenelabel,
+    for(f in framevector){
+      framewithlabel <- paste0(c(alabel,
                                  f), collapse = "\n")
       grid.newpage()
       grid.text(framewithlabel)
@@ -42,7 +57,7 @@ ride.normal <- function(scenelabel = "ride: normal", framevector,
   }
 }
 
-ride.obstacle <- function(scenelabel = "ride: obstacle!", 
+ride.obstacle <- function(alabel = "ride: obstacle!", 
                           framevector, ssint = 0.3, 
                           loops = 10){
   grid.newpage()
@@ -50,14 +65,12 @@ ride.obstacle <- function(scenelabel = "ride: obstacle!",
   while(c < loops){
     for(f in fv){
       # print ride animation
-      framewithlabel <- paste0(c(scenelabel,
-                                 f), 
+      framewithlabel <- paste0(c(alabel, f), 
                                collapse = "\n")
       grid.newpage()
       grid.text(framewithlabel)
       # print obstacle animation
       grid.text()
-      
       Sys.sleep(sleepint)
     }
     c = c + 1
@@ -151,13 +164,50 @@ install.packages("svDialogs")
 library(svDialogs)
 
 user.input <- dlgInput("Continue?", 
-                       Sys.info()[""])$res
-if (!length(user)){}
+                       Sys.info()["Y/N"])$res
 
-ui <- dlgInput("The bike looks damaged. Continue ride?",
-               )
 
-  
+
+# obstacle ui
+oui <- function(){
+  ui <- dlgInput("Cancel ride?",
+                 Sys.info()["Y/N"])$res
+  if(!length(ui)){
+    ride.on <- 0
+    message("ride cancelled")
+  } else{
+    ride.on <- 1
+    message("continuing ride...")
+  }
+  return(ride.on)
+}
+
+ui <- dlgInput("Cancel ride?",
+               Sys.info()["Y/N"])$res
+if(!length(ui)){
+  ride.on <- 0
+  message("ride cancelled")
+  } else{
+    ride.on <- 1
+    message("continuing ride...")
+  }
+
+ui.fun <- function(){
+  ui.msg <- dlg_message("cancel ride?", "yesno")$res
+  return(ifelse(ui.msg == "yes", 0, 1))
+}
+
+
+
+ui <- dlg_message("Cancel ride?",
+               Sys.info()["Y/N"])$res
+if(!length(ui)){
+  ride.on <- 0
+  message("ride cancelled")
+} else{
+  ride.on <- 1
+  message("continuing ride...")
+}
   
   
 #--------------------

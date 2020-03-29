@@ -6,16 +6,27 @@
 
 sleepint <- 0.1
 
-#----------
-# bike ani frames
-#---------
+#--------
+# bike ani data
+#--------
 stationary <- c("_______\n  =__% \n__0 0__")
 blink <- c("_______\n       \n__   __")
+fv.idle <- c(stationary, blink)
 
-drive1 <- c()
-drive2 <- c()
+drive1 <- c("     **\n `=__% \n__O o_-")
+drive2 <- c("   ** *\n`=__%  \n__o O__")
+drive3 <- c("***     \n `=__% \n_-o o__")
+drive4 <- c("       \n `=__% \n-_0 0__")
+fv.drive <- c(drive1, drive2, drive3, drive4)
+
+#----------
+# scenes data
+#---------
+fv <- c(drive1, drive2, drive3, drive4)
+s.drive <- scene(fv)
 
 fv <- c(stationary, blink)
+s.idle <- scene(fv)
 
 #-------
 # scene function
@@ -47,21 +58,22 @@ while(i < 100){
 }
 
 # driving
+i = 1
 while(i < 100){
   grid.newpage()
-  grid.text("______-\n `=__% \n_*O o__")
+  grid.text("     **\n `=__% \n__O o_-")
   Sys.sleep(sleepint)
   
   grid.newpage()
-  grid.text("___-___\n `=__%.\n*_o O__")
+  grid.text("   ** *\n `=__% \n__o O__")
   Sys.sleep(sleepint)
   
   grid.newpage()
-  grid.text("-______\n `=__% \n__o o__")
+  grid.text("***     \n `=__% \n_-o o__")
   Sys.sleep(sleepint)
   
   grid.newpage()
-  grid.text("_______\n.`=__% \n__0 0__")
+  grid.text("       \n `=__% \n-_0 0__")
   Sys.sleep(sleepint)
   
   i = i + 1

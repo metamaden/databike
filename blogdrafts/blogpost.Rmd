@@ -11,3 +11,6 @@ https://stackoverflow.com/questions/8772630/plotting-during-a-loop-in-rstudio
 
 -->
 
+With covid everywhere and idle time, I took a stab at making a game... in R! Crazy right? 
+
+You can call this a game, but I prefer to think of it as an extremely basic simulator. This. is. scootersim!

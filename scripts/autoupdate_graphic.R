@@ -3,23 +3,58 @@
 # =__%
 # O O
 
+
+sym.blank <- " "
+len.line = 10
+len.bike = 3
+len.wheels = 2
+cloud = "-"
+
+# skyline
+sky1 <- c(rep(sym.blank, 
+              len.line - 1), cloud)
+sky2 <- c(rep(sym.blank, 
+              len.line - 4),
+          cloud, rep(sym.blank, 3))
+sky3 <- c(cloud, rep(sym.blank, 
+                     len.line - 1))
+
+frame1 <- sky1
+frame2 <- sky2
+frame3 <- sky3
+
+
+grid.newpage()
+grid.text(frame1, x = 0.5, y = 0.5,
+          gp = gpar(fontsize = 20, col = "black"))
+Sys.sleep(0.1)
+
+
+
+
 grid.newpage()
 
+sky2 <- paste0(c(rep(" ", 3), "-", rep(" ", 4)))
+sky3 <- paste0(c("-", rep(" ", 7)))
+
+exhaust2 <- "*-"
+bikespace <- rep(" ", )
+bike2 <- paste0(exhaust2, "=---%o", bikespace)
+wheels2 <- "__oo_"
+
+# frame 1
 sky1 <- paste0(c(rep(" ", 7), "-"))
-sky2 <- paste0(c(rep(" ", 4), "-", rep(" ", )))
-sky3 <- c(rep(" ", 7), "-")
+exhaust1 <- "-*"
+bike1 <- c(exhaust1, "=___%o", 
+           rep(bikespace, 10))
+wheels1 <- "__00_"
+fe1 <- c(sky1, bike1, wheels1)
+f1 <- paste0(fe1, collapse = "\n")
 
-exhaust1 <- "-~"
-exhaust2 <- "~-"
-bikespace <- "  "
-bike1 <- paste0(exhaust1, "=__%", bikespace)
-bike2 <- paste0(exhaust2, "=__%", bikespace)
+# frame 2
 
 
-wheels <- "__00_"
-frame1 <- paste0(c(bike, 
-                   wheels), 
-                 collapse = "\n")
+
 
 grid.text(frame1, 
           x = 0.5, y = 0.5,

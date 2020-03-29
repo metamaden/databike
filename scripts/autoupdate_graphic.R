@@ -1,5 +1,7 @@
 #!/usr/bin/env R
 
+require(grid)
+
 # Graphics for scootsim
 
 # scene labels
@@ -53,29 +55,13 @@ s.drive <- scene(fv)
 fv <- c(stationary, blink)
 s.idle <- scene(fv)
 
-sl.idle <- scene.withlabel(lab.idle, fv.idle,
-                           loops = 10)
+sl.idle <- scene.withlabel(lab.idle, fv.idle, loops = 10)
 
 sl.drive <- scene.withlabel(lab.drive, fv.drive, loops = 10)
 
 #-------
 # scene function
-#--------
-scene <- function(fv, sleepint = 0.1, 
-                  cycles = 100){
-  grid.newpage()
-  c = 1
-  while(c < cycles){
-    for(f in fv){
-      grid.newpage()
-      grid.text(f)
-      Sys.sleep(sleepint)
-    }
-    c = c + 1
-  }
-}
-
-
+#-------
 scene.withlabel <- function(scenelabel, framevector, 
                   ssint = 0.1, loops = 100){
   grid.newpage()
@@ -92,4 +78,19 @@ scene.withlabel <- function(scenelabel, framevector,
   }
 }
   
-  
+#---------
+# old misc
+#---------
+scene <- function(fv, sleepint = 0.1, 
+                  cycles = 100){
+  grid.newpage()
+  c = 1
+  while(c < cycles){
+    for(f in fv){
+      grid.newpage()
+      grid.text(f)
+      Sys.sleep(sleepint)
+    }
+    c = c + 1
+  }
+}

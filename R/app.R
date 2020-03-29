@@ -26,6 +26,59 @@ ride <- function("ride", framevector){
   }
 }
 
+ride.normal <- function(scenelabel = "ride: normal", framevector, 
+                            ssint = 0.1, loops = 100){
+  grid.newpage()
+  c = 1
+  while(c < loops){
+    for(f in fv){
+      framewithlabel <- paste0(c(scenelabel,
+                                 f), collapse = "\n")
+      grid.newpage()
+      grid.text(framewithlabel)
+      Sys.sleep(sleepint)
+    }
+    c = c + 1
+  }
+}
+
+ride.obstacle <- function(scenelabel = "ride: obstacle!", 
+                          framevector, ssint = 0.3, 
+                          loops = 10){
+  grid.newpage()
+  c = 1
+  while(c < loops){
+    for(f in fv){
+      # print ride animation
+      framewithlabel <- paste0(c(scenelabel,
+                                 f), 
+                               collapse = "\n")
+      grid.newpage()
+      grid.text(framewithlabel)
+      # print obstacle animation
+      grid.text()
+      
+      Sys.sleep(sleepint)
+    }
+    c = c + 1
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 scene.withlabel <- function(scenelabel, framevector, 
                             ssint = 0.1, loops = 100){

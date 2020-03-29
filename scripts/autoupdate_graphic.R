@@ -21,7 +21,7 @@ o2 <- paste0(c(otop, omid, "    #  "), collapse = "\n")
 o3 <- paste0(c(otop, omid, "  ,    "), collapse = "\n")
 o4 <- paste0(c(otop, omid, ",      "), collapse = "\n")
 
-fv <- c(o1, o2, o3, o4)
+fv.obstacle <- c(o1, o2, o3, o4)
 
 for(i in seq(1, 10, 1)){
   for(f in fv){

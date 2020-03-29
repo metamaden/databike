@@ -3,31 +3,52 @@
 # =__%
 # O O
 
-
-sym.blank <- " "
+sym.blank <- "_"
 len.line = 10
 len.bike = 3
 len.wheels = 2
 cloud = "-"
 
-# skyline
+# skyline animation
 sky1 <- c(rep(sym.blank, 
-              len.line - 1), cloud)
+              len.line - 1), 
+          cloud)
 sky2 <- c(rep(sym.blank, 
               len.line - 4),
-          cloud, rep(sym.blank, 3))
-sky3 <- c(cloud, rep(sym.blank, 
-                     len.line - 1))
+          cloud, 
+          rep(sym.blank, 3))
+sky3 <- c(cloud, 
+          rep(sym.blank,
+              len.line - 1))
+f1 <- sky1; f2 <- sky2; f3 <- sky3
+fl <- list(f1, f2, f3)
 
-frame1 <- sky1
-frame2 <- sky2
-frame3 <- sky3
+for(i in seq(1, 100, 1)){
+  for(f in fl){
+    grid.newpage()
+    fp <- paste0(f)
+    grid.text(fp, x = 0.5, y = 0.5,
+              gp = gpar(fontsize = 20, 
+                        col = "black"))
+    Sys.sleep(0.1)
+  }
+}
 
 
-grid.newpage()
-grid.text(frame1, x = 0.5, y = 0.5,
-          gp = gpar(fontsize = 20, col = "black"))
-Sys.sleep(0.1)
+sleepint <- 0.1
+fl = list(f1 = "_____-",
+          f2 = "~=_%__",
+          f3 = "__oo__")
+for(i in seq(1, 100 ,1)){
+  for(f in fl){
+    grid.newpage()
+    grid.text(f)
+    Sys.sleep(sleepint)
+  }
+}
+
+
+
 
 
 

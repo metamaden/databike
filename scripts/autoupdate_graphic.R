@@ -6,9 +6,67 @@
 
 sleepint <- 0.1
 
-
+#----------
+# bike ani frames
 #---------
-# bike anim
+stationary <- c("_______\n  =__% \n__0 0__")
+blink <- c("_______\n       \n__   __")
+
+drive1 <- c()
+drive2 <- c()
+
+fv <- c(stationary, blink)
+
+#-------
+# scene function
+#--------
+scene <- function(fv, sleepint = 0.1, 
+                  cycles = 100){
+  grid.newpage()
+  c = 1
+  while(c < cycles){
+    for(f in fv){
+      grid.newpage()
+      grid.text(f)
+      Sys.sleep(sleepint)
+    }
+    c = c + 1
+  }
+}
+
+#--------------
+# bike animations
+#-----------
+
+# starting
+i <- 1
+while(i < 100){
+  stationary()
+  blink()
+  i = i + 1
+}
+
+# driving
+while(i < 100){
+  grid.newpage()
+  grid.text("______-\n `=__% \n_*O o__")
+  Sys.sleep(sleepint)
+  
+  grid.newpage()
+  grid.text("___-___\n `=__%.\n*_o O__")
+  Sys.sleep(sleepint)
+  
+  grid.newpage()
+  grid.text("-______\n `=__% \n__o o__")
+  Sys.sleep(sleepint)
+  
+  grid.newpage()
+  grid.text("_______\n.`=__% \n__0 0__")
+  Sys.sleep(sleepint)
+  
+  i = i + 1
+}
+
 
 #--------------------
 # frames, scratchcode

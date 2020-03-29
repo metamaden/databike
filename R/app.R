@@ -1,27 +1,30 @@
 #!/usr/bin/env R
 
-
 # https://stackoverflow.com/questions/46116614/taking-inputs-through-pop-up-window-in-r/46116803
 
-
-
-
-
-
 # pre-ride
-# 1. drive duration (animation loops)
+# 1. ride duration (animation loops)
 # 2. obstacles and obstacle intervals
 
-drive.dur <- 100
-drive.seq <- seq(1, drive.dur, 1)
+# prep ride data
+ride.dur <- 100
+ride.seq <- seq(1, ride.dur, 1)
 
+# get obstacle data
 max.o <- 10
 o.num <- sample(max.o, 1)
-o.seq <- sample(drive.seq, o.num)
+o.seq <- sample(ride.seq, o.num)
 
 # ride function
-
-ride <- function("ride", framevector, )
+ride <- function("ride", framevector){
+  for(c in ride.seq){
+    if(c %in% o.seq){
+      
+    } else{
+      
+    }
+  }
+}
 
 
 scene.withlabel <- function(scenelabel, framevector, 
@@ -52,7 +55,7 @@ seqscene <- c()
 
 # 0. calculate num obstacles (sample) and obstacle interval (sample)
 # 1. bike idle
-# 2. bike drive
+# 2. bike ride
 # 3. 
 
 
@@ -64,25 +67,25 @@ seqscene <- c()
 
 
 # Data for app
-# Manage scene sequences for drives
+# Manage scene sequences for rides
 # Manage probs for app engine
 
 # Game sequence
 # A. "inspect bike"
 # A1. "maintain"
 # A2. ""
-# B. "drive"
+# B. "ride"
 # B1. "obstacle encounter"
 
 # score
-# num drives - (num "crashes" * 0.5 num "stops")
+# num rides - (num "crashes" * 0.5 num "stops")
 
 # A. tune?
-# B. drive?
+# B. ride?
 
 # 
 
-# vars for "drive sequence"
+# vars for "ride sequence"
 # time (cycles in animation)
 # bike wear (change chance of "breakdown")
 # tire wear
@@ -107,13 +110,13 @@ ui <- dlgInput("The bike looks damaged. Continue ride?",
 #--------------------
 # animation sequences
 #--------------------
-# sequence for "normal drive"
+# sequence for "normal ride"
 # 1. idle
-# 2. drive
+# 2. ride
 
 # sequence for "obstacle"
-# 0. (normal drive)
-# 1. drive + obstacle
+# 0. (normal ride)
+# 1. ride + obstacle
 # 2. idle
 # 3. player option (continue, or "stop")
 
@@ -124,7 +127,7 @@ ui <- dlgInput("The bike looks damaged. Continue ride?",
 # obstacles
 #----------
 
-# at start of drive, calculate obstacles
+# at start of ride, calculate obstacles
 
 # grid.text() overlay frames
 # use sample to assess obstacle presence

@@ -3,21 +3,29 @@
 # =__%
 # O O
 
-# sym.blank <- "_"
-# len.line = 10
-# len.bike = 3
-# len.wheels = 2
-# cloud = "-"
 
 sleepint <- 0.1
 
 #----------------
 # frame with vars
 #----------------
+sym.blank <- "_"
+# len.line = 10
+# len.bike = 3
+# len.wheels = 2
+cloud = "-"
+bike = " *=__%_"
+
+
 {
   i = 1
   while(i < 100){
     grid.newpage()
+    l1 <- paste0(c(rep(sym.blank, 6), cloud), collapse = "")
+    l2 <- paste0(c(bike), collapse = "")
+    
+    f1 <- paste0(c(l1, l2), collapse = "\n")
+    
     grid.text("______-\n *=__%_\n__O o__")
     Sys.sleep(sleepint)
     
@@ -37,9 +45,10 @@ sleepint <- 0.1
   }
 }
 
+
+#---------------
 # frame novars
-
-
+#---------------
 while(i < 100){
   grid.newpage()
   grid.text("______-\n *=__%_\n__O o__")

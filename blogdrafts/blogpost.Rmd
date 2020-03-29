@@ -11,6 +11,26 @@ https://stackoverflow.com/questions/8772630/plotting-during-a-loop-in-rstudio
 
 -->
 
-With covid everywhere and idle time, I took a stab at making a game... in R! Crazy right? 
+With covid everywhere and idle time, I took a stab at making a game... in R! Crazy right? This. is. scootersim!
 
-You can call this a game, but I prefer to think of it as an extremely basic simulator. This. is. scootersim!
+# Game sequence
+
+The score, as in most computer games, is an imaginary points system, which I have defined here as:
+
+Dt - (Nc + 0.5 * Ns)
+
+Where 
+
+1. Dt is total "distance" traveled (just an integer counter in this case), 
+2. Nc is the number of "crashes" (rides where bike stops), and 
+3. Ns is the number of "stops" (rides where player stops riding before end of ride).
+
+
+
+A. "inspect bike"
+A1. "maintain"
+A2. ""
+B. "drive"
+B1. "obstacle encounter"
+
+

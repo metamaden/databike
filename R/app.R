@@ -25,11 +25,9 @@ endride.uifun <- function(msgstr){
   ui.msg <- dlg_message(msgstr, "ok")
 }
 
-
-
 ride.normal <- function(alabel = "ride: normal", 
                         framevector = fv.drive, 
-                        ssint = 0.1, loops = 100){
+                        ssint = 0.1, loops = 1){
   grid.newpage()
   c = 1
   while(c <= loops){
@@ -69,8 +67,6 @@ ride.obstacle <- function(alabel = "ride: obstacle!",
   }
 }
 
-
-
 ride <- function(ride.seq, o.seq){
   grid.newpage()
   ride.finished <- 0
@@ -80,16 +76,18 @@ ride <- function(ride.seq, o.seq){
       ride.finished <- ifelse(c == max(ride.seq),
                               1, 0)
       if(c %in% o.seq){
-        ride.obstacle(loops = 2)
+        ride.obstacle()
         ride.status <- obstacle.uifun()
       } else{
-        ride.normal(loops = 1)
+        ride.normal()
       }
       if(ride.status == 0){
         msgstr <- "ride over!"
         msgstr <- ifelse(ride.finished == 1,
-                         paste0(msgstr, " you completed your ride :)"),
-                         paste0(msgstr, " you canceled your ride without finishing :("))
+                         paste0(msgstr, 
+                                " you completed your ride :)"),
+                         paste0(msgstr, 
+                                " you canceled your ride without finishing ;]"))
         endride.uifun(msgstr)
         return(NULL)
       }

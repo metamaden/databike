@@ -3,11 +3,87 @@
 # =__%
 # O O
 
-sym.blank <- "_"
-len.line = 10
-len.bike = 3
-len.wheels = 2
-cloud = "-"
+# sym.blank <- "_"
+# len.line = 10
+# len.bike = 3
+# len.wheels = 2
+# cloud = "-"
+
+sleepint <- 0.1
+
+#----------------
+# frame with vars
+#----------------
+{
+  i = 1
+  while(i < 100){
+    grid.newpage()
+    grid.text("______-\n *=__%_\n__O o__")
+    Sys.sleep(sleepint)
+    
+    grid.newpage()
+    grid.text("___-___\n*.=__%_\n__o O__")
+    Sys.sleep(sleepint)
+    
+    grid.newpage()
+    grid.text("-______\n. =__%_\n__o o__")
+    Sys.sleep(sleepint)
+    
+    grid.newpage()
+    grid.text("_______\n  =__%_\n__0 0__")
+    Sys.sleep(sleepint)
+    
+    i = i + 1
+  }
+}
+
+# frame novars
+
+
+while(i < 100){
+  grid.newpage()
+  grid.text("______-\n *=__%_\n__O o__")
+  Sys.sleep(sleepint)
+  
+  grid.newpage()
+  grid.text("___-___\n*.=__%_\n__o O__")
+  Sys.sleep(sleepint)
+  
+  grid.newpage()
+  grid.text("-______\n. =__%_\n__o o__")
+  Sys.sleep(sleepint)
+  
+  grid.newpage()
+  grid.text("_______\n  =__%_\n__0 0__")
+  Sys.sleep(sleepint)
+  
+  i = i + 1
+}
+
+
+
+sleepint <- 0.1
+i = 1
+while(i < 100){
+  grid.newpage()
+  grid.text("______-\n *=__%_\n__O o__")
+  Sys.sleep(sleepint)
+  
+  grid.newpage()
+  grid.text("___-___\n*.=__%_\n__o O__")
+  Sys.sleep(sleepint)
+  
+  grid.newpage()
+  grid.text("-______\n. =__%_\n__o o__")
+  Sys.sleep(sleepint)
+  
+  grid.newpage()
+  grid.text("_______\n  =__%_\n__0 0__")
+  Sys.sleep(sleepint)
+  
+  i = i + 1
+}
+
 
 # skyline animation
 sky1 <- c(rep(sym.blank, 
@@ -55,27 +131,6 @@ for(i in seq(1, 100, 1)){
   }
 }
 
-sleepint <- 0.1
-i = 1
-while(i < 100){
-  grid.newpage()
-  grid.text("______-\n *=__%_\n__O o__")
-  Sys.sleep(sleepint)
-  
-  grid.newpage()
-  grid.text("___-___\n*.=__%_\n__o O__")
-  Sys.sleep(sleepint)
-  
-  grid.newpage()
-  grid.text("-______\n. =__%_\n__o o__")
-  Sys.sleep(sleepint)
-  
-  grid.newpage()
-  grid.text("_______\n  =__%_\n__0 0__")
-  Sys.sleep(sleepint)
-  
-  i = i + 1
-}
 
 
 

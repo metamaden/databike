@@ -69,8 +69,8 @@ ride.obstacle <- function(alabel = "ride: obstacle!",
 
 ride <- function(ride.seq, o.seq){
   grid.newpage()
-  ride.finished <- 0
-  ride.status <- 1
+  # baseline stats for ride
+  ride.finished <- 0; ride.status <- 1
   while(ride.status > 1){
     for(c in ride.seq){
       ride.finished <- ifelse(c == max(ride.seq),
@@ -85,9 +85,9 @@ ride <- function(ride.seq, o.seq){
         msgstr <- "ride over!"
         msgstr <- ifelse(ride.finished == 1,
                          paste0(msgstr, 
-                                " you completed your ride :)"),
+                                " you completed the ride :)"),
                          paste0(msgstr, 
-                                " you canceled your ride without finishing ;]"))
+                                " you had to cancel the ride ;]"))
         endride.uifun(msgstr)
         return(NULL)
       }
@@ -95,7 +95,7 @@ ride <- function(ride.seq, o.seq){
   }
 }
 
-ride()
+ride(ride.seq, o.seq)
 
 
 

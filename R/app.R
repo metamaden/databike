@@ -23,26 +23,10 @@ obstacle.uifun <- function(){
 }
 
 
-ride <- function(){
-  ride.finished <- 0
-  ride.status <- 1
-  while(ride.status > 1){
-    for(c in ride.seq){
-      if(c %in% o.seq){
-        ride.obstacle()
-        ride.status <- obstacle.uifun()
-      } else{
-        
-      }
-      if(ride.status){
-        
-      }
-    }
-  }
-}
 
-ride.normal <- function(alabel = "ride: normal", framevector, 
-                            ssint = 0.1, loops = 100){
+ride.normal <- function(alabel = "ride: normal", 
+                        framevector = fv.drive, 
+                        ssint = 0.1, loops = 100){
   grid.newpage()
   c = 1
   while(c < loops){
@@ -63,17 +47,41 @@ ride.obstacle <- function(alabel = "ride: obstacle!",
   grid.newpage()
   c = 1
   while(c < loops){
-    for(f in fv){
+    for(i in 1:length(framevector)){
+      fs <- framevector1[i]
+      fo <- framevector2[i]
       # print ride animation
-      framewithlabel <- paste0(c(alabel, f), 
+      frame1withlabel <- paste0(c(alabel, fs), 
                                collapse = "\n")
       grid.newpage()
       grid.text(framewithlabel)
       # print obstacle animation
+      frame2 <- paste0(c(alabel, fo),
+                       collapse = "\n")
       grid.text()
       Sys.sleep(sleepint)
     }
     c = c + 1
+  }
+}
+
+
+
+ride <- function(){
+  ride.finished <- 0
+  ride.status <- 1
+  while(ride.status > 1){
+    for(c in ride.seq){
+      if(c %in% o.seq){
+        ride.obstacle()
+        ride.status <- obstacle.uifun()
+      } else{
+        
+      }
+      if(ride.status){
+        
+      }
+    }
   }
 }
 

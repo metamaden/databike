@@ -14,12 +14,13 @@ lab.drive <- "driving"
 # 
 
 # obstacle data
+osym <- "#"
 otop <- paste0(rep(" ", 7), collapse = "")
 omid <- paste0(rep(" ", 7), collapse = "")
-o1 <- paste0(c(otop, omid, "      #"), collapse = "\n")
-o2 <- paste0(c(otop, omid, "    #  "), collapse = "\n")
-o3 <- paste0(c(otop, omid, "  ,    "), collapse = "\n")
-o4 <- paste0(c(otop, omid, ",      "), collapse = "\n")
+o1 <- paste0(c(otop, omid, c("      ", osym)), collapse = "\n")
+o2 <- paste0(c(otop, omid, c("    ", osym, " ")), collapse = "\n")
+o3 <- paste0(c(otop, omid, c("     ", osym, " ")), collapse = "\n")
+o4 <- paste0(c(otop, omid, c("    ", osym, "  ")), collapse = "\n")
 
 fv.obstacle <- c(o1, o2, o3, o4)
 

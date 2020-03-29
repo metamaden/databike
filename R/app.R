@@ -16,10 +16,13 @@ o.num <- sample(max.o, 1)
 o.seq <- sample(ride.seq, o.num)
 
 # ride function
-
 obstacle.uifun <- function(){
   ui.msg <- dlg_message("cancel ride?", "yesno")$res
   return(ifelse(ui.msg == "yes", 0, 1))
+}
+
+endride.uifun <- function(msgstr){
+  ui.msg <- dlg_message(msgstr, "ok")
 }
 
 
@@ -29,37 +32,38 @@ ride.normal <- function(alabel = "ride: normal",
                         ssint = 0.1, loops = 100){
   grid.newpage()
   c = 1
-  while(c < loops){
+  while(c <= loops){
     for(f in framevector){
       framewithlabel <- paste0(c(alabel,
                                  f), collapse = "\n")
       grid.newpage()
       grid.text(framewithlabel)
-      Sys.sleep(sleepint)
+      Sys.sleep(ssint)
     }
     c = c + 1
   }
 }
 
 ride.obstacle <- function(alabel = "ride: obstacle!", 
-                          framevector, ssint = 0.3, 
-                          loops = 10){
+                          framevector1 = fv.drive, 
+                          framevector2 = fv.obstacle, 
+                          ssint = 0.5, loops = 1){
   grid.newpage()
   c = 1
-  while(c < loops){
-    for(i in 1:length(framevector)){
-      fs <- framevector1[i]
-      fo <- framevector2[i]
-      # print ride animation
-      frame1withlabel <- paste0(c(alabel, fs), 
-                               collapse = "\n")
+  while(c <= loops){
+    for(i in 1:length(framevector1)){
       grid.newpage()
-      grid.text(framewithlabel)
+      # print ride animation
+      fs <- framevector1[i]
+      frame1 <- paste0(c(alabel, fs), 
+                               collapse = "\n")
+      grid.text(frame1)
       # print obstacle animation
-      frame2 <- paste0(c(alabel, fo),
+      fo <- framevector2[i]
+      frame2 <- paste0(c(" ", fo),
                        collapse = "\n")
-      grid.text()
-      Sys.sleep(sleepint)
+      grid.text(frame2)
+      Sys.sleep(ssint)
     }
     c = c + 1
   }
@@ -67,23 +71,33 @@ ride.obstacle <- function(alabel = "ride: obstacle!",
 
 
 
-ride <- function(){
+ride <- function(ride.seq, o.seq){
+  grid.newpage()
   ride.finished <- 0
   ride.status <- 1
   while(ride.status > 1){
     for(c in ride.seq){
+      ride.finished <- ifelse(c == max(ride.seq),
+                              1, 0)
       if(c %in% o.seq){
-        ride.obstacle()
+        ride.obstacle(loops = 2)
         ride.status <- obstacle.uifun()
       } else{
-        
+        ride.normal(loops = 1)
       }
-      if(ride.status){
-        
+      if(ride.status == 0){
+        msgstr <- "ride over!"
+        msgstr <- ifelse(ride.finished == 1,
+                         paste0(msgstr, " you completed your ride :)"),
+                         paste0(msgstr, " you canceled your ride without finishing :("))
+        endride.uifun(msgstr)
+        return(NULL)
       }
     }
   }
 }
+
+ride()
 
 
 

@@ -39,12 +39,42 @@ sleepint <- 0.1
 fl = list(f1 = "_____-",
           f2 = "~=_%__",
           f3 = "__oo__")
-for(i in seq(1, 100 ,1)){
+
+f1 = "_____-"
+f2 = "~=_%__"
+f3 = "__oo__"
+fr <- paste(c(f1, f2, f3), 
+            collapse = "\n")
+fl <- list(fr)
+
+for(i in seq(1, 100, 1)){
   for(f in fl){
     grid.newpage()
     grid.text(f)
     Sys.sleep(sleepint)
   }
+}
+
+sleepint <- 0.1
+i = 1
+while(i < 100){
+  grid.newpage()
+  grid.text("______-\n *=__%_\n__O o__")
+  Sys.sleep(sleepint)
+  
+  grid.newpage()
+  grid.text("___-___\n*.=__%_\n__o O__")
+  Sys.sleep(sleepint)
+  
+  grid.newpage()
+  grid.text("-______\n. =__%_\n__o o__")
+  Sys.sleep(sleepint)
+  
+  grid.newpage()
+  grid.text("_______\n  =__%_\n__0 0__")
+  Sys.sleep(sleepint)
+  
+  i = i + 1
 }
 
 
@@ -53,7 +83,9 @@ for(i in seq(1, 100 ,1)){
 
 
 
+
 grid.newpage()
+grid.text("___\n___")
 
 sky2 <- paste0(c(rep(" ", 3), "-", rep(" ", 4)))
 sky3 <- paste0(c("-", rep(" ", 7)))

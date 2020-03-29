@@ -27,6 +27,23 @@
 # bike wear (change chance of "breakdown")
 # tire wear
 
+#------------
+# user prompt
+#------------
+install.packages("svDialogs")
+
+library(svDialogs)
+
+user.input <- dlgInput("Continue?", 
+                       Sys.info()[""])$res
+if (!length(user)){}
+
+ui <- dlgInput("The bike looks damaged. Continue ride?",
+               )
+
+  
+  
+  
 #--------------------
 # animation sequences
 #--------------------

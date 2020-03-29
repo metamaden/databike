@@ -1,6 +1,15 @@
 #!/usr/bin/env R
 
-# Graphic code for scootsim
+# Graphics for scootsim
+
+# scene labels
+labtag <- "mode: "
+lab.idle <- "idle"
+lab.maintenance <- "maintenance"
+lab.inspect <- "inspect"
+lab.drive <- "driving"
+
+# 
 
 # obstacle data
 otop <- paste0(rep(" ", 7), collapse = "")
@@ -44,6 +53,11 @@ s.drive <- scene(fv)
 fv <- c(stationary, blink)
 s.idle <- scene(fv)
 
+sl.idle <- scene.withlabel(lab.idle, fv.idle,
+                           loops = 10)
+
+sl.drive <- scene.withlabel(lab.drive, fv.drive, loops = 10)
+
 #-------
 # scene function
 #--------
@@ -60,3 +74,22 @@ scene <- function(fv, sleepint = 0.1,
     c = c + 1
   }
 }
+
+
+scene.withlabel <- function(scenelabel, framevector, 
+                  ssint = 0.1, loops = 100){
+  grid.newpage()
+  c = 1
+  while(c < loops){
+    for(f in fv){
+      framewithlabel <- paste0(c(scenelabel,
+                                 f), collapse = "\n")
+      grid.newpage()
+      grid.text(framewithlabel)
+      Sys.sleep(sleepint)
+    }
+    c = c + 1
+  }
+}
+  
+  

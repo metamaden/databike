@@ -3,6 +3,66 @@
 
 # https://stackoverflow.com/questions/46116614/taking-inputs-through-pop-up-window-in-r/46116803
 
+
+
+
+
+
+# pre-ride
+# 1. drive duration (animation loops)
+# 2. obstacles and obstacle intervals
+
+drive.dur <- 100
+drive.seq <- seq(1, drive.dur, 1)
+
+max.o <- 10
+o.num <- sample(max.o, 1)
+o.seq <- sample(drive.seq, o.num)
+
+# ride function
+
+ride <- function("ride", framevector, )
+
+
+scene.withlabel <- function(scenelabel, framevector, 
+                            ssint = 0.1, loops = 100){
+  grid.newpage()
+  c = 1
+  while(c < loops){
+    for(f in fv){
+      framewithlabel <- paste0(c(scenelabel,
+                                 f), collapse = "\n")
+      grid.newpage()
+      grid.text(framewithlabel)
+      Sys.sleep(sleepint)
+    }
+    c = c + 1
+  }
+}
+
+seqscene <- c()
+
+
+
+
+
+
+
+# ride
+
+# 0. calculate num obstacles (sample) and obstacle interval (sample)
+# 1. bike idle
+# 2. bike drive
+# 3. 
+
+
+
+
+
+
+
+
+
 # Data for app
 # Manage scene sequences for drives
 # Manage probs for app engine

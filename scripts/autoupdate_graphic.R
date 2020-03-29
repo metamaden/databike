@@ -77,7 +77,9 @@ scene.withlabel <- function(scenelabel, framevector,
     c = c + 1
   }
 }
-  
+
+seqscene <- c()
+
 #---------
 # old misc
 #---------
@@ -94,3 +96,6 @@ scene <- function(fv, sleepint = 0.1,
     c = c + 1
   }
 }
+
+
+

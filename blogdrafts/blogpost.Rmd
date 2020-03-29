@@ -9,6 +9,8 @@ https://stackoverflow.com/questions/13143801/update-plots-during-for-loop-from-w
 
 https://stackoverflow.com/questions/8772630/plotting-during-a-loop-in-rstudio
 
+https://stackoverflow.com/questions/46116614/taking-inputs-through-pop-up-window-in-r/46116803
+
 -->
 
 With covid everywhere and idle time, I took a stab at making a game... in R! Crazy right? This. is. scootersim!

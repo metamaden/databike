@@ -133,8 +133,8 @@ rpm <- 1.5 # repair prob modifier to bdi
     }
   }
   
-  ride <- function(ride.seq, o.seq, bc,
-                   tdist, onum, bcond){
+  ride <- function(ride.seq, o.seq,
+                   bcond, tdist, onum){
     
     # global stats
     # tdist # global mileage
@@ -186,13 +186,18 @@ rpm <- 1.5 # repair prob modifier to bdi
     grid.newpage()
     return(bc)
   }
+  
+  
 }
+
+#---------------
+# test main app
+#---------------
+ride(ride.seq, o.seq, bcond, tdist, onum)
 
 #---------
 # main app
 #---------
-
-
 # idle/maintenance -- can only repair or maintain
 # repair? 
 # maintain?
@@ -205,8 +210,6 @@ rungame <- function(){
   o.seq <- get_oseq(ride.seq)
   ride(ride.seq, o.seq)
 }
-
-
 
 # trigger idle -> do task
 

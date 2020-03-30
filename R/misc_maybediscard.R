@@ -1,4 +1,15 @@
 
+{
+  # options (ascending ride "length" c)
+  opt1 <- "shrt"; opt2 <- "medium"; opt3 <- "loooong"
+  ride.options <- c(opt1, opt2, opt3)
+  rt <- sample(ride.options) # short, medium, long
+  ride.type <- rt
+  ride.dur <- ifelse(rt == opt1, 30, 
+                     ifelse(rt == opt2, 50, 
+                            ifelse(rt == opt3, 100, "NA")))
+  ride.seq <- seq(1, ride.dur, 1)
+}
 
 
 

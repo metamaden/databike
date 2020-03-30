@@ -1,10 +1,15 @@
 # Early app goals
-# 1. bike condition modifies obstacles
-# 2. mileage modifies maintenance -> bcond
-# 3. between rides, either "maintain" or "repair"
 
-# customize ride (set bikestr)
+# 3. between rides, either "maintain" or "repair" (DONE)
+# customize ride (set bikestr) (DONE)
 
-#---------------
-# test main app
-#---------------
+
+
+
+
+
+
+
+# 1. bike condition modifies obstacles (NOT DONE)
+# 2. mileage modifies maintenance -> bcond (NOT DONE)
+# app runs from command line? (NOT DONE)

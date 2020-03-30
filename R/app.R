@@ -362,115 +362,96 @@ do_ride()
   
   
   
-  
-}
-
-# customize bike
-asciibike <- function(msg = "customize your ride!", bike = "`=__%"){
-  bike <- dlg_input(msg, default = bike)$res
-  return(bike)
-}
-
-bike <- asciibike()
-
-ascii_blink_fv_old <- function(bike = "`=__%"){
+  ascii_blink_fv_old <- function(bike = "`=__%"){
     stationary <- c("_______\n  =__% \n__0 0__")
     blink <- c("_______\n       \n__   __")
     fv <- c(stationary, blink)
     return(fv)
-}
-ascii_drive_fv_old <- function(bike = "`=__%"){
+  }
+  ascii_drive_fv_old <- function(bike = "`=__%"){
     drive1 <- c("     **\n `=__% \n__O o_-")
     drive2 <- c("   ** *\n`=__%  \n__o O__")
     drive3 <- c("***     \n `=__% \n_-o o__")
     drive4 <- c("       \n `=__% \n-_0 0__")
     fv <- c(drive1, drive2, drive3, drive4)
     return(fv)
+  }
 }
-  
+
+#--------
+# appdoc
+#----------
+# databike
+
+# customize bike
+# edit bike data
+asciibike <- function(msg = "customize your ride!", bike = "`=__%"){
+  bike.ascii <- dlg_input(msg, default = bike)$res
+  return(bike.ascii)
+}
+bike <- asciibike()
+
+# name bike
+# bikename <- function(msg = "name bike!", bike = "databike"){
+#   bike.name <- dlg_input(msg, default = bike)$res
+#   return(bike.name)
+# }
+# bike.name <- bikename()
+
+
+# 1. load game data
+# 1A. load frame data
+# 1A1. bike data and "customize"
+# 1A1A. prompt bike inof
+asciibike <- function(msg = "customize your ride!", bike = "`=__%"){
+  bike <- dlg_input(msg, default = bike)$res
+  return(bike)
+}
+# 1A1B. bike var
+bike <- asciibike()
+
+# 1B. "scene " data
+# 1B1. blink
 ascii_blink_fv <- function(bike = "`=__%"){
-    stationary <- paste0(c("_______\n  ", bike," \n__0 0__"), collapse = "")
-    blink <- "_______\n       \n__   __"
-    fv <- c(stationary, blink)
-    return(fv)
-}
-ascii_drive_fv <- function(bike = "`=__%"){
-    drive1 <- paste0("     **\n ", bike, " \n__O o_-", collapse = '')
-    drive2 <- paste0("   ** *\n", bike, "  \n__o O__", collapse = '')
-    drive3 <- paste0("***     \n ", bike, " \n_-o o__", collapse = '')
-    drive4 <- paste0("       \n ", bike, " \n-_0 0__", collapse = '')
-    fv <- c(drive1, drive2, drive3, drive4)
-    return(fv)
+  stationary <- paste0(c("_______\n  ", bike," \n__0 0__"), collapse = "")
+  blink <- "_______\n       \n__   __"
+  fv <- c(stationary, blink)
+  return(fv)
 }
 fv.blink <- ascii_blink_fv()
+# 1B2. drive
+ascii_drive_fv <- function(bike = "`=__%"){
+  drive1 <- paste0("     **\n ", bike, " \n__O o_-", collapse = '')
+  drive2 <- paste0("   ** *\n", bike, "  \n__o O__", collapse = '')
+  drive3 <- paste0("***     \n ", bike, " \n_-o o__", collapse = '')
+  drive4 <- paste0("       \n ", bike, " \n-_0 0__", collapse = '')
+  fv <- c(drive1, drive2, drive3, drive4)
+  return(fv)
+}
 fv.drive <- ascii_drive_fv()
-  
-ascii_drive_fv_old <- function(bike = "`=__%"){
-    drive1 <- c("     **\n `=__% \n__O o_-")
-    drive2 <- c("   ** *\n`=__%  \n__o O__")
-    drive3 <- c("***     \n `=__% \n_-o o__")
-    drive4 <- c("       \n `=__% \n-_0 0__")
-    fv <- c(drive1, drive2, drive3, drive4)
-    return(fv)
-}
-  
+# 1BC. 'obstacle'
 ascii_obstacle_fv <- function(osym = "#"){
-    # osym <- "#"
-    otop <- paste0(rep(" ", 7), collapse = "")
-    omid <- paste0(rep(" ", 7), collapse = "")
-    o1 <- paste0(c(otop, omid, c("      ", osym)), collapse = "\n")
-    o2 <- paste0(c(otop, omid, c("    ", osym, " ")), collapse = "\n")
-    o3 <- paste0(c(otop, omid, c("     ", osym, " ")), collapse = "\n")
-    o4 <- paste0(c(otop, omid, c("    ", osym, "  ")), collapse = "\n")
-    fv <- c(o1, o2, o3, o4)
-    return(fv)
-}
-  
-  }
-
-
-
-ascii_fvl <- function(fv.drive, fv.idle, fv.obstacle){
-  # gets ascii dat for animations
-  stationary <- c("_______\n  =__% \n__0 0__")
-  blink <- c("_______\n       \n__   __")
-  fv.idle <- c(stationary, blink)
-  
-  drive1 <- c("     **\n `=__% \n__O o_-")
-  drive2 <- c("   ** *\n`=__%  \n__o O__")
-  drive3 <- c("***     \n `=__% \n_-o o__")
-  drive4 <- c("       \n `=__% \n-_0 0__")
-  fv.drive <- c(drive1, drive2, drive3, drive4)
-  
-  osym <- "#"
+  # osym <- "#"
   otop <- paste0(rep(" ", 7), collapse = "")
   omid <- paste0(rep(" ", 7), collapse = "")
   o1 <- paste0(c(otop, omid, c("      ", osym)), collapse = "\n")
   o2 <- paste0(c(otop, omid, c("    ", osym, " ")), collapse = "\n")
   o3 <- paste0(c(otop, omid, c("     ", osym, " ")), collapse = "\n")
   o4 <- paste0(c(otop, omid, c("    ", osym, "  ")), collapse = "\n")
-  fv.obstacle <- c(o1, o2, o3, o4)
-  
+  fv <- c(o1, o2, o3, o4)
+  return(fv)
+}
+
+# 1C. organize scene data
+ascii_fvl <- function(fv.drive, fv.idle, fv.obstacle){
   fvl <- list("idle" = fv.idle, 
               "drive" = fv.drive, 
               "obstacle" = fv.obstacle)
-  
   return(fvl)
 }
 
-# ride data
-{
-  # options (ascending ride "length" c)
-  opt1 <- "shrt"; opt2 <- "medium"; opt3 <- "loooong"
-  ride.options <- c(opt1, opt2, opt3)
-  rt <- sample(ride.options) # short, medium, long
-  ride.type <- rt
-  ride.dur <- ifelse(rt == opt1, 30, 
-                     ifelse(rt == opt2, 50, 
-                            ifelse(rt == opt3, 100, "NA")))
-  ride.seq <- seq(1, ride.dur, 1)
-}
-
+# 2. get ride options
+# 2A. ride data
 get_ride.dur <- function(){
   # defines ride durations
   opt1 <- "shrt"; opt2 <- "medium"; opt3 <- "loooong"
@@ -482,7 +463,6 @@ get_ride.dur <- function(){
                             ifelse(rt == opt3, 100, "NA")))
   return(ride.dur)
 }
-
 get_ride.seq <- function(ride.dur){
   # parses ride durations into c lengths and indices
   opt1 <- "shrt"; opt2 <- "medium"; opt3 <- "loooong"
@@ -495,6 +475,12 @@ get_ride.seq <- function(ride.dur){
   ride.seq <- seq(1, ride.dur, 1)
   return(ride.seq)
 }
+
+
+#  start app loop
+
+
+
 
 
 # load

@@ -152,10 +152,9 @@ rpm <- 1.5 # repair prob modifier to bdi
     # bcchange <- bc # bike condition
     while(ride.status > 0){
       for(c in ride.seq){
-        perc.finished <- round(100*(c/length(ride.seq)), 3)
+        perc.finished <- round(100*(c/length(ride.seq)), 0)
         msgperc <- paste0("ride progress: ", perc.finished, "%")
-        ride.finished <- ifelse(c == max(ride.seq),
-                                1, 0)
+        ride.finished <- ifelse(c == max(ride.seq), 1, 0)
         if(c %in% o.seq){
           ride.obstacle(msgperc = msgperc)
           ride.status <- obstacle.uifun()
@@ -164,22 +163,16 @@ rpm <- 1.5 # repair prob modifier to bdi
         }
         if(ride.status == 0){
           # tdist updates
-          msgstr <- "ride over!"
-          msgstr <- ifelse(ride.finished == 1,
-                           paste0(msgstr, 
-                                  " the ride has ended!! \n",
-                                  "mileage = ", tdnew,
-                                  ", obstacles = ", onum + oride),
-                           paste0(msgstr,
-                                  " the ride has ended!! \n",
-                                  "mileage = ", tdnew,
-                                  "obstacles = ", onum + oride)
-          )
-          # get running stats
-          lr <- list("tot.dist",
-                     "tot.obstacles",
-                     "bike.condition")
-          
+          tdnew <- tdist + c
+          onew <- onum + oride
+          msgstr <- paste0("the ride has ended!! \n",
+                           "your current usr stats:\n",
+                           "mileage = ", tdnew, "\n", 
+                           "obstacles = ", onew, "\n",
+                           "bike.cond = ", bcond, "\n")
+          # update user stats
+          tdist = tdnew
+          onum = onew
           endride.uifun(msgstr)
           return(NULL)
         }
@@ -188,8 +181,6 @@ rpm <- 1.5 # repair prob modifier to bdi
     grid.newpage()
     return(bc)
   }
-  
-  
 }
 
 #---------------

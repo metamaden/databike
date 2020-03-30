@@ -7,10 +7,24 @@
 # prep ride data
 rt <- "short" # short, medium, long
 ride.type <- rt
-
 ride.dur <- ifelse(rt == "short", 30, ifelse(rt == "medium", 50, ifelse(rt == "long", 100, "NA")))
-
 ride.seq <- seq(1, ride.dur, 1)
+
+# ride duration prompt
+ride.options <- c("short", "medium", "long")
+get.ride <- sample(ride.options, 1)
+ui.msg <- dlg_message("accept ride?", "yesno")$res
+
+get_rideseq <- function(rt){
+  ride.dur <- ifelse(rt == "short", 30, 
+                     ifelse(rt == "medium", 50, 
+                            ifelse(rt == "long", 100, "NA")))
+  ride.seq <- seq(1, ride.dur, 1)
+}
+
+ride.prompt <- function(){
+  ui.msg <- dlg_message("accept ride?", "yesno")$res
+}
 
 # get obstacle data
 max.o <- 10

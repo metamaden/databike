@@ -9,7 +9,7 @@ This post is about creating a truly basic/barebones app called `scootersim`, wit
 
 # Game guts
 
-Using R presents some challenges, and it took some planning to organize simulation elements. I managed to make progress with just a couple of amazing R libs, `grid` and `svDialogs`.
+Using R presents some challenges, and it took some planning to organize simulation elements. I managed to make progress with just a couple of dependencies. I chose `grid` for acii text animations and `svDialogs` for managing ui.
 
 # Game guts
 

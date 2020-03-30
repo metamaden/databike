@@ -1,0 +1,43 @@
+#!/usr/bin/env R
+
+# app start
+require(svDialogs)
+require(grid)
+
+# app.R
+# runs `databike`
+dn <- "data"
+#path.data <- paste0(dn, "data.RData", collapse = "/")
+path.functions <- paste0(c(dn, "functions.RData"), 
+                         collapse = "/")
+path.userscorestart <- paste0(c(dn, "uscorestart.RData"), 
+                              collapse = "/")
+
+# load(path.data) # load.data()
+load(path.userscorestart) # load.uscorestart()
+load(path.functions) # load.functions()
+#log_errors()
+
+# main app # maintain bcond > 0, also show score.... ... 
+while(bcond > 0){
+  # load "cache" data
+  fv.idle <- ascii_idle_fv()
+  fv.drive <- ascii_drive_fv()
+  fv.obstacle <- ascii_obstacle_fv()
+  fvl <- ascii_fvl(fv.drive, 
+                   fv.idle, 
+                   fv.obstacle)
+  # main app
+  # 1. bikevar prompt
+  bike <- asciibike()
+  # 2. main app loop
+  # 2B. idle var prompt
+  do_idle(mprob, rprob)
+  # 2C. do ride
+  ride(ride.seq, o.seq, bcond, 
+       tdist, onum)
+}
+message("process finished")
+# end options endgame ...
+# play again?
+# other stuff

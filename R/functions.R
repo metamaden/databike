@@ -1,15 +1,5 @@
 #!/usr/bin/env R
 
-
-
-
-
-
-
-
-
-
-
 # 1. load game data
 # 1A. load frame data
 # 1A1. bike data customization
@@ -81,7 +71,6 @@ get_ride.seq <- function(ride.dur){
   ride.seq <- seq(1, ride.dur, 1)
   return(ride.seq)
 }
-
 
 
 # 2. ride function stuff
@@ -223,13 +212,15 @@ do_idle <- function(mprob, rprob){
 
 
 
-# main app
-# 1. bikevar prompt
-bike <- asciibike()
-# 2. main app loop
-# 2B. idle var prompt
-do_idle(mprob, rprob)
-# 2C. do ride
-ride(ride.seq, o.seq, bcond, 
-     tdist, onum)
+
+
+
+
+
+
+
+
+
+
+
 

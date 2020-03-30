@@ -32,8 +32,6 @@ while(bcond > 0){
   # 2. main app loop
   # 2B. idle var prompt
   do_idle(mprob, rprob)
-  # 2C. do ride
-  
   # 2CA. get ride "mileage"
   ride.dur <- get_ride.dur()
   ride.seq <- seq(1, ride.dur, 1)

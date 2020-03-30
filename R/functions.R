@@ -40,11 +40,11 @@ ascii_obstacle_fv <- function(osym = "#"){
 }
 # 1C. organize "scene" data
 ascii_fvl <- function(drive, idle, obstacle){
-  fvl <- list("idle" = idle, 
-              "drive" = drive, 
+  fvl <- list("idle" = idle, "drive" = drive, 
               "obstacle" = obstacle)
   return(fvl)
 }
+
 
 
 # 2. ride duration function
@@ -60,6 +60,8 @@ get_ride.dur <- function(optl = c("short", "medium", "long")){
                                    "NA")))
   return(ride.dur)
 }
+
+
 
 
 # 2. ride function stuff
@@ -157,9 +159,6 @@ ride <- function(ride.seq, o.seq,
 }
 
 
-
-
-
 # 3. do_idle function
 # 3A . task
 do_task <- function(bcond, rpm){
@@ -171,7 +170,7 @@ do_task <- function(bcond, rpm){
 # 3B 
 get_task_outcome <- function(task.prob){
   # parses maintenance and repair tasks
-  v <- 10*task.prob
+  v <- 100*task.prob
   s1 = rep("fix", v)
   s2 = rep("break", 100 - v)
   outcome <- sample(c(s1, s2), 1)
@@ -182,8 +181,8 @@ get_task_outcome <- function(task.prob){
   }
   return(outcome)
 }
-# 3C.
-do_idle <- function(mprob, rprob){
+# 3C 
+do_idle <- function(mprobability, rprob){
   itask <- dlg_message("maintain?", "yesno")$res
   # parse idle task
   if(itask == "yes"){

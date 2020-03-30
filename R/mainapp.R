@@ -8,6 +8,7 @@ library(grid)
 fv.idle <- ascii_idle_fv()
 fv.drive <- ascii_drive_fv()
 fv.obstacle <- ascii_obstacle_fv()
+fvl <- ascii_fvl(fv.drive, fv.idle, fv.obstacle)
 
 # main app
 # 1. bikevar prompt

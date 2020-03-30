@@ -44,7 +44,6 @@ ascii_fvl <- function(drive, idle, obstacle){
               "obstacle" = obstacle)
   return(fvl)
 }
-fvl <- ascii_fvl(fv.drive, fv.idle, fv.obstacle)
 
 # 2. ride duration function
 get_ride.dur <- function(optl = c("short", "medium", "long")){
@@ -60,3 +59,46 @@ get_ride.dur <- function(optl = c("short", "medium", "long")){
   return(ride.dur)
 }
 
+# 3. do_idle function
+# 3A . task
+do_task <- function(bcond, rpm){
+  new.bcond <- ifelse(outcome == "fix",
+                      bcond + bdi*rpm,
+                      bcond - bdi*rpm)
+  return(new.bcond)
+}
+# 3B 
+get_task_outcome <- function(task.prob){
+  # parses maintenance and repair tasks
+  v <- 10*task.prob
+  s1 = rep("fix", v)
+  s2 = rep("break", 100 - v)
+  outcome <- sample(c(s1, s2), 1)
+  if(outcome == "fix"){
+    dlg_message("the bike was successfully maintained", "ok")
+  } else{
+    dlg_message("attempt to maintain bike failed", "ok")
+  }
+  return(outcome)
+}
+# 3C.
+do_idle <- function(mprob, rprob){
+  itask <- dlg_message("maintain?", "yesno")$res
+  # parse idle task
+  if(itask == "yes"){
+    outcome <- get_task_outcome(mprob)
+    bcond.new = ifelse(outcome == "fix",
+                       bcond + bdi, 
+                       bcond - bdi)
+  } else{
+    itask <- dlg_message("repair?", "yesno")$res
+    # parse repair task
+    if(itask == "yes"){
+      outcome <- get_task_outcome(mprob)
+      bcond.new <- ifelse(outcome == "fix",
+                          bcond + bdi*rpm,
+                          bcond - bdi*rpm)
+    }
+  }
+  return(bcond.new)
+}

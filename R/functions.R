@@ -167,6 +167,7 @@ do_task <- function(bcond, rpm){
                       bcond - bdi*rpm)
   return(new.bcond)
 }
+
 # 3B 
 get_task_outcome <- function(task.prob){
   # parses maintenance and repair tasks

@@ -6,11 +6,11 @@ require(grid)
 
 # app.R
 # runs `databike`
-dn <- "data"
+dn <- "R"
 #path.data <- paste0(dn, "data.RData", collapse = "/")
 path.functions <- paste(c(dn, "functions.RData"), 
                          collapse = "/")
-path.userscorestart <- paste(c(dn, "userscorestart.RData"), 
+path.userscorestart <- paste(c(dn, "data.RData"), 
                               collapse = "/")
 
 # load(path.data) # load.data()

@@ -1,0 +1,10 @@
+# Early app goals
+# 1. bike condition modifies obstacles
+# 2. mileage modifies maintenance -> bcond
+# 3. between rides, either "maintain" or "repair"
+
+# customize ride (set bikestr)
+
+#---------------
+# test main app
+#---------------

@@ -33,7 +33,38 @@ rpm <- 1.5 # repair prob modifier to bdi
 # repair? 
 # maintain?
 
-do_repair <- function(bcond, rpm){
+rungame <- function(){
+  do_idle()
+  
+}
+
+
+
+# trigger idle -> do task
+
+# returns modified bcond
+do_idle <- function(mprob, rprob){
+  itask <- dlg_message("maintain?", "yesno")$res
+  # parse idle task
+  if(itask == "yes"){
+    outcome <- get_task_outcome(mprob)
+    bcond.new = ifelse(outcome == "fix",
+                   bcond + bdi, 
+                   bcond - bdi)
+  } else{
+   itask <- dlg_message("repair?", "yesno")$res
+   # parse repair task
+   if(itask == "yes"){
+     outcome <- get_task_outcome(mprob)
+     bcond.new <- ifelse(outcome == "fix",
+                     bcond + bdi*rpm,
+                     bcond - bdi*rpm)
+   }
+  }
+  return(bcond.new)
+}
+
+do_task <- function(bcond, rpm){
   new.bcond <- ifelse(outcome == "fix",
                       bcond + bdi*rpm,
                       bcond - bdi*rpm)
@@ -41,29 +72,17 @@ do_repair <- function(bcond, rpm){
 }
 
 get_task_outcome <- function(task.prob){
+  # parses maintenance and repair tasks
   v <- 10*task.prob
   s1 = rep("fix", v)
   s2 = rep("break", 100 - v)
   outcome <- sample(c(s1, s2), 1)
-  return(outcome)
-}
-
-do_idle <- function(mprob, rprob){
-  # idle.task
-  itask <- dlg_message("maintain?", "yesno")$res
-  if(itask == "yes"){
-    outcome <- get_task_outcome()
-    bcond = ifelse(outcome == "fix",
-                   bcond + bdi, )
+  if(outcome == "fix"){
+    dlg_message("the bike was successfully maintained", "ok")
   } else{
-   itask <- dlg_message("repair?", "yesno")$res
-   if(itask == "yes"){
-     bcond <- ifelse(outcome == "fix",
-                     bcond + bdi*rpm,
-                     bcond - bdi*rpm)
-   }
+    dlg_message("attempt to maintain bike failed", "ok")
   }
-  return()
+  return(outcome)
 }
 
 # random bonus

@@ -1,7 +1,11 @@
 #!/usr/bin/env R
 # dependencies
+
+
 library(svDialogs)
 library(grid)
+
+
 #===============
 
 #-----
@@ -306,15 +310,7 @@ rpm <- 1.5 # repair prob modifier to bdi
 }
 
 
-# prep ride data
-{
-  rt <- "short" # short, medium, long
-  ride.type <- rt
-  ride.dur <- ifelse(rt == "short", 30, 
-                     ifelse(rt == "medium", 50, 
-                            ifelse(rt == "long", 100, "NA")))
-  ride.seq <- seq(1, ride.dur, 1)
-}
+
 
 do_garage()
 check_ride()
@@ -368,6 +364,8 @@ do_ride()
     fv <- c(stationary, blink)
     return(fv)
   }
+  
+  
   ascii_drive_fv_old <- function(bike = "`=__%"){
     drive1 <- c("     **\n `=__% \n__O o_-")
     drive2 <- c("   ** *\n`=__%  \n__o O__")
@@ -376,6 +374,8 @@ do_ride()
     fv <- c(drive1, drive2, drive3, drive4)
     return(fv)
   }
+  
+  
 }
 
 #--------
@@ -389,7 +389,6 @@ asciibike <- function(msg = "customize your ride!", bike = "`=__%"){
   bike.ascii <- dlg_input(msg, default = bike)$res
   return(bike.ascii)
 }
-bike <- asciibike()
 
 # name bike
 # bikename <- function(msg = "name bike!", bike = "databike"){
@@ -403,7 +402,8 @@ bike <- asciibike()
 # 1A. load frame data
 # 1A1. bike data and "customize"
 # 1A1A. prompt bike inof
-asciibike <- function(msg = "customize your ride!", bike = "`=__%"){
+asciibike <- function(msg = "customize your ride!", 
+                      bike = "`=__%"){
   bike <- dlg_input(msg, default = bike)$res
   return(bike)
 }
@@ -415,7 +415,6 @@ ascii_idle_fv <- function(bike = "`=__%"){
   fv <- c(stationary, blink)
   return(fv)
 }
-
 # 1B2. drive
 ascii_drive_fv <- function(bike = "`=__%"){
   drive1 <- paste0("     **\n ", bike, " \n__O o_-", collapse = '')
@@ -445,6 +444,7 @@ ascii_fvl <- function(drive, idle, obstacle){
   return(fvl)
 }
 fvl <- ascii_fvl(fv.drive, fv.idle, fv.obstacle)
+
 # 2. ride duration function
 get_ride.dur <- function(optl = c("short", "medium", "long")){
   # defines ride durations# 
@@ -459,31 +459,18 @@ get_ride.dur <- function(optl = c("short", "medium", "long")){
   return(ride.dur)
 }
 
-# app start
-# 0. load "cache" data
-fv.idle <- ascii_idle_fv()
-fv.drive <- ascii_drive_fv()
-fv.obstacle <- ascii_obstacle_fv()
 
-# 1. bikevar prompt
-bike <- asciibike()
 
-# 2. main app loop
-# 2A. rideseq var prompt
-get_ride.seq <- function(ride.dur){
-  # parses ride durations into c lengths and indices
-  opt1 <- "shrt"; opt2 <- "medium"; opt3 <- "loooong"
-  ride.options <- c(opt1, opt2, opt3)
-  rt <- sample(ride.options) # short, medium, long
-  ride.type <- rt
-  ride.dur <- ifelse(rt == opt1, 30, 
-                     ifelse(rt == opt2, 50, 
-                            ifelse(rt == opt3, 100, "NA")))
-  ride.seq <- seq(1, ride.dur, 1)
-  return(ride.seq)
-}
-# 2B. idle var prompt
-do_idle()
-# 2C. do ride
+
+
+
+
+
+
+
+
+
+
+
 
 

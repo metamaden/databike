@@ -13,6 +13,17 @@
 
 
 
+# prep ride data
+{
+  rt <- "short" # short, medium, long
+  ride.type <- rt
+  ride.dur <- ifelse(rt == "short", 30, 
+                     ifelse(rt == "medium", 50, 
+                            ifelse(rt == "long", 100, "NA")))
+  ride.seq <- seq(1, ride.dur, 1)
+}
+
+
 # ride
 
 # 0. calculate num obstacles (sample) and obstacle interval (sample)

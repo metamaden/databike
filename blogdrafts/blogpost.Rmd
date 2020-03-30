@@ -13,11 +13,11 @@ https://stackoverflow.com/questions/46116614/taking-inputs-through-pop-up-window
 
 -->
 
-With covid everywhere and idle time, I took a stab at making a game... in R! Crazy right? This. is. scootersim!
+
 
 # Game sequence
 
-The score, as in most computer games, is an imaginary points system, which I have defined here as:
+The score is an imaginary points system, which is defined here as:
 
 Dt - (Nc + 0.5 * Ns)
 

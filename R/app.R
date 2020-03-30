@@ -363,13 +363,6 @@ do_ride()
   
   
   
-  asciibike <- function(msg = "customize your ride!", bike = "`=__%"){
-    bike <- dlg_input(msg, default = bike)$res
-    return(bike)
-  }
-  
-  
-  
 }
 
 # customize bike
@@ -380,24 +373,48 @@ asciibike <- function(msg = "customize your ride!", bike = "`=__%"){
 
 bike <- asciibike()
 
-
-  ascii_blink_fv <- function(bike = "`=__%"){
+ascii_blink_fv_old <- function(bike = "`=__%"){
     stationary <- c("_______\n  =__% \n__0 0__")
     blink <- c("_______\n       \n__   __")
     fv <- c(stationary, blink)
     return(fv)
-  }
-  
-  ascii_drive_fv <- function(bike = "`=__%"){
+}
+ascii_drive_fv_old <- function(bike = "`=__%"){
     drive1 <- c("     **\n `=__% \n__O o_-")
     drive2 <- c("   ** *\n`=__%  \n__o O__")
     drive3 <- c("***     \n `=__% \n_-o o__")
     drive4 <- c("       \n `=__% \n-_0 0__")
     fv <- c(drive1, drive2, drive3, drive4)
     return(fv)
-  }
+}
   
-  ascii_obstacle_fv <- function(osym = "#"){
+ascii_blink_fv <- function(bike = "`=__%"){
+    stationary <- paste0(c("_______\n  ", bike," \n__0 0__"), collapse = "")
+    blink <- "_______\n       \n__   __"
+    fv <- c(stationary, blink)
+    return(fv)
+}
+ascii_drive_fv <- function(bike = "`=__%"){
+    drive1 <- paste0("     **\n ", bike, " \n__O o_-", collapse = '')
+    drive2 <- paste0("   ** *\n", bike, "  \n__o O__", collapse = '')
+    drive3 <- paste0("***     \n ", bike, " \n_-o o__", collapse = '')
+    drive4 <- paste0("       \n ", bike, " \n-_0 0__", collapse = '')
+    fv <- c(drive1, drive2, drive3, drive4)
+    return(fv)
+}
+fv.blink <- ascii_blink_fv()
+fv.drive <- ascii_drive_fv()
+  
+ascii_drive_fv_old <- function(bike = "`=__%"){
+    drive1 <- c("     **\n `=__% \n__O o_-")
+    drive2 <- c("   ** *\n`=__%  \n__o O__")
+    drive3 <- c("***     \n `=__% \n_-o o__")
+    drive4 <- c("       \n `=__% \n-_0 0__")
+    fv <- c(drive1, drive2, drive3, drive4)
+    return(fv)
+}
+  
+ascii_obstacle_fv <- function(osym = "#"){
     # osym <- "#"
     otop <- paste0(rep(" ", 7), collapse = "")
     omid <- paste0(rep(" ", 7), collapse = "")
@@ -407,7 +424,7 @@ bike <- asciibike()
     o4 <- paste0(c(otop, omid, c("    ", osym, "  ")), collapse = "\n")
     fv <- c(o1, o2, o3, o4)
     return(fv)
-  }
+}
   
   }
 

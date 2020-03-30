@@ -20,7 +20,39 @@ library(grid)
 #-------------
 # dependencies
 #-------------
+
+# starting stats
+tdist <- 0 # total mileage
+onum <- 0 # obstacle number
+bcond <- 0.5 # bike condition
+mprob <- 0.5 # maintenance
+rprob <- 0.5 # repair
+bdi <- 0.1 # bcond change increment
+rpm <- 1.5 # repair prob modifier to bdi
+
+# event data and functions
 {
+  
+  get_rideseq <- function(ride.options = c("short", "medium", "long")){
+    # randomize ride len
+    rand.ridedur <- sample(ride.options, 1)
+    # offer ride
+    ui.msg <- dlg_message(paste0("Offer for a ride of ", 
+                                 rand.ridedur," duration. ",
+                                 "Accept ride offer?"), 
+                          "yesno")$res
+    ui.ridedur <- ifelse(ui.msg == "yes", rand.ridedur, "NA")
+    # return ride.seq
+    ride.seq <- get_rideseq(ui.ridedur)
+    return(ride.seq)
+  }
+  
+  # get obstacle data
+  get_oseq <- function(ride.seq, max.o = 10){
+    o.num <- sample(max.o, 1)
+    o.seq <- sample(ride.seq, o.num)
+    return(o.seq)
+  }
   
   # ridseq
   rt <- "short" # short, medium, long
@@ -41,6 +73,15 @@ library(grid)
   drive3 <- c("***     \n `=__% \n_-o o__")
   drive4 <- c("       \n `=__% \n-_0 0__")
   fv.drive <- c(drive1, drive2, drive3, drive4)
+  
+  osym <- "#"
+  otop <- paste0(rep(" ", 7), collapse = "")
+  omid <- paste0(rep(" ", 7), collapse = "")
+  o1 <- paste0(c(otop, omid, c("      ", osym)), collapse = "\n")
+  o2 <- paste0(c(otop, omid, c("    ", osym, " ")), collapse = "\n")
+  o3 <- paste0(c(otop, omid, c("     ", osym, " ")), collapse = "\n")
+  o4 <- paste0(c(otop, omid, c("    ", osym, "  ")), collapse = "\n")
+  fv.obstacle <- c(o1, o2, o3, o4)
   
   obstacle.uifun <- function(){
     ui.msg <- dlg_message("cancel ride?", "yesno")$res
@@ -150,14 +191,7 @@ library(grid)
 #---------
 # main app
 #---------
-# starting stats
-tdist <- 0 # total mileage
-onum <- 0 # obstacle number
-bcond <- 0.5 # bike condition
-mprob <- 0.5 # maintenance
-rprob <- 0.5 # repair
-bdi <- 0.1 # bcond change increment
-rpm <- 1.5 # repair prob modifier to bdi
+
 
 # idle/maintenance -- can only repair or maintain
 # repair? 
@@ -233,6 +267,7 @@ bonustype <- sample(c(), 1)
 # get rideseq and oseq
 ride.seq <- get_rideseq()
 o.seq <- get_oseq(ride.seq)
+
 ride(ride.seq, o.seq)
 
 #---------------
@@ -291,6 +326,7 @@ get_oseq <- function(ride.seq, max.o = 10){
   o.seq <- sample(ride.seq, o.num)
   return(o.seq)
 }
+
 {
   max.o <- 10
   o.num <- sample(max.o, 1)

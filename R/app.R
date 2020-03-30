@@ -1,13 +1,15 @@
 #!/usr/bin/env R
 
-# https://stackoverflow.com/questions/46116614/taking-inputs-through-pop-up-window-in-r/46116803
-
 # pre-ride
 # 1. ride duration (animation loops)
 # 2. obstacles and obstacle intervals
 
 # prep ride data
-ride.dur <- 100
+rt <- "short" # short, medium, long
+ride.type <- rt
+
+ride.dur <- ifelse(rt == "short", 30, ifelse(rt == "medium", 50, ifelse(rt == "long", 100, "NA")))
+
 ride.seq <- seq(1, ride.dur, 1)
 
 # get obstacle data
@@ -25,15 +27,14 @@ endride.uifun <- function(msgstr){
   ui.msg <- dlg_message(msgstr, "ok")
 }
 
-ride.normal <- function(alabel = "ride: normal", 
-                        framevector = fv.drive, 
-                        ssint = 0.1, loops = 1){
+ride.normal <- function(alabel = "ride: normal", msgperc,
+                        framevector = fv.drive, ssint = 0.1, loops = 1){
   grid.newpage()
   c = 1
   while(c <= loops){
     for(f in framevector){
-      framewithlabel <- paste0(c(alabel,
-                                 f), collapse = "\n")
+      framewithlabel <- paste0(c(alabel, f, msgperc), 
+                               collapse = "\n")
       grid.newpage()
       grid.text(framewithlabel)
       Sys.sleep(ssint)
@@ -42,10 +43,10 @@ ride.normal <- function(alabel = "ride: normal",
   }
 }
 
-ride.obstacle <- function(alabel = "ride: obstacle!", 
+ride.obstacle <- function(alabel = "ride: obstacle!", msgperc,
                           framevector1 = fv.drive, 
                           framevector2 = fv.obstacle, 
-                          ssint = 0.5, loops = 1){
+                          ssint = 0.5, loops = 2){
   grid.newpage()
   c = 1
   while(c <= loops){
@@ -53,7 +54,7 @@ ride.obstacle <- function(alabel = "ride: obstacle!",
       grid.newpage()
       # print ride animation
       fs <- framevector1[i]
-      frame1 <- paste0(c(alabel, fs), 
+      frame1 <- paste0(c(alabel, fs, msgperc), 
                                collapse = "\n")
       grid.text(frame1)
       # print obstacle animation
@@ -67,32 +68,43 @@ ride.obstacle <- function(alabel = "ride: obstacle!",
   }
 }
 
-ride <- function(ride.seq, o.seq){
+ride <- function(ride.seq, o.seq, bc){
+  # add bike condition stuff
   grid.newpage()
   # baseline stats for ride
   ride.finished <- 0; ride.status <- 1
-  while(ride.status > 1){
+  perc.finished <- 0
+  # bcchange <- bc # bike condition
+  # list of stats to return
+  lr <- list(tot.dist,
+             tot.obstacles,
+             bike.condition)
+  while(ride.status > 0){
     for(c in ride.seq){
+      perc.finished <- 100*(c/length(ride.seq))
+      msgperc <- paste0("ride progress: ", perc.finished, "%")
       ride.finished <- ifelse(c == max(ride.seq),
                               1, 0)
       if(c %in% o.seq){
-        ride.obstacle()
+        ride.obstacle(msgperc = msgperc)
         ride.status <- obstacle.uifun()
       } else{
-        ride.normal()
+        ride.normal(msgperc = msgperc)
       }
       if(ride.status == 0){
         msgstr <- "ride over!"
         msgstr <- ifelse(ride.finished == 1,
                          paste0(msgstr, 
-                                " you completed the ride :)"),
+                                " you completed the ride!!"),
                          paste0(msgstr, 
-                                " you had to cancel the ride ;]"))
+                                " you had to cancel the ride."))
         endride.uifun(msgstr)
         return(NULL)
       }
     }
   }
+  grid.newpage()
+  return(bc)
 }
 
 ride(ride.seq, o.seq)

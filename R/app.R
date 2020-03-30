@@ -3,15 +3,16 @@
 # app.R
 # runs `databike`
 
-load_caache()
+load.data()
+load.uscorestart()
+load.functions()
 #log_errors()
 
-# while bcond > 0
+# main app # maintain bcond > 0, also show score.... ... 
 while(bcond > 0){
   
 }
-
-
-if(){
-  
-}
+message("process finished")
+# end options endgame ...
+# play again?
+# other stuff

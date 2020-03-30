@@ -1,5 +1,5 @@
 ---
-title: "Scootersim: basic scooter simulation"
+title: "Scootsim: a scooter maintenance app"
 output: html_notebook
 ---
 
@@ -38,9 +38,14 @@ Using R presents some challenges, and it took some planning to organize simulati
 I settled on a simplistic "graphical interface" that appropriates viewports to generate a passable animation, and a basic user input system. The hard work behind the scenes is being done by `grid::grid.text()` and `svDialogs::dlgInput()`.
 
 
+If you need help with scooters, consult an expert!
 
 
+Thie this simulation of scooters could potentially be used as a reminder for scheduled maintenance
 
+The notion is maintenance of aging systems, in this case a rad scooter.
+
+Ongoing monitoring can be crucial to prevent accidents and prolong the lifetime of your bike
 
 
 

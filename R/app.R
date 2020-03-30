@@ -1,8 +1,20 @@
 #!/usr/bin/env R
 
-# pre-ride
-# 1. ride duration (animation loops)
-# 2. obstacles and obstacle intervals
+# Main code for scootsim app
+
+#-------------------
+# main app functions
+#-------------------
+# starting stats
+tdist <- onum <- 0; 
+bcond <- 0.5
+
+# get rideseq and oseq
+ride.seq <- get_rideseq()
+o.seq <- get_oseq(ride.seq)
+ride(ride.seq, o.seq)
+
+# idle/maintenance
 
 #---------------------
 # ride and ride prompt
@@ -22,42 +34,59 @@ ride.seq <- seq(1, ride.dur, 1)
 #---------------------
 # ride duration prompt
 #---------------------
-get_ride_duration <- function(ride.options = c("short", "medium", "long")){
+get_rideseq <- function(ride.options = c("short", "medium", "long")){
   # randomize ride len
-  get.ride <- sample(ride.options, 1)
+  rand.ridedur <- sample(ride.options, 1)
   # offer ride
+  ui.msg <- dlg_message(paste0("Offer for a ride of ", 
+                               rand.ridedur," duration. ",
+                               "Accept ride offer?"), 
+                        "yesno")$res
+  ui.ridedur <- ifelse(ui.msg == "yes", rand.ridedur, "NA")
+  # return ride.seq
+  ride.seq <- get_rideseq(ui.ridedur)
+  return(ride.seq)
+}
+
+{
+  ride.options <- c("short", "medium", "long")
+  get.ridedur <- sample(ride.options, 1)
   ui.msg <- dlg_message(paste0("Offer for a ride of ", get.ride," duration. ",
                                "Accept ride offer?"), 
                         "yesno")$res
-  # return ride.seq
-  ride.seq <- get_rideseq(ui.msg)
-  return(ride.seq)
-}
-
-ride.options <- c("short", "medium", "long")
-get.ridedur <- sample(ride.options, 1)
-ui.msg <- dlg_message(paste0("Offer for a ride of ", get.ride," duration. ",
-                             "Accept ride offer?"), 
-                      "yesno")$res
-ui.ridedur <- ifelse(ui.msg, ridedur, "NA")
-
-# triggers ride sequences
-get_rideseq <- function(rt = ui.msg){
-  ride.dur <- ifelse(rt == "short", 30, 
-                     ifelse(rt == "medium", 50, 
-                            ifelse(rt == "long", 100, "NA")))
-  ride.seq <- seq(1, ride.dur, 1)
-  return(ride.seq)
-}
-
-ride.prompt <- function(){
-  ui.msg <- dlg_message("accept ride?", "yesno")$res
+  ui.ridedur <- ifelse(ui.msg, ridedur, "NA")
+  
+  # triggers ride sequences
+  get_rideseq <- function(rt = ui.ridedur){
+    ride.dur <- ifelse(rt == "short", 30, 
+                       ifelse(rt == "medium", 50, 
+                              ifelse(rt == "long", 100, "NA")))
+    ride.seq <- seq(1, ride.dur, 1)
+    return(ride.seq)
+  }
+  
+  ride.prompt <- function(){
+    ui.msg <- dlg_message("accept ride?", "yesno")$res
+  }
+  
 }
 
 # get obstacle data
-max.o <- 10
-o.num <- sample(max.o, 1)
-o.seq <- sample(ride.seq, o.num)
+get_oseq <- function(ride.seq, max.o = 10){
+  o.num <- sample(max.o, 1)
+  o.seq <- sample(ride.seq, o.num)
+  return(o.seq)
+}
+{
+  max.o <- 10
+  o.num <- sample(max.o, 1)
+  o.seq <- sample(ride.seq, o.num)
+  
+}
+
+# get rideseq and oseq
+ride.seq <- get_rideseq()
+o.seq <- get_oseq(ride.seq)
 
 #---------------
 # ride functions
@@ -113,18 +142,22 @@ ride.obstacle <- function(alabel = "ride: obstacle!", msgperc,
   }
 }
 
-ride <- function(ride.seq, o.seq, bc){
+ride <- function(ride.seq, o.seq, bc,
+                 tdist, onum, bcond){
+  
+  # global stats
+  # tdist # global mileage
+  # onum # global obstacle count
+  # bcond # bike condition
+  
   require(grid)
   # add bike condition stuff
   grid.newpage()
   # baseline stats for ride
   ride.finished <- 0; ride.status <- 1
   perc.finished <- 0
+  oride <- 0
   # bcchange <- bc # bike condition
-  # list of stats to return
-  lr <- list("tot.dist",
-             "tot.obstacles",
-             "bike.condition")
   while(ride.status > 0){
     for(c in ride.seq){
       perc.finished <- 100*(c/length(ride.seq))
@@ -141,9 +174,19 @@ ride <- function(ride.seq, o.seq, bc){
         msgstr <- "ride over!"
         msgstr <- ifelse(ride.finished == 1,
                          paste0(msgstr, 
-                                " you completed the ride!!"),
-                         paste0(msgstr, 
-                                " you had to cancel the ride."))
+                                " the ride has ended!! \n",
+                                "mileage = ", tdist + c,
+                                ""),
+                         paste0(msgstr,
+                                " the ride has ended!! \n",
+                                "mileage = ", tdist + c,
+                                "obstacles = ", onum + oride)
+                         )
+        # get running stats
+        lr <- list("tot.dist",
+                   "tot.obstacles",
+                   "bike.condition")
+        
         endride.uifun(msgstr)
         return(NULL)
       }

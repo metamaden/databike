@@ -3,19 +3,27 @@ title: "Scootersim: basic scooter simulation"
 output: html_notebook
 ---
 
-<!-- # 
+tags: ascii; animations; for loops; parsing user prompts; scooters; covid19
 
-https://stackoverflow.com/questions/13143801/update-plots-during-for-loop-from-within-rstudio 
+This post is about creating a truly basic/barebones app called `scootersim`, within the confines of R, a language commonly used in data science. 
 
-https://stackoverflow.com/questions/8772630/plotting-during-a-loop-in-rstudio
+# Game guts
 
-https://stackoverflow.com/questions/46116614/taking-inputs-through-pop-up-window-in-r/46116803
+Using R presents some challenges, and it took some planning to organize simulation elements. I managed to make progress with just a couple of amazing R libs, `grid` and `svDialogs`.
 
--->
+# Game guts
 
-With covid everywhere and idle time, I took a stab at making a game... in R! Crazy right? This. is. scootersim!
+This 
 
-# Game sequence
+management of nested functions
+
+unit testing examples?
+
+
+
+## Sequence of events
+
+## Score formula
 
 The score, as in most computer games, is an imaginary points system, which I have defined here as:
 
@@ -30,13 +38,6 @@ Where
 # App data
 
 I've designed this "app" (e.g. simplistic simulation) with modularity in mind. In other words, I've taken measures to ensure weights on score conditions are tolerant to large magnitude modifications.
-
-# Game guts
-
-Using R presents some challenges, and it took some planning to organize simulation elements.
-
-I settled on a simplistic "graphical interface" that appropriates viewports to generate a passable animation, and a basic user input system. The hard work behind the scenes is being done by `grid::grid.text()` and `svDialogs::dlgInput()`.
-
 
 
 

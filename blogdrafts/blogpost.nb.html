@@ -1749,18 +1749,22 @@ summary {
 
 
 <!-- rnb-text-begin -->
-<!-- # 
-
-https://stackoverflow.com/questions/13143801/update-plots-during-for-loop-from-within-rstudio 
-
-https://stackoverflow.com/questions/8772630/plotting-during-a-loop-in-rstudio
-
-https://stackoverflow.com/questions/46116614/taking-inputs-through-pop-up-window-in-r/46116803
-
--->
-<p>With covid everywhere and idle time, I took a stab at making a game… in R! Crazy right? This. is. scootersim!</p>
-<div id="game-sequence" class="section level1">
-<h1>Game sequence</h1>
+<p>tags: ascii; animations; for loops; parsing user prompts; scooters; covid19</p>
+<p>This post is about creating a truly basic/barebones app called <code>scootersim</code>, within the confines of R, a language commonly used in data science.</p>
+<div id="game-guts" class="section level1">
+<h1>Game guts</h1>
+<p>Using R presents some challenges, and it took some planning to organize simulation elements. I managed to make progress with just a couple of amazing R libs, <code>grid</code> and <code>svDialogs</code>.</p>
+</div>
+<div id="game-guts-1" class="section level1">
+<h1>Game guts</h1>
+<p>This</p>
+<p>management of nested functions</p>
+<p>unit testing examples?</p>
+<div id="sequence-of-events" class="section level2">
+<h2>Sequence of events</h2>
+</div>
+<div id="score-formula" class="section level2">
+<h2>Score formula</h2>
 <p>The score, as in most computer games, is an imaginary points system, which I have defined here as:</p>
 <p>Dt - (Nc + 0.5 * Ns)</p>
 <p>Where</p>
@@ -1770,19 +1774,15 @@ https://stackoverflow.com/questions/46116614/taking-inputs-through-pop-up-window
 <li>Ns is the number of “stops” (rides where player stops riding before end of ride).</li>
 </ol>
 </div>
+</div>
 <div id="app-data" class="section level1">
 <h1>App data</h1>
 <p>I’ve designed this “app” (e.g. simplistic simulation) with modularity in mind. In other words, I’ve taken measures to ensure weights on score conditions are tolerant to large magnitude modifications.</p>
-</div>
-<div id="game-guts" class="section level1">
-<h1>Game guts</h1>
-<p>Using R presents some challenges, and it took some planning to organize simulation elements.</p>
-<p>I settled on a simplistic “graphical interface” that appropriates viewports to generate a passable animation, and a basic user input system. The hard work behind the scenes is being done by <code>grid::grid.text()</code> and <code>svDialogs::dlgInput()</code>.</p>
 <p>A. “inspect bike” A1. “maintain” A2. &quot;&quot; B. “drive” B1. “obstacle encounter”</p>
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlNjb290ZXJzaW06IGJhc2ljIHNjb290ZXIgc2ltdWxhdGlvbiINCm91dHB1dDogaHRtbF9ub3RlYm9vaw0KLS0tDQoNCjwhLS0gIyANCg0KaHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvMTMxNDM4MDEvdXBkYXRlLXBsb3RzLWR1cmluZy1mb3ItbG9vcC1mcm9tLXdpdGhpbi1yc3R1ZGlvIA0KDQpodHRwczovL3N0YWNrb3ZlcmZsb3cuY29tL3F1ZXN0aW9ucy84NzcyNjMwL3Bsb3R0aW5nLWR1cmluZy1hLWxvb3AtaW4tcnN0dWRpbw0KDQpodHRwczovL3N0YWNrb3ZlcmZsb3cuY29tL3F1ZXN0aW9ucy80NjExNjYxNC90YWtpbmctaW5wdXRzLXRocm91Z2gtcG9wLXVwLXdpbmRvdy1pbi1yLzQ2MTE2ODAzDQoNCi0tPg0KDQpXaXRoIGNvdmlkIGV2ZXJ5d2hlcmUgYW5kIGlkbGUgdGltZSwgSSB0b29rIGEgc3RhYiBhdCBtYWtpbmcgYSBnYW1lLi4uIGluIFIhIENyYXp5IHJpZ2h0PyBUaGlzLiBpcy4gc2Nvb3RlcnNpbSENCg0KIyBHYW1lIHNlcXVlbmNlDQoNClRoZSBzY29yZSwgYXMgaW4gbW9zdCBjb21wdXRlciBnYW1lcywgaXMgYW4gaW1hZ2luYXJ5IHBvaW50cyBzeXN0ZW0sIHdoaWNoIEkgaGF2ZSBkZWZpbmVkIGhlcmUgYXM6DQoNCkR0IC0gKE5jICsgMC41ICogTnMpDQoNCldoZXJlIA0KDQoxLiBEdCBpcyB0b3RhbCAiZGlzdGFuY2UiIHRyYXZlbGVkIChqdXN0IGFuIGludGVnZXIgY291bnRlciBpbiB0aGlzIGNhc2UpLCANCjIuIE5jIGlzIHRoZSBudW1iZXIgb2YgImNyYXNoZXMiIChyaWRlcyB3aGVyZSBiaWtlIHN0b3BzKSwgYW5kIA0KMy4gTnMgaXMgdGhlIG51bWJlciBvZiAic3RvcHMiIChyaWRlcyB3aGVyZSBwbGF5ZXIgc3RvcHMgcmlkaW5nIGJlZm9yZSBlbmQgb2YgcmlkZSkuDQoNCiMgQXBwIGRhdGENCg0KSSd2ZSBkZXNpZ25lZCB0aGlzICJhcHAiIChlLmcuIHNpbXBsaXN0aWMgc2ltdWxhdGlvbikgd2l0aCBtb2R1bGFyaXR5IGluIG1pbmQuIEluIG90aGVyIHdvcmRzLCBJJ3ZlIHRha2VuIG1lYXN1cmVzIHRvIGVuc3VyZSB3ZWlnaHRzIG9uIHNjb3JlIGNvbmRpdGlvbnMgYXJlIHRvbGVyYW50IHRvIGxhcmdlIG1hZ25pdHVkZSBtb2RpZmljYXRpb25zLg0KDQojIEdhbWUgZ3V0cw0KDQpVc2luZyBSIHByZXNlbnRzIHNvbWUgY2hhbGxlbmdlcywgYW5kIGl0IHRvb2sgc29tZSBwbGFubmluZyB0byBvcmdhbml6ZSBzaW11bGF0aW9uIGVsZW1lbnRzLg0KDQpJIHNldHRsZWQgb24gYSBzaW1wbGlzdGljICJncmFwaGljYWwgaW50ZXJmYWNlIiB0aGF0IGFwcHJvcHJpYXRlcyB2aWV3cG9ydHMgdG8gZ2VuZXJhdGUgYSBwYXNzYWJsZSBhbmltYXRpb24sIGFuZCBhIGJhc2ljIHVzZXIgaW5wdXQgc3lzdGVtLiBUaGUgaGFyZCB3b3JrIGJlaGluZCB0aGUgc2NlbmVzIGlzIGJlaW5nIGRvbmUgYnkgYGdyaWQ6OmdyaWQudGV4dCgpYCBhbmQgYHN2RGlhbG9nczo6ZGxnSW5wdXQoKWAuDQoNCg0KDQoNCg0KDQoNCg0KQS4gImluc3BlY3QgYmlrZSINCkExLiAibWFpbnRhaW4iDQpBMi4gIiINCkIuICJkcml2ZSINCkIxLiAib2JzdGFjbGUgZW5jb3VudGVyIg0KDQoNCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlNjb290ZXJzaW06IGJhc2ljIHNjb290ZXIgc2ltdWxhdGlvbiINCm91dHB1dDogaHRtbF9ub3RlYm9vaw0KLS0tDQoNCnRhZ3M6IGFzY2lpOyBhbmltYXRpb25zOyBmb3IgbG9vcHM7IHBhcnNpbmcgdXNlciBwcm9tcHRzOyBzY29vdGVyczsgY292aWQxOQ0KDQpUaGlzIHBvc3QgaXMgYWJvdXQgY3JlYXRpbmcgYSB0cnVseSBiYXNpYy9iYXJlYm9uZXMgYXBwIGNhbGxlZCBgc2Nvb3RlcnNpbWAsIHdpdGhpbiB0aGUgY29uZmluZXMgb2YgUiwgYSBsYW5ndWFnZSBjb21tb25seSB1c2VkIGluIGRhdGEgc2NpZW5jZS4gDQoNCiMgR2FtZSBndXRzDQoNClVzaW5nIFIgcHJlc2VudHMgc29tZSBjaGFsbGVuZ2VzLCBhbmQgaXQgdG9vayBzb21lIHBsYW5uaW5nIHRvIG9yZ2FuaXplIHNpbXVsYXRpb24gZWxlbWVudHMuIEkgbWFuYWdlZCB0byBtYWtlIHByb2dyZXNzIHdpdGgganVzdCBhIGNvdXBsZSBvZiBhbWF6aW5nIFIgbGlicywgYGdyaWRgIGFuZCBgc3ZEaWFsb2dzYC4NCg0KIyBHYW1lIGd1dHMNCg0KVGhpcyANCg0KbWFuYWdlbWVudCBvZiBuZXN0ZWQgZnVuY3Rpb25zDQoNCnVuaXQgdGVzdGluZyBleGFtcGxlcz8NCg0KDQoNCiMjIFNlcXVlbmNlIG9mIGV2ZW50cw0KDQojIyBTY29yZSBmb3JtdWxhDQoNClRoZSBzY29yZSwgYXMgaW4gbW9zdCBjb21wdXRlciBnYW1lcywgaXMgYW4gaW1hZ2luYXJ5IHBvaW50cyBzeXN0ZW0sIHdoaWNoIEkgaGF2ZSBkZWZpbmVkIGhlcmUgYXM6DQoNCkR0IC0gKE5jICsgMC41ICogTnMpDQoNCldoZXJlIA0KDQoxLiBEdCBpcyB0b3RhbCAiZGlzdGFuY2UiIHRyYXZlbGVkIChqdXN0IGFuIGludGVnZXIgY291bnRlciBpbiB0aGlzIGNhc2UpLCANCjIuIE5jIGlzIHRoZSBudW1iZXIgb2YgImNyYXNoZXMiIChyaWRlcyB3aGVyZSBiaWtlIHN0b3BzKSwgYW5kIA0KMy4gTnMgaXMgdGhlIG51bWJlciBvZiAic3RvcHMiIChyaWRlcyB3aGVyZSBwbGF5ZXIgc3RvcHMgcmlkaW5nIGJlZm9yZSBlbmQgb2YgcmlkZSkuDQoNCiMgQXBwIGRhdGENCg0KSSd2ZSBkZXNpZ25lZCB0aGlzICJhcHAiIChlLmcuIHNpbXBsaXN0aWMgc2ltdWxhdGlvbikgd2l0aCBtb2R1bGFyaXR5IGluIG1pbmQuIEluIG90aGVyIHdvcmRzLCBJJ3ZlIHRha2VuIG1lYXN1cmVzIHRvIGVuc3VyZSB3ZWlnaHRzIG9uIHNjb3JlIGNvbmRpdGlvbnMgYXJlIHRvbGVyYW50IHRvIGxhcmdlIG1hZ25pdHVkZSBtb2RpZmljYXRpb25zLg0KDQoNCg0KDQoNCg0KDQpBLiAiaW5zcGVjdCBiaWtlIg0KQTEuICJtYWludGFpbiINCkEyLiAiIg0KQi4gImRyaXZlIg0KQjEuICJvYnN0YWNsZSBlbmNvdW50ZXIiDQoNCg0K</div>
 
 
 

@@ -14,6 +14,7 @@ ride.seq <- seq(1, ride.dur, 1)
 ride.options <- c("short", "medium", "long")
 get.ride <- sample(ride.options, 1)
 ui.msg <- dlg_message("accept ride?", "yesno")$res
+# triggers ride sequences
 
 get_rideseq <- function(rt){
   ride.dur <- ifelse(rt == "short", 30, 
@@ -31,7 +32,10 @@ max.o <- 10
 o.num <- sample(max.o, 1)
 o.seq <- sample(ride.seq, o.num)
 
-# ride function
+#---------------
+# ride functions
+#---------------
+
 obstacle.uifun <- function(){
   ui.msg <- dlg_message("cancel ride?", "yesno")$res
   return(ifelse(ui.msg == "yes", 0, 1))
@@ -259,11 +263,11 @@ if(!length(ui)){
 #--------------------
 # animation sequences
 #--------------------
-# sequence for "normal ride"
+# ascii seqs for "normal ride"
 # 1. idle
 # 2. ride
 
-# sequence for "obstacle"
+# ascii seqs for "obstacle"
 # 0. (normal ride)
 # 1. ride + obstacle
 # 2. idle

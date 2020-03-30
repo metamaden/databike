@@ -1,25 +1,35 @@
 #!/usr/bin/env R
 
 # Main code for scootsim app
+# Beta: 
+# 1. bike condition modifies obstacles
+# 2. mileage modifies maintenance -> bcond
+# 3. between rides, either "maintain" or "repair"
+
+# planned updates
+# define "bike" and "component" classes
+# introduce "components" as classes
+
+# classes
+# bike -> component
+# possible components: component1, component2
 
 #-------------------
 # main app functions
 #-------------------
 # starting stats
-tdist <- onum <- 0; 
-bcond <- 0.5
+tdist <- 0; # total mileage
+onum <- 0; # obstacle number
+bcond <- 0.5; # bike condition
+
+# idle/maintenance -- can only repair or maintain
+# repair? 
+# maintain?
 
 # get rideseq and oseq
 ride.seq <- get_rideseq()
 o.seq <- get_oseq(ride.seq)
 ride(ride.seq, o.seq)
-
-# idle/maintenance
-
-#---------------------
-# ride and ride prompt
-#---------------------
-
 
 #---------------
 # prep ride data

@@ -15,37 +15,56 @@
 # possible components: component1, component2
 
 library(svDialogs)
+library(grid)
 
 #---------
 # main app
 #---------
 # starting stats
-tdist <- 0; # total mileage
-onum <- 0; # obstacle number
-bcond <- 0.5; # bike condition
+tdist <- 0 # total mileage
+onum <- 0 # obstacle number
+bcond <- 0.5 # bike condition
 mprob <- 0.5 # maintenance
 rprob <- 0.5 # repair
+bdi <- 0.1 # bcond change increment
+rpm <- 1.5 # repair prob modifier to bdi
 
 # idle/maintenance -- can only repair or maintain
 # repair? 
 # maintain?
 
+do_repair <- function(bcond, rpm){
+  new.bcond <- ifelse(outcome == "fix",
+                      bcond + bdi*rpm,
+                      bcond - bdi*rpm)
+  return(new.bcond)
+}
+
+get_task_outcome <- function(task.prob){
+  v <- 10*task.prob
+  s1 = rep("fix", v)
+  s2 = rep("break", 100 - v)
+  outcome <- sample(c(s1, s2), 1)
+  return(outcome)
+}
+
 do_idle <- function(mprob, rprob){
   # idle.task
-  itask <- ui.maintain()
+  itask <- dlg_message("maintain?", "yesno")$res
   if(itask == "yes"){
-    
+    outcome <- get_task_outcome()
+    bcond = ifelse(outcome == "fix",
+                   bcond + bdi, )
   } else{
-   itask <- ui.repair()
+   itask <- dlg_message("repair?", "yesno")$res
    if(itask == "yes"){
-     
+     bcond <- ifelse(outcome == "fix",
+                     bcond + bdi*rpm,
+                     bcond - bdi*rpm)
    }
   }
   return()
 }
-
-ui.maintain <- dlg_message("maintain?", "yesno")$res
-ui.repair <- dlg_message("repair?", "yesno")$res
 
 # random bonus
 # 1. inc. bike condition

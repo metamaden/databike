@@ -5,7 +5,7 @@ output: html_notebook
 
 tags: ascii; animations; for loops; parsing user prompts; scooters; covid19
 
-This post is about creating a truly basic/barebones app called `scootersim`, within the confines of R, a language commonly used in data science. 
+This post is about creating a truly basic/barebones app called `scootersim`, within the confines of R, a language commonly used in data science. This app
 
 # Game guts
 

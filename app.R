@@ -33,8 +33,13 @@ while(bcond > 0){
   # 2B. idle var prompt
   do_idle(mprob, rprob)
   # 2C. do ride
+  
+  # 2CA. get ride "mileage"
   ride.dur <- get_ride.dur()
-  ride.seq <- get_ride.seq(ride.dur)
+  ride.seq <- seq(1, ride.dur, 1)
+  n.obstacles <- sample(10, 1)
+  o.seq <- sample(ride.seq, n.obstacles)
+  # run ride
   ride(ride.seq, o.seq, 
        bcond, tdist, onum)
 }

@@ -45,32 +45,20 @@ ascii_fvl <- function(drive, idle, obstacle){
               "obstacle" = obstacle)
   return(fvl)
 }
+
+
 # 2. ride duration function
 get_ride.dur <- function(optl = c("short", "medium", "long")){
   # defines ride durations# 
   # optl # list ascending mileage labels
   # mileage pertains to c # of loops in ride
-  ride.options <- c(optl[1], optl[2], optl[3])
-  rt <- sample(ride.options) # short, medium, long
+  rt <- sample(optl, 1) # short, medium, long
   ride.type <- rt
   ride.dur <- ifelse(rt == optl[1], 30, 
                      ifelse(rt == optl[2], 50, 
                             ifelse(rt == optl[3], 100, 
                                    "NA")))
   return(ride.dur)
-}
-# 2A. rideseq var prompt
-get_ride.seq <- function(ride.dur){
-  # parses ride durations into c lengths and indices
-  opt1 <- "shrt"; opt2 <- "medium"; opt3 <- "loooong"
-  ride.options <- c(opt1, opt2, opt3)
-  rt <- sample(ride.options) # short, medium, long
-  ride.type <- rt
-  ride.dur <- ifelse(rt == opt1, 30, 
-                     ifelse(rt == opt2, 50, 
-                            ifelse(rt == opt3, 100, "NA")))
-  ride.seq <- seq(1, ride.dur, 1)
-  return(ride.seq)
 }
 
 
@@ -167,6 +155,11 @@ ride <- function(ride.seq, o.seq,
   grid.newpage()
   return(bc)
 }
+
+
+
+
+
 # 3. do_idle function
 # 3A . task
 do_task <- function(bcond, rpm){

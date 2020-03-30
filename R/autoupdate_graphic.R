@@ -11,8 +11,6 @@ lab.maintenance <- "maintenance"
 lab.inspect <- "inspect"
 lab.drive <- "driving"
 
-# 
-
 # obstacle data
 osym <- "#"
 otop <- paste0(rep(" ", 7), collapse = "")

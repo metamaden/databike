@@ -314,8 +314,6 @@ library(svDialogs)
 user.input <- dlgInput("Continue?", 
                        Sys.info()["Y/N"])$res
 
-
-
 # obstacle ui
 oui <- function(){
   ui <- dlgInput("Cancel ride?",
@@ -344,8 +342,6 @@ ui.fun <- function(){
   ui.msg <- dlg_message("cancel ride?", "yesno")$res
   return(ifelse(ui.msg == "yes", 0, 1))
 }
-
-
 
 ui <- dlg_message("Cancel ride?",
                Sys.info()["Y/N"])$res

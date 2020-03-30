@@ -1,22 +1,30 @@
 #!/usr/bin/env R
 
-# Defines "scooter" and its subclasses
-
-inspectscooter <- function(){
-  # returns statuses for scooter and components
-}
-
 #-----------
-# scooter class
+# databike class
 #------------
-setClass("scooter", 
+setClass("bike.data", 
          slots = c(bike = "character",
                    weight = "numeric",
                    fuel = "numeric")
          )
 
+
+
+
+
+
+
+
+
+
+
+
+
 # methods
-setMethod("inspect", function(){inspectscooter()})
+setMethod("inspectscooter",
+          signature(),
+          function(){inspectscooter})
 
 #-------
 # component classes
@@ -35,3 +43,9 @@ setClass("bike", slots = c(type = "character",
 #----------------
 # bike components
 #----------------
+
+
+
+inspectscooter <- function(){
+  # returns statuses for scooter and components
+}

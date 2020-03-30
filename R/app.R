@@ -1,0 +1,290 @@
+#!/usr/bin/env R
+
+# pre-ride
+# 1. ride duration (animation loops)
+# 2. obstacles and obstacle intervals
+
+# prep ride data
+rt <- "short" # short, medium, long
+ride.type <- rt
+ride.dur <- ifelse(rt == "short", 30, ifelse(rt == "medium", 50, ifelse(rt == "long", 100, "NA")))
+ride.seq <- seq(1, ride.dur, 1)
+
+# ride duration prompt
+ride.options <- c("short", "medium", "long")
+get.ride <- sample(ride.options, 1)
+ui.msg <- dlg_message("accept ride?", "yesno")$res
+
+get_rideseq <- function(rt){
+  ride.dur <- ifelse(rt == "short", 30, 
+                     ifelse(rt == "medium", 50, 
+                            ifelse(rt == "long", 100, "NA")))
+  ride.seq <- seq(1, ride.dur, 1)
+}
+
+ride.prompt <- function(){
+  ui.msg <- dlg_message("accept ride?", "yesno")$res
+}
+
+# get obstacle data
+max.o <- 10
+o.num <- sample(max.o, 1)
+o.seq <- sample(ride.seq, o.num)
+
+# ride function
+obstacle.uifun <- function(){
+  ui.msg <- dlg_message("cancel ride?", "yesno")$res
+  return(ifelse(ui.msg == "yes", 0, 1))
+}
+
+endride.uifun <- function(msgstr){
+  ui.msg <- dlg_message(msgstr, "ok")
+}
+
+ride.normal <- function(alabel = "ride: normal", msgperc,
+                        framevector = fv.drive, ssint = 0.1, loops = 1){
+  grid.newpage()
+  c = 1
+  while(c <= loops){
+    for(f in framevector){
+      framewithlabel <- paste0(c(alabel, f, msgperc), 
+                               collapse = "\n")
+      grid.newpage()
+      grid.text(framewithlabel)
+      Sys.sleep(ssint)
+    }
+    c = c + 1
+  }
+}
+
+ride.obstacle <- function(alabel = "ride: obstacle!", msgperc,
+                          framevector1 = fv.drive, 
+                          framevector2 = fv.obstacle, 
+                          ssint = 0.5, loops = 2){
+  grid.newpage()
+  c = 1
+  while(c <= loops){
+    for(i in 1:length(framevector1)){
+      grid.newpage()
+      # print ride animation
+      fs <- framevector1[i]
+      frame1 <- paste0(c(alabel, fs, msgperc), 
+                               collapse = "\n")
+      grid.text(frame1)
+      # print obstacle animation
+      fo <- framevector2[i]
+      frame2 <- paste0(c(" ", fo),
+                       collapse = "\n")
+      grid.text(frame2)
+      Sys.sleep(ssint)
+    }
+    c = c + 1
+  }
+}
+
+ride <- function(ride.seq, o.seq, bc){
+  # add bike condition stuff
+  grid.newpage()
+  # baseline stats for ride
+  ride.finished <- 0; ride.status <- 1
+  perc.finished <- 0
+  # bcchange <- bc # bike condition
+  # list of stats to return
+  lr <- list(tot.dist,
+             tot.obstacles,
+             bike.condition)
+  while(ride.status > 0){
+    for(c in ride.seq){
+      perc.finished <- 100*(c/length(ride.seq))
+      msgperc <- paste0("ride progress: ", perc.finished, "%")
+      ride.finished <- ifelse(c == max(ride.seq),
+                              1, 0)
+      if(c %in% o.seq){
+        ride.obstacle(msgperc = msgperc)
+        ride.status <- obstacle.uifun()
+      } else{
+        ride.normal(msgperc = msgperc)
+      }
+      if(ride.status == 0){
+        msgstr <- "ride over!"
+        msgstr <- ifelse(ride.finished == 1,
+                         paste0(msgstr, 
+                                " you completed the ride!!"),
+                         paste0(msgstr, 
+                                " you had to cancel the ride."))
+        endride.uifun(msgstr)
+        return(NULL)
+      }
+    }
+  }
+  grid.newpage()
+  return(bc)
+}
+
+ride(ride.seq, o.seq)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+scene.withlabel <- function(scenelabel, framevector, 
+                            ssint = 0.1, loops = 100){
+  grid.newpage()
+  c = 1
+  while(c < loops){
+    for(f in fv){
+      framewithlabel <- paste0(c(scenelabel,
+                                 f), collapse = "\n")
+      grid.newpage()
+      grid.text(framewithlabel)
+      Sys.sleep(sleepint)
+    }
+    c = c + 1
+  }
+}
+
+seqscene <- c()
+
+
+
+
+
+
+
+# ride
+
+# 0. calculate num obstacles (sample) and obstacle interval (sample)
+# 1. bike idle
+# 2. bike ride
+# 3. 
+
+
+
+
+
+
+
+
+
+# Data for app
+# Manage scene sequences for rides
+# Manage probs for app engine
+
+# Game sequence
+# A. "inspect bike"
+# A1. "maintain"
+# A2. ""
+# B. "ride"
+# B1. "obstacle encounter"
+
+# score
+# num rides - (num "crashes" * 0.5 num "stops")
+
+# A. tune?
+# B. ride?
+
+# 
+
+# vars for "ride sequence"
+# time (cycles in animation)
+# bike wear (change chance of "breakdown")
+# tire wear
+
+#------------
+# user prompt
+#------------
+install.packages("svDialogs")
+
+library(svDialogs)
+
+user.input <- dlgInput("Continue?", 
+                       Sys.info()["Y/N"])$res
+
+
+
+# obstacle ui
+oui <- function(){
+  ui <- dlgInput("Cancel ride?",
+                 Sys.info()["Y/N"])$res
+  if(!length(ui)){
+    ride.on <- 0
+    message("ride cancelled")
+  } else{
+    ride.on <- 1
+    message("continuing ride...")
+  }
+  return(ride.on)
+}
+
+ui <- dlgInput("Cancel ride?",
+               Sys.info()["Y/N"])$res
+if(!length(ui)){
+  ride.on <- 0
+  message("ride cancelled")
+  } else{
+    ride.on <- 1
+    message("continuing ride...")
+  }
+
+ui.fun <- function(){
+  ui.msg <- dlg_message("cancel ride?", "yesno")$res
+  return(ifelse(ui.msg == "yes", 0, 1))
+}
+
+
+
+ui <- dlg_message("Cancel ride?",
+               Sys.info()["Y/N"])$res
+if(!length(ui)){
+  ride.on <- 0
+  message("ride cancelled")
+} else{
+  ride.on <- 1
+  message("continuing ride...")
+}
+  
+  
+#--------------------
+# animation sequences
+#--------------------
+# sequence for "normal ride"
+# 1. idle
+# 2. ride
+
+# sequence for "obstacle"
+# 0. (normal ride)
+# 1. ride + obstacle
+# 2. idle
+# 3. player option (continue, or "stop")
+
+
+# test
+
+#-----------
+# obstacles
+#----------
+
+# at start of ride, calculate obstacles
+
+# grid.text() overlay frames
+# use sample to assess obstacle presence
+get_omod <- function(set.omod = 2){
+  if(is.null(set.omomd)){
+    # assess things and get modified omod
+  }
+  return(omod)
+}
+o.mod <- get_omod(2)
+o.chance <- sample(c(1, o.mod), 1)

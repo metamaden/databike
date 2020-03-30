@@ -9,18 +9,6 @@ setClass("bike.data",
                    fuel = "numeric")
          )
 
-
-
-
-
-
-
-
-
-
-
-
-
 # methods
 setMethod("inspectscooter",
           signature(),

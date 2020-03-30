@@ -14,17 +14,49 @@
 # bike -> component
 # possible components: component1, component2
 
-#-------------------
-# main app functions
-#-------------------
+library(svDialogs)
+
+#---------
+# main app
+#---------
 # starting stats
 tdist <- 0; # total mileage
 onum <- 0; # obstacle number
 bcond <- 0.5; # bike condition
+mprob <- 0.5 # maintenance
+rprob <- 0.5 # repair
 
 # idle/maintenance -- can only repair or maintain
 # repair? 
 # maintain?
+
+do_idle <- function(mprob, rprob){
+  # idle.task
+  itask <- ui.maintain()
+  if(itask == "yes"){
+    
+  } else{
+   itask <- ui.repair()
+   if(itask == "yes"){
+     
+   }
+  }
+  return()
+}
+
+ui.maintain <- dlg_message("maintain?", "yesno")$res
+ui.repair <- dlg_message("repair?", "yesno")$res
+
+# random bonus
+# 1. inc. bike condition
+# 2. improve repair
+# 3. improve maintain
+
+bprob <- 0.5
+100 * bprob
+
+bonustype <- sample(c(), 1)
+
 
 # get rideseq and oseq
 ride.seq <- get_rideseq()
@@ -207,21 +239,6 @@ ride <- function(ride.seq, o.seq, bc,
 }
 
 ride(ride.seq, o.seq)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 scene.withlabel <- function(scenelabel, framevector, 

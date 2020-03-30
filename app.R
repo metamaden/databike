@@ -8,9 +8,9 @@ require(grid)
 # runs `databike`
 dn <- "data"
 #path.data <- paste0(dn, "data.RData", collapse = "/")
-path.functions <- paste0(c(dn, "functions.RData"), 
+path.functions <- paste(c(dn, "functions.RData"), 
                          collapse = "/")
-path.userscorestart <- paste0(c(dn, "uscorestart.RData"), 
+path.userscorestart <- paste(c(dn, "userscorestart.RData"), 
                               collapse = "/")
 
 # load(path.data) # load.data()
@@ -24,8 +24,7 @@ while(bcond > 0){
   fv.idle <- ascii_idle_fv()
   fv.drive <- ascii_drive_fv()
   fv.obstacle <- ascii_obstacle_fv()
-  fvl <- ascii_fvl(fv.drive, 
-                   fv.idle, 
+  fvl <- ascii_fvl(fv.drive, fv.idle, 
                    fv.obstacle)
   # main app
   # 1. bikevar prompt
@@ -34,10 +33,15 @@ while(bcond > 0){
   # 2B. idle var prompt
   do_idle(mprob, rprob)
   # 2C. do ride
-  ride(ride.seq, o.seq, bcond, 
-       tdist, onum)
+  ride.dur <- get_ride.dur()
+  ride.seq <- get_ride.seq(ride.dur)
+  ride(ride.seq, o.seq, 
+       bcond, tdist, onum)
 }
 message("process finished")
 # end options endgame ...
 # play again?
 # other stuff
+
+
+

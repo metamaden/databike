@@ -9,3 +9,5 @@ mprob <- 0.5 # maintenance
 rprob <- 0.5 # repair
 bdi <- 0.1 # bcond change increment
 rpm <- 1.5 # repair prob modifier to bdi
+
+save.image("data")

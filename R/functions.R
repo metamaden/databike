@@ -53,9 +53,10 @@ get_ride.dur <- function(optl = c("short", "medium", "long")){
   ride.options <- c(optl[1], optl[2], optl[3])
   rt <- sample(ride.options) # short, medium, long
   ride.type <- rt
-  ride.dur <- ifelse(rt == opt1, 30, 
-                     ifelse(rt == opt2, 50, 
-                            ifelse(rt == opt3, 100, "NA")))
+  ride.dur <- ifelse(rt == optl[1], 30, 
+                     ifelse(rt == optl[2], 50, 
+                            ifelse(rt == optl[3], 100, 
+                                   "NA")))
   return(ride.dur)
 }
 # 2A. rideseq var prompt
@@ -210,7 +211,7 @@ do_idle <- function(mprob, rprob){
   return(bcond.new)
 }
 
-
+save.image("functions")
 
 
 

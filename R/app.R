@@ -4,23 +4,50 @@
 # 1. ride duration (animation loops)
 # 2. obstacles and obstacle intervals
 
+#---------------------
+# ride and ride prompt
+#---------------------
+
+
+#---------------
 # prep ride data
+#---------------
 rt <- "short" # short, medium, long
 ride.type <- rt
-ride.dur <- ifelse(rt == "short", 30, ifelse(rt == "medium", 50, ifelse(rt == "long", 100, "NA")))
+ride.dur <- ifelse(rt == "short", 30, 
+                   ifelse(rt == "medium", 50, 
+                          ifelse(rt == "long", 100, "NA")))
 ride.seq <- seq(1, ride.dur, 1)
 
+#---------------------
 # ride duration prompt
-ride.options <- c("short", "medium", "long")
-get.ride <- sample(ride.options, 1)
-ui.msg <- dlg_message("accept ride?", "yesno")$res
-# triggers ride sequences
+#---------------------
+get_ride_duration <- function(ride.options = c("short", "medium", "long")){
+  # randomize ride len
+  get.ride <- sample(ride.options, 1)
+  # offer ride
+  ui.msg <- dlg_message(paste0("Offer for a ride of ", get.ride," duration. ",
+                               "Accept ride offer?"), 
+                        "yesno")$res
+  # return ride.seq
+  ride.seq <- get_rideseq(ui.msg)
+  return(ride.seq)
+}
 
-get_rideseq <- function(rt){
+ride.options <- c("short", "medium", "long")
+get.ridedur <- sample(ride.options, 1)
+ui.msg <- dlg_message(paste0("Offer for a ride of ", get.ride," duration. ",
+                             "Accept ride offer?"), 
+                      "yesno")$res
+ui.ridedur <- ifelse(ui.msg, ridedur, "NA")
+
+# triggers ride sequences
+get_rideseq <- function(rt = ui.msg){
   ride.dur <- ifelse(rt == "short", 30, 
                      ifelse(rt == "medium", 50, 
                             ifelse(rt == "long", 100, "NA")))
   ride.seq <- seq(1, ride.dur, 1)
+  return(ride.seq)
 }
 
 ride.prompt <- function(){
@@ -87,6 +114,7 @@ ride.obstacle <- function(alabel = "ride: obstacle!", msgperc,
 }
 
 ride <- function(ride.seq, o.seq, bc){
+  require(grid)
   # add bike condition stuff
   grid.newpage()
   # baseline stats for ride
@@ -94,9 +122,9 @@ ride <- function(ride.seq, o.seq, bc){
   perc.finished <- 0
   # bcchange <- bc # bike condition
   # list of stats to return
-  lr <- list(tot.dist,
-             tot.obstacles,
-             bike.condition)
+  lr <- list("tot.dist",
+             "tot.obstacles",
+             "bike.condition")
   while(ride.status > 0){
     for(c in ride.seq){
       perc.finished <- 100*(c/length(ride.seq))

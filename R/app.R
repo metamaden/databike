@@ -145,13 +145,14 @@ rpm <- 1.5 # repair prob modifier to bdi
     # add bike condition stuff
     grid.newpage()
     # baseline stats for ride
-    ride.finished <- 0; ride.status <- 1
+    ride.finished <- 0
+    ride.status <- 1
     perc.finished <- 0
     oride <- 0
     # bcchange <- bc # bike condition
     while(ride.status > 0){
       for(c in ride.seq){
-        perc.finished <- 100*(c/length(ride.seq))
+        perc.finished <- round(100*(c/length(ride.seq)), 3)
         msgperc <- paste0("ride progress: ", perc.finished, "%")
         ride.finished <- ifelse(c == max(ride.seq),
                                 1, 0)
@@ -162,15 +163,16 @@ rpm <- 1.5 # repair prob modifier to bdi
           ride.normal(msgperc = msgperc)
         }
         if(ride.status == 0){
+          # tdist updates
           msgstr <- "ride over!"
           msgstr <- ifelse(ride.finished == 1,
                            paste0(msgstr, 
                                   " the ride has ended!! \n",
-                                  "mileage = ", tdist + c,
-                                  ""),
+                                  "mileage = ", tdnew,
+                                  ", obstacles = ", onum + oride),
                            paste0(msgstr,
                                   " the ride has ended!! \n",
-                                  "mileage = ", tdist + c,
+                                  "mileage = ", tdnew,
                                   "obstacles = ", onum + oride)
           )
           # get running stats

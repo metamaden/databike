@@ -63,7 +63,6 @@ get_ride.dur <- function(optl = c("short", "medium", "long")){
 
 
 
-
 # 2. ride function stuff
 obstacle.uifun <- function(){
   ui.msg <- dlg_message("cancel ride?", "yesno")$res
@@ -111,8 +110,7 @@ ride.obstacle <- function(alabel = "ride: obstacle!", msgperc,
     c = c + 1
   }
 }
-ride <- function(ride.seq, o.seq,
-                 bcond, tdist, onum){
+ride <- function(ride.seq, o.seq, bcond, tdist, onum){
   # global stats
   # tdist # global mileage
   # onum # global obstacle count

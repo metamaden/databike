@@ -24,13 +24,15 @@ load(path.functions) # load.functions()
 
 # main app # maintain bcond > 0, also show score.... ... 
 # load "cache" data
-fv.idle <- ascii_idle_fv()
-fv.drive <- ascii_drive_fv()
+
+# bike datatt
+bike <- asciibike()
+fv.idle <- ascii_idle_fv(bike)
+fv.drive <- ascii_drive_fv(bike)
 fv.obstacle <- ascii_obstacle_fv()
 fvl <- ascii_fvl(fv.drive, fv.idle, 
-                 fv.obstacle)
+                   fv.obstacle)
 while(bcond > 0){
-  bike <- asciibike()
   do_idle(mprob, rprob)
   ride.dur <- get_ride.dur()
   ride.seq <- seq(1, ride.dur, 1)

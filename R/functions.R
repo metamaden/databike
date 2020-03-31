@@ -45,8 +45,6 @@ ascii_fvl <- function(drive, idle, obstacle){
   return(fvl)
 }
 
-
-
 # 2. ride duration function
 get_ride.dur <- function(optl = c("short", "medium", "long")){
   # defines ride durations# 
@@ -61,13 +59,33 @@ get_ride.dur <- function(optl = c("short", "medium", "long")){
   return(ride.dur)
 }
 
-
-
-# 2. ride function stuff
-obstacle.uifun <- function(){
-  ui.msg <- dlg_message("cancel ride?", "yesno")$res
-  return(ifelse(ui.msg == "yes", 0, 1))
+obstacle.uifun <- function(mx.dmg.extent = 0.2){
+  # variable dmg chance
+  # damage extent
+  # mx.dmg.extent : max possible numeric amt by which to reduce bcond
+  # default 0.2
+  dmg.extent <- sample(seq(mx.dmg.extent, 0.01), 1) # possible amt to reduce bcond
+  dmg.message <- ifelse(dmg.extent > 0.1, "heavy", "light")
+  ui.msg <- dlg_message(paste0("Cancel your ride?",
+                               " If `no`, your bike could sustain ", 
+                               dmg.message, " damage..."), "yesno")$res
+  if(ui.msg == "no"){
+    # whether damaged (50% default)
+    dmg.roll <- sample(c("damaged", "undamaged"), 1)
+    obstacle.outcome <- sample(dmg.roll, 1)
+    if(obstacle.outcome == "damaged"){
+      bcond <- bcond - dmg.extent
+      ooutcome.msg <- paste0("Your bike sustained some damage.",
+                             " new bike condition: ", bcond)
+      dlg_message(ooutcome.msg, "ok")
+      return(1) # continues ride
+    }
+  } else{
+    return(0) # ends ride
+  }
+  return(NULL)
 }
+
 endride.uifun <- function(msgstr){
   ui.msg <- dlg_message(msgstr, "ok")
 }
@@ -124,11 +142,14 @@ ride <- function(ride.seq, o.seq, bcond, tdist, onum){
   perc.finished <- 0
   oride <- 0
   # bcchange <- bc # bike condition
-  while(ride.status > 0){
+  while(perc.finished < 100 & 
+        ride.status > 0){
     for(c in ride.seq){
       perc.finished <- round(100*(c/length(ride.seq)), 0)
-      msgperc <- paste0("ride progress: ", perc.finished, "%")
-      ride.finished <- ifelse(c == max(ride.seq), 1, 0)
+      msgperc <- paste0("ride progress: ", 
+                        perc.finished, "%")
+      ride.finished <- ifelse(c == max(ride.seq), 
+                              1, 0)
       if(c %in% o.seq){
         ride.obstacle(msgperc = msgperc)
         ride.status <- obstacle.uifun()
@@ -140,10 +161,10 @@ ride <- function(ride.seq, o.seq, bcond, tdist, onum){
         tdnew <- tdist + c
         onew <- onum + oride
         msgstr <- paste0("the ride has ended!! \n",
-                         "your current usr stats:\n",
-                         "mileage = ", tdnew, "\n", 
-                         "obstacles = ", onew, "\n",
-                         "bike.cond = ", bcond, "\n")
+                         "your current usr stats:\n ",
+                         "mileage = ", tdnew, "\n ", 
+                         "obstacles = ", onew, "\n ",
+                         "bike.cond = ", bcond, "\n ")
         # update user stats
         tdist = tdnew
         onum = onew
@@ -155,7 +176,6 @@ ride <- function(ride.seq, o.seq, bcond, tdist, onum){
   grid.newpage()
   return(bc)
 }
-
 
 # 3. do_idle function
 # 3A . task
@@ -203,16 +223,3 @@ do_idle <- function(mprobability, rprob){
 }
 
 save.image("functions")
-
-
-
-
-
-
-
-
-
-
-
-
-

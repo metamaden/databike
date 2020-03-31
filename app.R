@@ -1,5 +1,7 @@
 #!/usr/bin/env R
 
+# blah
+
 # app start
 require(svDialogs)
 require(grid)
@@ -8,10 +10,12 @@ require(grid)
 # runs `databike`
 dn <- "R"
 #path.data <- paste0(dn, "data.RData", collapse = "/")
-path.functions <- paste(c(dn, "functions.RData"), 
-                         collapse = "/")
-path.userscorestart <- paste(c(dn, "data.RData"), 
-                              collapse = "/")
+{
+  path.functions <- paste(c(dn, "functions.RData"), 
+                          collapse = "/")
+  path.userscorestart <- paste(c(dn, "data.RData"), 
+                               collapse = "/")
+}
 
 # load(path.data) # load.data()
 load(path.userscorestart) # load.uscorestart()

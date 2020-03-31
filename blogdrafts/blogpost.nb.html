@@ -1749,46 +1749,10 @@ summary {
 
 
 <!-- rnb-text-begin -->
-<!-- # 
-
-https://stackoverflow.com/questions/13143801/update-plots-during-for-loop-from-within-rstudio 
-
-https://stackoverflow.com/questions/8772630/plotting-during-a-loop-in-rstudio
-
-https://stackoverflow.com/questions/46116614/taking-inputs-through-pop-up-window-in-r/46116803
-
--->
-<div id="section" class="section level1">
-<h1></h1>
-</div>
-<div id="game-sequence" class="section level1">
-<h1>Game sequence</h1>
-<p>The score is an imaginary points system, which is defined here as:</p>
-<p>Dt - (Nc + 0.5 * Ns)</p>
-<p>Where</p>
-<ol style="list-style-type: decimal">
-<li>Dt is total “distance” traveled (just an integer counter in this case),</li>
-<li>Nc is the number of “crashes” (rides where bike stops), and</li>
-<li>Ns is the number of “stops” (rides where player stops riding before end of ride).</li>
-</ol>
-</div>
-<div id="app-data" class="section level1">
-<h1>App data</h1>
-<p>I’ve designed this “app” (e.g. simplistic simulation) with modularity in mind. In other words, I’ve taken measures to ensure weights on score conditions are tolerant to large magnitude modifications.</p>
-</div>
-<div id="game-guts" class="section level1">
-<h1>Game guts</h1>
-<p>Using R presents some challenges, and it took some planning to organize simulation elements.</p>
-<p>I settled on a simplistic “graphical interface” that appropriates viewports to generate a passable animation, and a basic user input system. The hard work behind the scenes is being done by <code>grid::grid.text()</code> and <code>svDialogs::dlgInput()</code>.</p>
-<p>If you need help with scooters, consult an expert!</p>
-<p>Thie this simulation of scooters could potentially be used as a reminder for scheduled maintenance</p>
-<p>The notion is maintenance of aging systems, in this case a rad scooter.</p>
-<p>Ongoing monitoring can be crucial to prevent accidents and prolong the lifetime of your bike</p>
-<p>A. “inspect bike” A1. “maintain” A2. &quot;&quot; B. “drive” B1. “obstacle encounter”</p>
+<p>(This page will receive periodic updates) # Databike</p>
 <!-- rnb-text-end -->
-</div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkRhdGFiaWtlIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KPCEtLSAjIA0KDQpodHRwczovL3N0YWNrb3ZlcmZsb3cuY29tL3F1ZXN0aW9ucy8xMzE0MzgwMS91cGRhdGUtcGxvdHMtZHVyaW5nLWZvci1sb29wLWZyb20td2l0aGluLXJzdHVkaW8gDQoNCmh0dHBzOi8vc3RhY2tvdmVyZmxvdy5jb20vcXVlc3Rpb25zLzg3NzI2MzAvcGxvdHRpbmctZHVyaW5nLWEtbG9vcC1pbi1yc3R1ZGlvDQoNCmh0dHBzOi8vc3RhY2tvdmVyZmxvdy5jb20vcXVlc3Rpb25zLzQ2MTE2NjE0L3Rha2luZy1pbnB1dHMtdGhyb3VnaC1wb3AtdXAtd2luZG93LWluLXIvNDYxMTY4MDMNCg0KLS0+DQoNCiMNCg0KDQoNCiMgR2FtZSBzZXF1ZW5jZQ0KDQpUaGUgc2NvcmUgaXMgYW4gaW1hZ2luYXJ5IHBvaW50cyBzeXN0ZW0sIHdoaWNoIGlzIGRlZmluZWQgaGVyZSBhczoNCg0KRHQgLSAoTmMgKyAwLjUgKiBOcykNCg0KV2hlcmUgDQoNCjEuIER0IGlzIHRvdGFsICJkaXN0YW5jZSIgdHJhdmVsZWQgKGp1c3QgYW4gaW50ZWdlciBjb3VudGVyIGluIHRoaXMgY2FzZSksIA0KMi4gTmMgaXMgdGhlIG51bWJlciBvZiAiY3Jhc2hlcyIgKHJpZGVzIHdoZXJlIGJpa2Ugc3RvcHMpLCBhbmQgDQozLiBOcyBpcyB0aGUgbnVtYmVyIG9mICJzdG9wcyIgKHJpZGVzIHdoZXJlIHBsYXllciBzdG9wcyByaWRpbmcgYmVmb3JlIGVuZCBvZiByaWRlKS4NCg0KIyBBcHAgZGF0YQ0KDQpJJ3ZlIGRlc2lnbmVkIHRoaXMgImFwcCIgKGUuZy4gc2ltcGxpc3RpYyBzaW11bGF0aW9uKSB3aXRoIG1vZHVsYXJpdHkgaW4gbWluZC4gSW4gb3RoZXIgd29yZHMsIEkndmUgdGFrZW4gbWVhc3VyZXMgdG8gZW5zdXJlIHdlaWdodHMgb24gc2NvcmUgY29uZGl0aW9ucyBhcmUgdG9sZXJhbnQgdG8gbGFyZ2UgbWFnbml0dWRlIG1vZGlmaWNhdGlvbnMuDQoNCiMgR2FtZSBndXRzDQoNClVzaW5nIFIgcHJlc2VudHMgc29tZSBjaGFsbGVuZ2VzLCBhbmQgaXQgdG9vayBzb21lIHBsYW5uaW5nIHRvIG9yZ2FuaXplIHNpbXVsYXRpb24gZWxlbWVudHMuDQoNCkkgc2V0dGxlZCBvbiBhIHNpbXBsaXN0aWMgImdyYXBoaWNhbCBpbnRlcmZhY2UiIHRoYXQgYXBwcm9wcmlhdGVzIHZpZXdwb3J0cyB0byBnZW5lcmF0ZSBhIHBhc3NhYmxlIGFuaW1hdGlvbiwgYW5kIGEgYmFzaWMgdXNlciBpbnB1dCBzeXN0ZW0uIFRoZSBoYXJkIHdvcmsgYmVoaW5kIHRoZSBzY2VuZXMgaXMgYmVpbmcgZG9uZSBieSBgZ3JpZDo6Z3JpZC50ZXh0KClgIGFuZCBgc3ZEaWFsb2dzOjpkbGdJbnB1dCgpYC4NCg0KDQpJZiB5b3UgbmVlZCBoZWxwIHdpdGggc2Nvb3RlcnMsIGNvbnN1bHQgYW4gZXhwZXJ0IQ0KDQoNClRoaWUgdGhpcyBzaW11bGF0aW9uIG9mIHNjb290ZXJzIGNvdWxkIHBvdGVudGlhbGx5IGJlIHVzZWQgYXMgYSByZW1pbmRlciBmb3Igc2NoZWR1bGVkIG1haW50ZW5hbmNlDQoNClRoZSBub3Rpb24gaXMgbWFpbnRlbmFuY2Ugb2YgYWdpbmcgc3lzdGVtcywgaW4gdGhpcyBjYXNlIGEgcmFkIHNjb290ZXIuDQoNCk9uZ29pbmcgbW9uaXRvcmluZyBjYW4gYmUgY3J1Y2lhbCB0byBwcmV2ZW50IGFjY2lkZW50cyBhbmQgcHJvbG9uZyB0aGUgbGlmZXRpbWUgb2YgeW91ciBiaWtlDQoNCg0KDQpBLiAiaW5zcGVjdCBiaWtlIg0KQTEuICJtYWludGFpbiINCkEyLiAiIg0KQi4gImRyaXZlIg0KQjEuICJvYnN0YWNsZSBlbmNvdW50ZXIiDQoNCg0K</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkRhdGFiaWtlIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQp0YWdzOiBhc2NpaTsgYXBwOyBub3RlOyBzaW11bGF0b3INCi0tLQ0KDQooVGhpcyBwYWdlIHdpbGwgcmVjZWl2ZSBwZXJpb2RpYyB1cGRhdGVzKQ0KIyBEYXRhYmlrZQ0KDQo=</div>
 
 
 

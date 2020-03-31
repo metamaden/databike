@@ -1,6 +1,6 @@
 #!/usr/bin/env R
-
-# blah
+# app; game; simulator
+# Databike game
 
 # app start
 require(svDialogs)

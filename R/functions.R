@@ -46,19 +46,16 @@ ascii_fvl <- function(drive, idle, obstacle){
 }
 
 # 2. ride duration function
-get_ride.dur <- function(optl = c("short", "medium", "long")){
-  # defines ride durations# 
-  # optl # list ascending mileage labels
-  # mileage pertains to c # of loops in ride
-  rt <- sample(optl, 1) # short, medium, long
-  ride.type <- rt
+# (contained in data) optl = c("short", "medium", "long")
+# 2A. ride() deps
+get_ride.dur <- function(rt){
+  # defines ride  numeric distance 
   ride.dur <- ifelse(rt == optl[1], 30, 
                      ifelse(rt == optl[2], 50, 
                             ifelse(rt == optl[3], 100, 
                                    "NA")))
   return(ride.dur)
 }
-
 obstacle.uifun <- function(mx.dmg.extent = 0.2){
   # variable dmg chance
   # damage extent
@@ -75,22 +72,25 @@ obstacle.uifun <- function(mx.dmg.extent = 0.2){
     obstacle.outcome <- sample(dmg.roll, 1)
     if(obstacle.outcome == "damaged"){
       bcond <- bcond - dmg.extent
-      ooutcome.msg <- paste0("Your bike sustained some damage.",
-                             " new bike condition: ", bcond)
-      dlg_message(ooutcome.msg, "ok")
-      return(1) # continues ride
     }
+    ooutcome.msg <- paste0("Bcond reduced by ", dmg.extent,
+                           " to ", bcond, ".")
+    dlg_message(ooutcome.msg, "ok")
+    return(1) # continues ride
+  } else if(ui.msg == "yes"){
+    return(0)
   } else{
-    return(0) # ends ride
+    return(NULL)
   }
-  return(NULL)
 }
-
 endride.uifun <- function(msgstr){
-  ui.msg <- dlg_message(msgstr, "ok")
+  ui.msg <- dlg_message(msgstr, type = "ok")
 }
 ride.normal <- function(alabel = "ride: normal", msgperc,
-                        framevector = fv.drive, ssint = 0.1, loops = 1){
+                        framevector = fv.drive, 
+                        ssint = 0.1, loops = 1){
+  # this is code 
+  # for normal ride seq animation
   grid.newpage()
   c = 1
   while(c <= loops){
@@ -108,6 +108,7 @@ ride.obstacle <- function(alabel = "ride: obstacle!", msgperc,
                           framevector1 = fv.drive, 
                           framevector2 = fv.obstacle, 
                           ssint = 0.5, loops = 2){
+  # sequences the obstacle encounter animation
   grid.newpage()
   c = 1
   while(c <= loops){
@@ -128,19 +129,24 @@ ride.obstacle <- function(alabel = "ride: obstacle!", msgperc,
     c = c + 1
   }
 }
-ride <- function(ride.seq, o.seq, bcond, tdist, onum){
+# main ride function
+# 2B. main ride function
+ride <- function(ride.seq, ride.dur, 
+                 o.seq, bcond, tdist, onum){
   # global stats
   # tdist # global mileage
   # onum # global obstacle count
   # bcond # bike condition
   require(grid)
+  # message ride duration
+  rd.message <- paste0("Beginning ride of ", 
+                       rt, " duration!")
+  endride.uifun(rd.message, "ok")
   # add bike condition stuff
   grid.newpage()
   # baseline stats for ride
-  ride.finished <- 0
-  ride.status <- 1
-  perc.finished <- 0
-  oride <- 0
+  ride.finished <- 0; ride.status <- 1
+  perc.finished <- 0; oride <- 0
   # bcchange <- bc # bike condition
   while(perc.finished < 100 & 
         ride.status > 0){
@@ -160,7 +166,7 @@ ride <- function(ride.seq, o.seq, bcond, tdist, onum){
         # tdist updates
         tdnew <- tdist + c
         onew <- onum + oride
-        msgstr <- paste0("the ride has ended!! \n",
+        messagestr <- paste0("the ride has ended!! \n",
                          "your current usr stats:\n ",
                          "mileage = ", tdnew, "\n ", 
                          "obstacles = ", onew, "\n ",
@@ -168,7 +174,7 @@ ride <- function(ride.seq, o.seq, bcond, tdist, onum){
         # update user stats
         tdist = tdnew
         onum = onew
-        endride.uifun(msgstr)
+        dlg_message(messagestr, type = "ok")
         return(NULL)
       }
     }

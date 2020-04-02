@@ -1,13 +1,12 @@
 #!/usr/bin/env R
 
+require(svDialogs)
+require(grid)
+
 # app.R
 # Main code for `databike` app.
 
 # external dependencies
-require(svDialogs)
-require(grid)
-
-
 fp.org <- "./org.R"
 source(fp.org)
 
@@ -27,24 +26,28 @@ fv.drive <- ascii_drive_fv(bike)
 fv.obstacle <- ascii_obstacle_fv()
 fvl <- ascii_fvl(fv.drive, fv.idle, 
                    fv.obstacle)
-while(bcond > 0){
+stopoption <- "no"
+while(bcond > 0 & 
+      stopoption == "no"){
   do_idle(mprob, rprob, bcond)
   # retrieve ride duration
-  rt <- sample(optl, 1) 
+  rt <- sample(optl, 1)
   ride.dur <- get_ride.dur(rt, ru)
   # new ride sequence data
- 
    ride.seq <- seq(1, ride.dur, 1)
   n.obstacles <- sample(10, 1)
-  o.seq <- sample(ride.seq, 
+  o.seq <- sample(ride.seq,
                   n.obstacles)
   # run ride
-  ride(ride.seq, ride.dur, 
+  ride(ride.seq, ride.dur,
        o.seq, bcond, tdist, onum)
+  # option to quit
+  stopoption <- dlg_message("Do you want to stop the game?", 
+                            "yesno")$res
 }
-message("Game over <3 (quit procrastinating and get to work!)",
-        "mileage: ", tdist,
-        "obstacles: ", onum)
+# end game message
+dlg_message(paste0("Game over!", " mileage = ", tdist,
+                   ", obstacles = ", onum), "ok")
 
 
 

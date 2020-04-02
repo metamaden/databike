@@ -104,6 +104,9 @@ do_idle <- function(mprob, rprob, bcond){
                           bcond + bdi*rpm,
                           bcond - bdi*rpm)
     }
+    else{
+      return(bcond)
+    }
   }
   return(bcond.new)
 }

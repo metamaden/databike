@@ -23,6 +23,7 @@ and current app status
 . show total score at endagme ui
 
 # OBSTACLE NOTE
+. random obstacle symbol for each encounter?
 
 # GAME ENGINE (score and stats modifiers)
 . bike condition modifies obstacle #
@@ -37,7 +38,6 @@ add error log (track new errs)
 
 
 # APP DETAILS
-. use soruce, obviate need for .Rdata objects
 . add GITIGNORE
 
 # todo long-term
@@ -52,8 +52,10 @@ add error log (track new errs)
 # TASKS COMPLETED
 #=================
 # tasks that rsolve mwinoaksdf no issues
-
 . customize ride (set bikestr)
+
+# APP DETAILS
+. use source, obviate need for .Rdata objects
 
 # RIDE UI
 
@@ -64,11 +66,9 @@ add error log (track new errs)
 # GAME ENGINE (score and stats modifiers)
 . between rides, either "maintain" or "repair" (DONE)
 .. chance to "break" bike (bcond reduces)
-.. 
+.. add option to stop game === > jump to end game ui
 
 . adds obstacle message about bcond (whether increased or decreased)
-
-
 . add bcond to end idle message
 
 

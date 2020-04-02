@@ -1,7 +1,7 @@
 #!/usr/bin/env R
 
 # script to store data for scootsim
-
+# called with load() in app.R
 
 
 # load usrscores

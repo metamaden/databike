@@ -1,5 +1,8 @@
 #!/usr/bin/env R
 
+# Main app functions
+# Called with load() in app.R
+
 fn <- "functions.Rdata"
 
 #--------------------
@@ -100,12 +103,10 @@ do_idle <- function(mprobability, rprob){
 
 
 
+#--------------------------
+# 4. ride management and UI
+#--------------------------
 
-#-----------------------------
-# 2. ride duration function
-#-----------------------------
-# (contained in data) optl = c("short", "medium", "long")
-# 2A. ride() deps
 get_ride.dur <- function(rt, ru){
   # defines ride  numeric distance 
   ride.dur <- ifelse(rt == optl[1], ru[1], 
@@ -115,9 +116,6 @@ get_ride.dur <- function(rt, ru){
   return(ride.dur)
 }
 
-#-------------
-# 4. ride UI
-#-------------
 # 3. obstacle UI
 obstacle.uifun <- function(mx.dmg.extent = 0.2){
   # variable dmg chance
@@ -205,7 +203,7 @@ ride <- function(ride.seq, ride.dur,
   # message ride duration
   rd.message <- paste0("Beginning ride of ", 
                        rt, " duration!")
-  endride.uifun(rd.message, "ok")
+  dlg_message(rd.message, "ok")
   # add bike condition stuff
   grid.newpage()
   # baseline stats for ride

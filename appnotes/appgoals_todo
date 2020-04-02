@@ -37,6 +37,8 @@ add error log (track new errs)
 
 . use soruce, obviate need for .Rdata objects
 
+. add GITIGNORE
+
 # todo long-term
 . app launch specs (NOT DONE)
 .  bundle app as executable

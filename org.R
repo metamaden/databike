@@ -17,3 +17,5 @@ fp.data <- paste0(c(dn, paste0(fn.data, ".R")), collapse = "/")
 
 # load data scripts (use source())
 
+source(fp.fun)
+source(fp.data)

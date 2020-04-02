@@ -7,15 +7,19 @@
 require(svDialogs)
 require(grid)
 
-dn <- "."
-functions.fn <- "functions.Rdata"
-data.fn <- "data.Rdata"
-path.functions <- paste(c(dn, functions.fn), collapse = "/")
-path.data <- paste(c(dn, data.fn), collapse = "/")
 
+fp.org <- "./data.R"
+
+source(fp.org)
+
+#dn <- "."
+#functions.fn <- "functions.Rdata"
+#data.fn <- "data.Rdata"
+#path.functions <- paste(c(dn, functions.fn), collapse = "/")
+#path.data <- paste(c(dn, data.fn), collapse = "/")
 # load game data and functions
-load(path.functions)
-load(path.data)
+#load(path.functions)
+#load(path.data)
 
 # bike ascii frames
 bike <- asciibike()

@@ -33,7 +33,9 @@ add error log (track new errs)
 . make runnable from cl
 
 
-# APP ORGANZING
+# APP DETAILS
+
+. use soruce, obviate need for .Rdata objects
 
 # todo long-term
 . app launch specs (NOT DONE)

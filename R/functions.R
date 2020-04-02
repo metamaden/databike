@@ -4,7 +4,11 @@
 # Called with load() in app.R
 
 # top matter
-fn <- "functions.Rdata"
+
+#dn <- "."
+#fn <- "data.Rdata"
+#fpath <- paste0(c(dn, fn), collapse = "/")
+#fn <- "functions.Rdata"
 
 
 #=====================
@@ -254,4 +258,4 @@ ride <- function(ride.seq, ride.dur,
 
 
 
-save.image(fn)
+# save.image(fn)

@@ -3,6 +3,9 @@
 # script to store data for scootsim
 # called with load() in app.R
 
+#dn <- "."
+#fn <- "data.Rdata"
+#fpath <- paste0(c(dn, fn), collapse = "/")
 
 # load usrscores
 # starting stats
@@ -22,4 +25,4 @@ optl = c("short", "medium", "long")
 # ride duration "units" (num. loops/value c)
 ru <- c(20, 50, 100)
 
-save.image("data.Rdata")
+# save.image(fpath)

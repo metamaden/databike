@@ -13,8 +13,9 @@ and current app status
 # generally ordred by decerasing importance ,by section
 
 # RIDE UI
-. tdist counter
+. tdist counter (adds tdist updater to ride display)
 . num obstacles encountered
+. add ride map?
 
 # GAME ENGINE (score and stats modifiers)
 . bike condition modifies obstacle #
@@ -28,10 +29,6 @@ and current app status
 . make runnable from cl
 
 
-# tentative? 
-. show tdist counter in rdie display
-
-
 # todo long-term
 . app launch specs (NOT DONE)
 .  bundle app as executable
@@ -40,9 +37,9 @@ and current app status
 
 . plots showing current player stats
 
-#-----------
+#=================
 # TASKS COMPLETED
-#-----------
+#=================
 
 . adds obstacle message about bcond (whether increased or decreased)
 
@@ -53,4 +50,4 @@ and current app status
 .. chance to "break" bike (bcond reduces)
 .. 
 
-# customize ride (set bikestr) (DONE)
+# customize ride (set bikestr)

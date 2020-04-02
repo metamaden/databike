@@ -3,8 +3,11 @@
 # Main app functions
 # Called with load() in app.R
 
+# top matter
 fn <- "functions.Rdata"
 
+
+#=====================
 #--------------------
 # 1. load game data
 #--------------------

@@ -1,29 +1,35 @@
-# app TODO
+# databike
+# notes on `databike` app progress
+
+notes about objectives for the app
+and current app status
+
+#------------
+# INCOMPLETE
+#------------
+# todo short-term
+
+. bike condition modifies obstacles (NOT DONE)
+
+. add bcond to end idle message
+
+. mileage modifies maintenance -> bcond (NOT DONE)
+. make runnable from cl
 
 
-# bike condition modifies obstacles (NOT DONE)
+# tentative? 
+. show tdist counter in rdie display
 
 
+# todo long-term
+. app launch specs (NOT DONE)
+.  bundle app as executable
+. port into python
+. supports unit testing
 
-
-# TODO (shortterm)
-
-# fix error: 
-
-# mileage modifies maintenance -> bcond (NOT DONE)
-
-
-
-# TODO (longterm)
-# app launch specs (NOT DONE)
-## make executable
-## make runnable from cl
-
-# port into python
-
-# unit testing
-
+#-----------
 # COMPLETE
+#-----------
 # 3. between rides, either "maintain" or "repair" (DONE)
 .. chance to "break" bike (bcond reduces)
 .. 

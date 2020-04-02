@@ -7,29 +7,21 @@ and current app status
 =======================
 
 #==================
-# TASKS QUEUE
+# TASKS QUEUE (short-term)
 #==================
 # todo short-term
+# generally ordred by decerasing importance ,by section
 
 # RIDE UI
 . tdist counter
 . num obstacles encountered
 
 # GAME ENGINE (score and stats modifiers)
-. bike condition modifies obstacle amount
-. bike condition modifies obstacle bcond modifier
-. bonus for rides completed. score modified?
-.. could impact idle task modifiers 
-.. (e.g. decreases likelihood task reduces bcond)
-
-
-
-
-
-
-
-
-
+. bike condition modifies obstacle #
+. bike condition modifies obstacle impact (bcond diff magnitude)
+ bonus for rides completed. score modified?
+.. could impact idle task modifiers (e.g. bcond dec on "break " outcome)
+..decrease likelihood "break" outcome (e.g. likelihood task outcome = "break")
 
 
 . mileage modifies maintenance -> bcond (NOT DONE)

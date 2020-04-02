@@ -25,7 +25,7 @@ fv.obstacle <- ascii_obstacle_fv()
 fvl <- ascii_fvl(fv.drive, fv.idle, 
                    fv.obstacle)
 while(bcond > 0){
-  do_idle(mprob, rprob)
+  do_idle(mprob, rprob, bcond)
   # retrieve ride duration
   rt <- sample(optl, 1) 
   ride.dur <- get_ride.dur(rt, ru)

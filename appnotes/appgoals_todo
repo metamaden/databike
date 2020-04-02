@@ -9,9 +9,26 @@ and current app status
 #------------
 # todo short-term
 
-. bike condition modifies obstacles (NOT DONE)
+. adds obstacle message about bcond (whether increased or decreased)
 
-. add bcond to end idle message
+. bike condition modifies obstacle amount
+
+. bike condition modifies obstacle bcond modifier?
+
+
+. bonus for rides completed. score modified?
+.. could impact idle task modifiers 
+.. (e.g. decreases likelihood task reduces bcond)
+
+
+
+
+
+
+
+
+
+
 
 . mileage modifies maintenance -> bcond (NOT DONE)
 . make runnable from cl
@@ -27,9 +44,14 @@ and current app status
 . port into python
 . supports unit testing
 
+. plots showing current player stats
+
 #-----------
 # COMPLETE
 #-----------
+
+. add bcond to end idle message
+
 # 3. between rides, either "maintain" or "repair" (DONE)
 .. chance to "break" bike (bcond reduces)
 .. 

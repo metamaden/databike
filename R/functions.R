@@ -56,6 +56,10 @@ ascii_fvl <- function(drive, idle, obstacle){
 #--------------
 # 3. idle UI
 #--------------
+# do_idle calls get_task_outcome
+# if player does work, update bcond (chance to fix or break)
+# maintenance bcond diff < repair bcond diff
+
 # 3A . task function
 do_task <- function(bcond, rpm){
   new.bcond <- ifelse(outcome == "fix",
@@ -64,25 +68,32 @@ do_task <- function(bcond, rpm){
   return(new.bcond)
 }
 # 3B . task outcome
-get_task_outcome <- function(task.prob){
+# includes end-task message
+get_task_outcome <- function(task.prob, bcond){
   # parses maintenance and repair tasks
   v <- 100*task.prob
   s1 = rep("fix", v)
   s2 = rep("break", 100 - v)
   outcome <- sample(c(s1, s2), 1)
+  dmsg <- paste0("Task complete! ")
   if(outcome == "fix"){
-    dlg_message("the bike was successfully maintained", "ok")
+    dmsg <- paste0(dsmg, " Bike condition has increased :D")
+    dmsg <- paste0(dsmg, " new bcond = ", bcond)
+    dlg_message(paste0(dmsg, "ok"))
   } else{
-    dlg_message("attempt to maintain bike failed", "ok")
+    dmsg <- paste0(dsmg, " Bike condition has decreased ;[")
+    dmsg <- paste0(dsmg, " new bcond = ", bcond)
+    dlg_message(paste0(dmsg, "ok"))
   }
   return(outcome)
 }
 # 3C. main idle function
-do_idle <- function(mprobability, rprob){
-  itask <- dlg_message("maintain?", "yesno")$res
+do_idle <- function(mprobability, rprob, bcond){
+  itask <- dlg_message("maintain?", 
+                       "yesno")$res
   # parse idle task
   if(itask == "yes"){
-    outcome <- get_task_outcome(mprob)
+    outcome <- get_task_outcome(mprob, bcond)
     bcond.new = ifelse(outcome == "fix",
                        bcond + bdi, 
                        bcond - bdi)
@@ -90,7 +101,7 @@ do_idle <- function(mprobability, rprob){
     itask <- dlg_message("repair?", "yesno")$res
     # parse repair task
     if(itask == "yes"){
-      outcome <- get_task_outcome(mprob)
+      outcome <- get_task_outcome(mprob, bcond)
       bcond.new <- ifelse(outcome == "fix",
                           bcond + bdi*rpm,
                           bcond - bdi*rpm)
@@ -106,7 +117,12 @@ do_idle <- function(mprobability, rprob){
 #--------------------------
 # 4. ride management and UI
 #--------------------------
+# ride sections
+# during ride, obstances an be encounterds 
+# obstacles have chance to reduce bcond
 
+# ride duration
+# this is num loops or distance of ride
 get_ride.dur <- function(rt, ru){
   # defines ride  numeric distance 
   ride.dur <- ifelse(rt == optl[1], ru[1], 

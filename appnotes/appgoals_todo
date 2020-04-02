@@ -33,6 +33,8 @@ add error log (track new errs)
 . make runnable from cl
 
 
+# APP ORGANZING
+
 # todo long-term
 . app launch specs (NOT DONE)
 .  bundle app as executable

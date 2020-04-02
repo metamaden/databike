@@ -24,8 +24,7 @@ bike <- asciibike()
 fv.idle <- ascii_idle_fv(bike)
 fv.drive <- ascii_drive_fv(bike)
 fv.obstacle <- ascii_obstacle_fv()
-fvl <- ascii_fvl(fv.drive, fv.idle, 
-                   fv.obstacle)
+fvl <- ascii_fvl(fv.drive, fv.idle)
 stopoption <- "no"
 while(bcond > 0 & 
       stopoption == "no"){
@@ -34,7 +33,7 @@ while(bcond > 0 &
   rt <- sample(optl, 1)
   ride.dur <- get_ride.dur(rt, ru)
   # new ride sequence data
-   ride.seq <- seq(1, ride.dur, 1)
+  ride.seq <- seq(1, ride.dur, 1)
   n.obstacles <- sample(10, 1)
   o.seq <- sample(ride.seq,
                   n.obstacles)

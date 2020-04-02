@@ -3,13 +3,6 @@
 # Main app functions
 # Called with load() in app.R
 
-# top matter
-
-#dn <- "."
-#fn <- "data.Rdata"
-#fpath <- paste0(c(dn, fn), collapse = "/")
-#fn <- "functions.Rdata"
-
 
 #=====================
 #--------------------
@@ -26,7 +19,8 @@ asciibike <- function(msg = "customize your ride!",
 # 1B. "scene " data
 # 1B1. idle
 ascii_idle_fv <- function(bike = "`=__%"){
-  stationary <- paste0(c("_______\n  ", bike," \n__0 0__"), collapse = "")
+  stationary <- paste0(c("_______\n  ", 
+                         bike," \n__0 0__"), collapse = "")
   blink <- "_______\n       \n__   __"
   fv <- c(stationary, blink)
   return(fv)
@@ -53,9 +47,8 @@ ascii_obstacle_fv <- function(osym = sample(ossl, 1)){
   return(fv)
 }
 # 1C. organize "scene" data
-ascii_fvl <- function(drive, idle, obstacle){
-  fvl <- list("idle" = idle, "drive" = drive, 
-              "obstacle" = obstacle)
+ascii_fvl <- function(drive, idle){
+  fvl <- list("idle" = idle, "drive" = drive)
   return(fvl)
 }
 
@@ -180,13 +173,19 @@ ride.normal <- function(alabel = "ride: normal", msgperc,
     c = c + 1
   }
 }
-ride.obstacle <- function(alabel = "ride: obstacle!", msgperc,
+ride.obstacle <- function(alabel = "ride: obstacle!", 
+                          msgperc,
                           framevector1 = fv.drive, 
-                          framevector2 = fv.obstacle, 
                           ssint = 0.5, loops = 2){
   # sequences the obstacle encounter animation
+  fv.obstacle <- ascii_obstacle_fv()
   grid.newpage()
   c = 1
+  # grab obstacle data
+  fv.obstacle <- ascii_obstacle_fv()
+  fvl <- ascii_fvl(fv.drive, fv.idle, 
+                   fv.obstacle)
+  
   while(c <= loops){
     for(i in 1:length(framevector1)){
       grid.newpage()

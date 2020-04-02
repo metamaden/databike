@@ -3,10 +3,6 @@
 # script to store data for scootsim
 # called with load() in app.R
 
-#dn <- "."
-#fn <- "data.Rdata"
-#fpath <- paste0(c(dn, fn), collapse = "/")
-
 # load usrscores
 # starting stats
 tdist <- 0 # total mileage
@@ -18,7 +14,7 @@ bdi <- 0.1 # bcond change increment
 rpm <- 1.5 # repair prob modifier to bdi
 
 # possible obstacle symbols (randomize on encounter)
-ossl <- c("#", "$", "@")# ascii chars
+ossl <- c("#", "$", "@", ".", "")# ascii chars
 
 # possible ride durations (ascending length)
 optl = c("short", "medium", "long")

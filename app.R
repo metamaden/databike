@@ -8,8 +8,7 @@ require(svDialogs)
 require(grid)
 
 
-fp.org <- "./data.R"
-
+fp.org <- "./org.R"
 source(fp.org)
 
 #dn <- "."
@@ -43,29 +42,9 @@ while(bcond > 0){
   ride(ride.seq, ride.dur, 
        o.seq, bcond, tdist, onum)
 }
-message("process finished. ",
+message("Game over <3 (quit procrastinating and get to work!)",
         "mileage: ", tdist,
-        "obstacles: ", onum,
-        "amount repaired: ", nrepair)
-# end options endgame ...
-# play again?
-# other stuff
-
-# adds check on bcond
-
-
-
-
-
-# ride loop improvements
-. option to quit#  option to quit
-# 
-
-
-
-
-
-
+        "obstacles: ", onum)
 
 
 

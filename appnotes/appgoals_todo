@@ -19,6 +19,9 @@ and current app status
 . num obstacles encountered
 . add ride map?
 
+# GAME END
+. show total score at endagme ui
+
 # OBSTACLE NOTE
 
 # GAME ENGINE (score and stats modifiers)
@@ -34,9 +37,7 @@ add error log (track new errs)
 
 
 # APP DETAILS
-
 . use soruce, obviate need for .Rdata objects
-
 . add GITIGNORE
 
 # todo long-term

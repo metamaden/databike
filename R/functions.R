@@ -1,5 +1,7 @@
 #!/usr/bin/env R
 
+fn <- "functions.Rdata"
+
 # 1. load game data
 # 1A. load frame data
 # 1A1. bike data customization
@@ -228,4 +230,4 @@ do_idle <- function(mprobability, rprob){
   return(bcond.new)
 }
 
-save.image("functions")
+save.image(fn)

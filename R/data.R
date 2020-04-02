@@ -1,5 +1,9 @@
 #!/usr/bin/env R
 
+# script to store data for scootsim
+
+
+
 # load usrscores
 # starting stats
 tdist <- 0 # total mileage
@@ -14,4 +18,4 @@ rpm <- 1.5 # repair prob modifier to bdi
 optl = c("short", "medium", "long")
 rt <- sample(optl, 1)
 
-save.image("data")
+save.image("data.Rdata")

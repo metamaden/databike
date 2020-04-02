@@ -4,17 +4,20 @@
 notes about objectives for the app
 and current app status
 
-#------------
-# TASKS INCOMPLETE
-#------------
+=======================
+
+#==================
+# TASKS QUEUE
+#==================
 # todo short-term
 
+# RIDE UI
+. tdist counter
+. num obstacles encountered
 
+# GAME ENGINE (score and stats modifiers)
 . bike condition modifies obstacle amount
-
-. bike condition modifies obstacle bcond modifier?
-
-
+. bike condition modifies obstacle bcond modifier
 . bonus for rides completed. score modified?
 .. could impact idle task modifiers 
 .. (e.g. decreases likelihood task reduces bcond)

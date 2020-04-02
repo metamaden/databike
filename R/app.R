@@ -1,16 +1,12 @@
 #!/usr/bin/env R
 
-
-
 # app.R
 # runs `databike` 
-
-
 
 # tagsforplb: app; game; simulator
 # Databike game
 
-# app start
+# external dependencies
 require(svDialogs)
 require(grid)
 
@@ -23,17 +19,9 @@ data.fn <- "data.Rdata"
 path.functions <- paste(c(dn, functions.fn), collapse = "/")
 path.data <- paste(c(dn, data.fn), collapse = "/")
 
-
-
-
-
-# load(path.data) # load.data()
-load(path.functions) # load.uscorestart()
-load(path.data) # load.functions()
-#log_errors()
-
-# main app # maintain bcond > 0, also show score.... ... 
-# load "cache" data
+# load game data and functions
+load(path.functions)
+load(path.data)
 
 # bike datatt
 bike <- asciibike()

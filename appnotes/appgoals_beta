@@ -1,23 +1,28 @@
 # Early app goals
 
+
+
+# bike condition modifies obstacles (NOT DONE)
+
+
+
+# TODO
+
+
+
+# mileage modifies maintenance -> bcond (NOT DONE)
+
+# app launch specs (NOT DONE)
+## make executable
+## make runnable from cl
+
+# port into python
+
+# unit testing
+
+# COMPLETE
 # 3. between rides, either "maintain" or "repair" (DONE)
 .. chance to "break" bike (bcond reduces)
 .. 
 
 # customize ride (set bikestr) (DONE)
-
-
-
-
-
-
-
-# TODO
-# bike condition modifies obstacles (NOT DONE)
-# mileage modifies maintenance -> bcond (NOT DONE)
-# app runs from command line? (NOT DONE)
-
-
-# port into python
-
-# unit testing

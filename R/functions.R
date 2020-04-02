@@ -150,8 +150,8 @@ obstacle.uifun <- function(mx.dmg.extent = 0.2){
     if(obstacle.outcome == "damaged"){
       bcond <- bcond - dmg.extent
     }
-    ooutcome.msg <- paste0("Bcond reduced by ", dmg.extent,
-                           " to ", bcond, ".")
+    ooutcome.msg <- paste0("Your bike sustained some damage. (bcond reduced by ", dmg.extent,
+                           " to ", bcond, ").")
     dlg_message(ooutcome.msg, "ok")
     return(1) # continues ride
   } else if(ui.msg == "yes"){
@@ -159,9 +159,6 @@ obstacle.uifun <- function(mx.dmg.extent = 0.2){
   } else{
     return(NULL)
   }
-}
-endride.uifun <- function(msgstr){
-  ui.msg <- dlg_message(msgstr, type = "ok")
 }
 
 ride.normal <- function(alabel = "ride: normal", msgperc,

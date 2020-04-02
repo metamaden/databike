@@ -5,11 +5,10 @@ notes about objectives for the app
 and current app status
 
 #------------
-# INCOMPLETE
+# TASKS INCOMPLETE
 #------------
 # todo short-term
 
-. adds obstacle message about bcond (whether increased or decreased)
 
 . bike condition modifies obstacle amount
 
@@ -47,8 +46,11 @@ and current app status
 . plots showing current player stats
 
 #-----------
-# COMPLETE
+# TASKS COMPLETED
 #-----------
+
+. adds obstacle message about bcond (whether increased or decreased)
+
 
 . add bcond to end idle message
 

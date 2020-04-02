@@ -30,7 +30,8 @@ while(bcond > 0){
   rt <- sample(optl, 1) 
   ride.dur <- get_ride.dur(rt, ru)
   # new ride sequence data
-  ride.seq <- seq(1, ride.dur, 1)
+ 
+   ride.seq <- seq(1, ride.dur, 1)
   n.obstacles <- sample(10, 1)
   o.seq <- sample(ride.seq, 
                   n.obstacles)

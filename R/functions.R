@@ -37,7 +37,7 @@ ascii_drive_fv <- function(bike = "`=__%"){
   return(fv)
 }
 # 1BC. 'obstacle'
-ascii_obstacle_fv <- function(osym = "#"){
+ascii_obstacle_fv <- function(osym = sample(ossl, 1)){
   # osym <- "#"
   otop <- paste0(rep(" ", 7), collapse = "")
   omid <- paste0(rep(" ", 7), collapse = "")
@@ -63,13 +63,6 @@ ascii_fvl <- function(drive, idle, obstacle){
 # if player does work, update bcond (chance to fix or break)
 # maintenance bcond diff < repair bcond diff
 
-# 3A . task function
-do_task <- function(bcond, rpm){
-  new.bcond <- ifelse(outcome == "fix",
-                      bcond + bdi*rpm,
-                      bcond - bdi*rpm)
-  return(new.bcond)
-}
 # 3B . task outcome
 # includes end-task message
 get_task_outcome <- function(task.prob, bcond){
@@ -80,21 +73,19 @@ get_task_outcome <- function(task.prob, bcond){
   outcome <- sample(c(s1, s2), 1)
   dmsg <- paste0("Task complete! ")
   if(outcome == "fix"){
-    dmsg <- paste0(dsmg, " Bike condition has increased :D")
-    dmsg <- paste0(dsmg, " new bcond = ", bcond)
-    dlg_message(paste0(dmsg, "ok"))
+    dmsg <- paste0(dmsg, " Bike condition has increased :D")
+    dmsg <- paste0(dmsg, " new bcond = ", bcond)
   } else{
-    dmsg <- paste0(dsmg, " Bike condition has decreased ;[")
-    dmsg <- paste0(dsmg, " new bcond = ", bcond)
-    dlg_message(paste0(dmsg, "ok"))
+    dmsg <- paste0(dmsg, " Bike condition has decreased ;[")
+    dmsg <- paste0(dmsg, " new bcond = ", bcond)
   }
   return(outcome)
 }
 # 3C. main idle function
-do_idle <- function(mprobability, rprob, bcond){
+do_idle <- function(mprob, rprob, bcond){
   itask <- dlg_message("maintain?", 
                        "yesno")$res
-  # parse idle task
+  # parse maintenance task
   if(itask == "yes"){
     outcome <- get_task_outcome(mprob, bcond)
     bcond.new = ifelse(outcome == "fix",
@@ -104,7 +95,7 @@ do_idle <- function(mprobability, rprob, bcond){
     itask <- dlg_message("repair?", "yesno")$res
     # parse repair task
     if(itask == "yes"){
-      outcome <- get_task_outcome(mprob, bcond)
+      outcome <- get_task_outcome(rprob, bcond)
       bcond.new <- ifelse(outcome == "fix",
                           bcond + bdi*rpm,
                           bcond - bdi*rpm)

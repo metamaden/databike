@@ -14,6 +14,9 @@ rprob <- 0.5 # repair
 bdi <- 0.1 # bcond change increment
 rpm <- 1.5 # repair prob modifier to bdi
 
+# possible obstacle symbols
+ossl <- c("#", "$", "@")# ascii chars
+
 # possible ride durations (ascending length)
 optl = c("short", "medium", "long")
 # ride duration "units" (num. loops/value c)

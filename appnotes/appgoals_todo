@@ -4,6 +4,8 @@
 notes about objectives for the app
 and current app status
 
+
+
 =======================
 
 #==================
@@ -17,6 +19,8 @@ and current app status
 . num obstacles encountered
 . add ride map?
 
+# OBSTACLE NOTE
+
 # GAME ENGINE (score and stats modifiers)
 . bike condition modifies obstacle #
 . bike condition modifies obstacle impact (bcond diff magnitude)
@@ -24,7 +28,7 @@ and current app status
 .. could impact idle task modifiers (e.g. bcond dec on "break " outcome)
 ..decrease likelihood "break" outcome (e.g. likelihood task outcome = "break")
 
-
+add error log (track new errs)
 . mileage modifies maintenance -> bcond (NOT DONE)
 . make runnable from cl
 
@@ -40,14 +44,25 @@ and current app status
 #=================
 # TASKS COMPLETED
 #=================
+# tasks that rsolve mwinoaksdf no issues
+
+. customize ride (set bikestr)
+
+# RIDE UI
+
+# OBSTACLE NOTE
+. randomize obstacle symbol?
+. add obstacle symbol vavr
+
+# GAME ENGINE (score and stats modifiers)
+. between rides, either "maintain" or "repair" (DONE)
+.. chance to "break" bike (bcond reduces)
+.. 
 
 . adds obstacle message about bcond (whether increased or decreased)
 
 
 . add bcond to end idle message
 
-# 3. between rides, either "maintain" or "repair" (DONE)
-.. chance to "break" bike (bcond reduces)
-.. 
 
-# customize ride (set bikestr)
+

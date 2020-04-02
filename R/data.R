@@ -14,8 +14,9 @@ rprob <- 0.5 # repair
 bdi <- 0.1 # bcond change increment
 rpm <- 1.5 # repair prob modifier to bdi
 
-# ride duration stuff/data sakjnfalfkjndsfkjsndfkjadsn
+# possible ride durations (ascending length)
 optl = c("short", "medium", "long")
-rt <- sample(optl, 1)
+# ride duration "units" (num. loops/value c)
+ru <- c(20, 50, 100)
 
 save.image("data.Rdata")

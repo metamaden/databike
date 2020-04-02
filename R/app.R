@@ -1,17 +1,11 @@
 #!/usr/bin/env R
 
 # app.R
-# runs `databike` 
-
-# tagsforplb: app; game; simulator
-# Databike game
+# Main code for `databike` app.
 
 # external dependencies
 require(svDialogs)
 require(grid)
-
-
-
 
 dn <- "."
 functions.fn <- "functions.Rdata"
@@ -23,7 +17,7 @@ path.data <- paste(c(dn, data.fn), collapse = "/")
 load(path.functions)
 load(path.data)
 
-# bike datatt
+# bike ascii frames
 bike <- asciibike()
 fv.idle <- ascii_idle_fv(bike)
 fv.drive <- ascii_drive_fv(bike)
@@ -32,7 +26,10 @@ fvl <- ascii_fvl(fv.drive, fv.idle,
                    fv.obstacle)
 while(bcond > 0){
   do_idle(mprob, rprob)
-  ride.dur <- get_ride.dur(optl)
+  # retrieve ride duration
+  rt <- sample(optl, 1) 
+  ride.dur <- get_ride.dur(rt, ru)
+  # new ride sequence data
   ride.seq <- seq(1, ride.dur, 1)
   n.obstacles <- sample(10, 1)
   o.seq <- sample(ride.seq, 

@@ -1,0 +1,12 @@
+---
+title: "Developing an small app about scooters"
+author: "Sean Maden"
+date: "4/2/2020"
+output: html_document
+---
+
+
+To demonstrate the utility of objective oriented programming
+I intend to port this into python
+
+Further updates include classes that inform user prgogrsss

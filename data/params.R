@@ -11,14 +11,10 @@ mprob <- 0.5 # maintenance
 rprob <- 0.5 # repair
 bdi <- 0.1 # bcond change increment
 rpm <- 1.5 # repair prob modifier to bdi
-
 ssint <- 0.15 # frame interval (game speed)
 # possible obstacle symbols (randomize on encounter)
 ossl <- c("#", "$", "@", ".", "")# ascii chars
-
 # possible ride durations (ascending length)
 optl = c("short", "medium", "long")
 # ride duration "units" (num. loops/value c)
 ru <- c(20, 50, 100)
-
-# save.image(fpath)

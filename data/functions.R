@@ -2,12 +2,10 @@
 
 # Main app functions
 # Called with load() in app.R
-# 
 
-#=====================
-#--------------------
+#------------------
 # 1. load game data
-#--------------------
+#------------------
 # 1A. load frame data
 # 1A1. bike data customization
 # 1A1A. prompt bike info
@@ -47,10 +45,9 @@ ascii_obstacle_fv <- function(osym = sample(ossl, 1)){
   return(fv)
 }
 
-
-#--------------
+#-----------
 # 3. idle UI
-#--------------
+#-----------
 # do_idle calls get_task_outcome
 # if player does work, update bcond (chance to fix or break)
 # maintenance bcond diff < repair bcond diff

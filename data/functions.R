@@ -73,24 +73,39 @@ get_task_outcome <- function(task.prob, bcond){
   }
   return(outcome)
 }
-# 3C. main idle function
-do_idle <- function(mprob, rprob, bcond, ssint = 0.15, 
-                    framevector = fv.idle, logo = logo,
-                    alabel = "idle mode"){
-  grid.newpage()
-  # add logo
-  grid.raster(logo, width = 0.35, height = 0.25, 
-              hjust = -0.2, vjust = 1.7)
-  idlechoice <- 0
-  while(idlechoice == 0){
-    # idle animation
+# idle animation
+idle_ani <- function(fv.idle, logo, 
+                     alabel = "idle mode", 
+                     loops = 10, ssint = 0.12){
+  for(l in 1:loops){
     for(f in framevector){
+      grid.newpage()
+      grid.raster(logo, width = 0.35, height = 0.25, 
+                  hjust = -0.2, vjust = 1.7)
       framewithlabel <- paste0(c(alabel, f), 
                                collapse = "\n")
-      grid.newpage()
       grid.text(framewithlabel)
       Sys.sleep(ssint)
     }
+  }
+}
+
+env(idle_ani(fv.idle))
+
+# idle options
+do_idle <- function(mprob, rprob, bcond, ssint = 0.15, 
+                    framevector = fv.idle, logo = logo){
+  grid.newpage()
+  # add logo
+  
+  idlechoice <- 0
+  while(idlechoice == 0){
+    # idle animation
+    
+    env(idle_ani())
+    
+    env(idle_ani())
+    
   }
   itask <- dlg_message("maintain?", 
                        "yesno")$res

@@ -38,6 +38,7 @@ add error log (track new errs)
 
 
 # APP DETAILS
+. add save option with caching
 . add GITIGNORE
 
 # todo long-term

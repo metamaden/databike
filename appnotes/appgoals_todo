@@ -14,6 +14,10 @@ and current app status
 # todo short-term
 # generally ordred by decerasing importance ,by section
 
+# Graphical interface
+. make viewports with stats
+. run multiple tasks simultaneous
+
 # RIDE UI
 . tdist counter (adds tdist updater to ride display)
 . num obstacles encountered

@@ -15,6 +15,8 @@ rpm <- 1.5 # repair prob modifier to bdi
 
 ssint <- 0.15 # frame interval (game speed)
 
+bgcol = "white" # background color
+
 # possible obstacle symbols (randomize on encounter)
 ossl <- c("#", "$", "@", ".", "")# ascii chars
 

@@ -2,7 +2,7 @@
 
 # Main app functions
 # Called with load() in app.R
-
+# 
 
 #=====================
 #--------------------
@@ -78,19 +78,18 @@ idle_ani <- function(fv.idle, logo,
                      alabel = "idle mode", 
                      loops = 10, ssint = 0.12){
   for(l in 1:loops){
+    grid.newpage()
+    grid.raster(logo, width = 0.35, height = 0.25, 
+                hjust = -0.2, vjust = 1.7)
     for(f in framevector){
-      grid.newpage()
-      grid.raster(logo, width = 0.35, height = 0.25, 
-                  hjust = -0.2, vjust = 1.7)
       framewithlabel <- paste0(c(alabel, f), 
                                collapse = "\n")
       grid.text(framewithlabel)
+      grid.text(framewithlabel, col = bgcol)
       Sys.sleep(ssint)
     }
   }
 }
-
-env(idle_ani(fv.idle))
 
 # idle options
 do_idle <- function(mprob, rprob, bcond, ssint = 0.15, 

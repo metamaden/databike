@@ -2,6 +2,7 @@
 
 require(svDialogs)
 require(grid)
+require(jpeg)
 
 # app.R
 # Main code for `databike` app.
@@ -26,8 +27,8 @@ fv.drive <- ascii_drive_fv(bike)
 fv.obstacle <- ascii_obstacle_fv()
 fvl <- ascii_fvl(fv.drive, fv.idle)
 stopoption <- "no"
-while(bcond > 0 & 
-      stopoption == "no"){
+logo <- readJPEG("databike_logo.jpg")
+while(bcond > 0 & stopoption == "no"){
   do_idle(mprob, rprob, bcond)
   # retrieve ride duration
   rt <- sample(optl, 1)
@@ -35,8 +36,7 @@ while(bcond > 0 &
   # new ride sequence data
   ride.seq <- seq(1, ride.dur, 1)
   n.obstacles <- sample(10, 1)
-  o.seq <- sample(ride.seq,
-                  n.obstacles)
+  o.seq <- sample(ride.seq, n.obstacles)
   # run ride
   ride(ride.seq, ride.dur,
        o.seq, bcond, tdist, onum)
@@ -47,7 +47,3 @@ while(bcond > 0 &
 # end game message
 dlg_message(paste0("Game over!", " mileage = ", tdist,
                    ", obstacles = ", onum), "ok")
-
-
-
-

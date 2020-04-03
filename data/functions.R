@@ -46,11 +46,6 @@ ascii_obstacle_fv <- function(osym = sample(ossl, 1)){
   fv <- c(o1, o2, o3, o4)
   return(fv)
 }
-# 1C. organize "scene" data
-ascii_fvl <- function(drive, idle){
-  fvl <- list("idle" = idle, "drive" = drive)
-  return(fvl)
-}
 
 
 #--------------
@@ -79,7 +74,24 @@ get_task_outcome <- function(task.prob, bcond){
   return(outcome)
 }
 # 3C. main idle function
-do_idle <- function(mprob, rprob, bcond){
+do_idle <- function(mprob, rprob, bcond, ssint = 0.15, 
+                    framevector = fv.idle, logo = logo,
+                    alabel = "idle mode"){
+  grid.newpage()
+  # add logo
+  grid.raster(logo, width = 0.35, height = 0.25, 
+              hjust = -0.2, vjust = 1.7)
+  idlechoice <- 0
+  while(idlechoice == 0){
+    # idle animation
+    for(f in framevector){
+      framewithlabel <- paste0(c(alabel, f), 
+                               collapse = "\n")
+      grid.newpage()
+      grid.text(framewithlabel)
+      Sys.sleep(ssint)
+    }
+  }
   itask <- dlg_message("maintain?", 
                        "yesno")$res
   # parse maintenance task
@@ -174,18 +186,15 @@ ride.normal <- function(alabel = "ride: normal", msgperc,
   }
 }
 ride.obstacle <- function(alabel = "ride: obstacle!", 
-                          msgperc,
-                          framevector1 = fv.drive, 
-                          ssint = 0.5, loops = 2){
+                          msgperc, framevector1 = fv.idle, 
+                          ssint = ssint, loops = 2){
   # sequences the obstacle encounter animation
   fv.obstacle <- ascii_obstacle_fv()
   grid.newpage()
   c = 1
   # grab obstacle data
-  fv.obstacle <- ascii_obstacle_fv()
-  fvl <- ascii_fvl(fv.drive, fv.idle, 
-                   fv.obstacle)
-  
+  framevector1 <- rep(fv.idle, 2)
+  framevector2 <- ascii_obstacle_fv()
   while(c <= loops){
     for(i in 1:length(framevector1)){
       grid.newpage()
@@ -223,14 +232,12 @@ ride <- function(ride.seq, ride.dur,
   ride.finished <- 0; ride.status <- 1
   perc.finished <- 0; oride <- 0
   # bcchange <- bc # bike condition
-  while(perc.finished < 100 & 
-        ride.status > 0){
+  while(perc.finished < 100 & ride.status > 0){
     for(c in ride.seq){
       perc.finished <- round(100*(c/length(ride.seq)), 0)
-      msgperc <- paste0("ride progress: ", 
-                        perc.finished, "%")
-      ride.finished <- ifelse(c == max(ride.seq), 
-                              1, 0)
+      msgperc <- paste0("ride progress = ", perc.finished, "%\n",
+                        "mileage = ", tdist)
+      ride.finished <- ifelse(c == max(ride.seq), 1, 0)
       if(c %in% o.seq){
         ride.obstacle(msgperc = msgperc)
         ride.status <- obstacle.uifun()

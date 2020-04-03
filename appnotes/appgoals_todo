@@ -55,6 +55,8 @@ add error log (track new errs)
 . customize ride (set bikestr)
 
 # APP DETAILS
+. fix idle (coordinate animation and options)
+. adds logo
 . use source, obviate need for .Rdata objects
 
 # RIDE UI

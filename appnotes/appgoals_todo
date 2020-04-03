@@ -36,10 +36,13 @@ add error log (track new errs)
 . mileage modifies maintenance -> bcond (NOT DONE)
 . make runnable from cl
 
+# BLOG STUFF
+. make gif ("make_gif.R")
 
 # APP DETAILS
 . add save option with caching
 . add GITIGNORE
+. rebuild with Rlib "magick"???
 
 # todo long-term
 . app launch specs (NOT DONE)

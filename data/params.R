@@ -3,8 +3,7 @@
 # script to store data for scootsim
 # called with load() in app.R
 
-# load usrscores
-# starting stats
+# starting values
 tdist <- 0 # total mileage
 onum <- 0 # obstacle number
 bcond <- 0.5 # bike condition
@@ -14,9 +13,6 @@ bdi <- 0.1 # bcond change increment
 rpm <- 1.5 # repair prob modifier to bdi
 
 ssint <- 0.15 # frame interval (game speed)
-
-bgcol = "white" # background color
-
 # possible obstacle symbols (randomize on encounter)
 ossl <- c("#", "$", "@", ".", "")# ascii chars
 

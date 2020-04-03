@@ -11,15 +11,6 @@ require(jpeg)
 fp.org <- "./org.R"
 source(fp.org)
 
-#dn <- "."
-#functions.fn <- "functions.Rdata"
-#data.fn <- "data.Rdata"
-#path.functions <- paste(c(dn, functions.fn), collapse = "/")
-#path.data <- paste(c(dn, data.fn), collapse = "/")
-# load game data and functions
-#load(path.functions)
-#load(path.data)
-
 # bike ascii frames
 bike <- asciibike()
 fv.idle <- ascii_idle_fv(bike)

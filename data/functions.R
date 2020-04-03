@@ -273,7 +273,3 @@ ride <- function(ride.seq, ride.dur,
   grid.newpage()
   return(bc)
 }
-
-
-
-# save.image(fn)

@@ -25,11 +25,13 @@ bike <- asciibike()
 fv.idle <- ascii_idle_fv(bike)
 fv.drive <- ascii_drive_fv(bike)
 fv.obstacle <- ascii_obstacle_fv()
-fvl <- ascii_fvl(fv.drive, fv.idle)
+fvl <- list("drive" = fv.drive, 
+            "idle" = fv.idle)
 stopoption <- "no"
 logo <- readJPEG("databike_logo.jpg")
 while(bcond > 0 & stopoption == "no"){
-  do_idle(mprob, rprob, bcond)
+  do_idle(framevector = fv.idle, logo = logo,
+          mprob, rprob, bcond)
   # retrieve ride duration
   rt <- sample(optl, 1)
   ride.dur <- get_ride.dur(rt, ru)

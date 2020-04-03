@@ -82,57 +82,52 @@ idle_ani <- function(fv.idle, logo,
     grid.raster(logo, width = 0.35, height = 0.25, 
                 hjust = -0.2, vjust = 1.7)
     for(f in framevector){
-      framewithlabel <- paste0(c(alabel, f), 
-                               collapse = "\n")
-      grid.text(framewithlabel)
-      grid.text(framewithlabel, col = bgcol)
+      grid.newpage()
+      
+      
       Sys.sleep(ssint)
     }
   }
 }
 
 # idle options
-do_idle <- function(mprob, rprob, bcond, ssint = 0.15, 
-                    framevector = fv.idle, logo = logo){
+do_idle <- function(framevector, logo, 
+                    mprob, rprob, bcond, ssint = 1, 
+                    alabel = "stats: idle"){
   grid.newpage()
+  grid.raster(logo, width = 0.35, height = 0.25, 
+              hjust = -0.2, vjust = 1.7)
+  framewithlabel <- paste0(c(alabel, framevector[1]), 
+                           collapse = "\n")
+  grid.text(framewithlabel)
+  Sys.sleep(ssint)
   # add logo
-  
   idlechoice <- 0
   while(idlechoice == 0){
-    # idle animation
-    
-    env(idle_ani())
-    
-    env(idle_ani())
-    
-  }
-  itask <- dlg_message("maintain?", 
-                       "yesno")$res
-  # parse maintenance task
-  if(itask == "yes"){
-    outcome <- get_task_outcome(mprob, bcond)
-    bcond.new = ifelse(outcome == "fix",
-                       bcond + bdi, 
-                       bcond - bdi)
-  } else{
-    itask <- dlg_message("repair?", "yesno")$res
-    # parse repair task
+    itask <- dlg_message("maintain?", 
+                         "yesno")$res
+    # parse maintenance task
     if(itask == "yes"){
-      outcome <- get_task_outcome(rprob, bcond)
-      bcond.new <- ifelse(outcome == "fix",
-                          bcond + bdi*rpm,
-                          bcond - bdi*rpm)
-    }
-    else{
-      return(bcond)
+      outcome <- get_task_outcome(mprob, bcond)
+      bcond.new = ifelse(outcome == "fix",
+                         bcond + bdi, 
+                         bcond - bdi)
+    } else{
+      itask <- dlg_message("repair?", "yesno")$res
+      # parse repair task
+      if(itask == "yes"){
+        outcome <- get_task_outcome(rprob, bcond)
+        bcond.new <- ifelse(outcome == "fix",
+                            bcond + bdi*rpm,
+                            bcond - bdi*rpm)
+      }
+      else{
+        return(bcond)
+      }
     }
   }
   return(bcond.new)
 }
-
-
-
-
 
 #--------------------------
 # 4. ride management and UI

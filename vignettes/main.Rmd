@@ -2,18 +2,20 @@
 title: '`databike` vignette'
 author: "Sean Maden"
 date: "4/4/2020"
-output: html_document
-abstract: >
+output:
+  pdf_document: default
+  html_document: default
+abstract: |
   This is the main vignette outlining the `databike` app structure, including functions and data.
 ---
 
-[databike logo](imgs/logo.tiff)
+![databike logo](imgs/logo.jpg)
 
 # Outline
 
 The app data is contained in 2 main scripts, `params.R` and `functions.R`. The former consists of the main functions managing the app, and the latter defines starting parameters and user options.
 
-![flowchart.jpg](imgs/design_workflow.jpg)
+![flowchart.jpg](imgs/app_flowchart.jpg)
 
 ## params.R
 

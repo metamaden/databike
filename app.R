@@ -21,7 +21,7 @@ fvl <- list("drive" = fv.drive,
 stopoption <- "no"
 logo <- readJPEG("databike_logo.jpg")
 while(bcond > 0 & stopoption == "no"){
-  do_idle(framevector = fv.idle, logo = logo,
+  bcond <- do_idle(framevector = fv.idle, logo = logo,
           mprob, rprob, bcond)
   # retrieve ride duration
   rt <- sample(optl, 1)

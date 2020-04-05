@@ -106,7 +106,7 @@ do_idle <- function(framevector, logo,
     # parse maintenance task
     if(itask == "yes"){
       outcome <- get_task_outcome(mprob, bcond)
-      bcond.new = ifelse(outcome == "fix",
+      bcond = ifelse(outcome == "fix",
                          bcond + bdi, 
                          bcond - bdi)
     } else{
@@ -114,16 +114,18 @@ do_idle <- function(framevector, logo,
       # parse repair task
       if(itask == "yes"){
         outcome <- get_task_outcome(rprob, bcond)
-        bcond.new <- ifelse(outcome == "fix",
+        bcond <- ifelse(outcome == "fix",
                             bcond + bdi*rpm,
                             bcond - bdi*rpm)
+        idlechoice <- 1
       }
       else{
         return(bcond)
       }
     }
+    idlechoice <- 1
   }
-  return(bcond.new)
+  return(bcond)
 }
 
 #--------------------------

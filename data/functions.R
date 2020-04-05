@@ -60,16 +60,18 @@ get_task_outcome <- function(task.prob, bcond){
   s1 = rep("fix", v)
   s2 = rep("break", 100 - v)
   outcome <- sample(c(s1, s2), 1)
-  dmsg <- paste0("Task complete! ")
+  dmssg <- paste0("Task complete! ")
   if(outcome == "fix"){
-    dmsg <- paste0(dmsg, " Bike condition has increased :D")
-    dmsg <- paste0(dmsg, " new bcond = ", bcond)
+    dmssg <- paste0(dmssg, " Bike condition has increased :)")
+    dmssg <- paste0(dmssg, " new bcond = ", bcond)
   } else{
-    dmsg <- paste0(dmsg, " Bike condition has decreased ;[")
-    dmsg <- paste0(dmsg, " new bcond = ", bcond)
+    dmssg <- paste0(dmssg, " Bike condition has decreased :(")
+    dmssg <- paste0(dmssg, " new bcond = ", bcond)
   }
+  dlgMessage(dmssg, "ok")
   return(outcome)
 }
+
 # idle animation
 idle_ani <- function(fv.idle, logo, 
                      alabel = "idle mode", 

@@ -95,16 +95,21 @@ get_task_outcome <- function(task.prob, bcond, dmssg = ""){
 #' @return NULL
 idle_ani <- function(fv.idle, logo, 
                      alabel = "\nidle mode", 
-                     loops = 3, sleepint = si.idle){
+                     loops = 5, sleepint = si.idle){
   grid.newpage()
   grid.raster(logo, width = 0.35, height = 0.25, 
               hjust = -0.2, vjust = 1.7)
+  pf2 <- fv.idle[1]
+  pf1 <- paste0(c(pf2, alabel),
+                collapse = "")
+  
   for(l in 1:loops){
-    grid.text(c(fv.idle[1], alabel), gp = gpar(col = "black"))
+    grid.text(pf1, gp = gpar(col = "black"))
     Sys.sleep(sleepint)
-    grid.text(c(fv.idle[1], alabel), gp = gpar(col = "white"))
+    grid.text(pf2, gp = gpar(col = "white"))
+    Sys.sleep(sleepint)
   }
-  grid.newpage()
+  grid.text(pf1, gp = gpar(col = "black"))
   return(NULL)
 }
 

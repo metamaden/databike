@@ -21,7 +21,7 @@ nobst = 0 # num obstacles
 
 # "frame speed" settings (sleepintts)
 si.stationary <- 1
-si.idle <- 0.2
+si.idle <- 0.09
 si.ridenorm <- 0.12
 si.rideobst <- 0.1
 

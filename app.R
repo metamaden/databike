@@ -20,10 +20,21 @@ fvl <- list("drive" = fv.drive,
             "idle" = fv.idle)
 stopoption <- "no"
 logo <- readJPEG("databike_logo.jpg")
-nride = 0
 while(bcond > 0 & stopoption == "no"){
-  app.fun()
+  
+  su.ride <- app.fun(fv.idle, logo, 
+                     mprob, rprob, 
+                     bcond, nobst)
+  
+  #if(nride==0){
+  #  
+  #} else{
+  #  app.fun()
+  #}
+  
 }
 # end game message
-dlg_message(paste0("Game over!", " mileage = ", tdist,
-                   ", obstacles = ", onum), "ok")
+dlg_message(paste0("Game over!", " mileage = ", 
+                   tdist,
+                   ", obstacles = ", onum), 
+            "ok")

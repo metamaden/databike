@@ -347,30 +347,31 @@ ride <- function(ride.seq, ride.dur,
 
 #' app function
 #'
-#'
-#'
-#'
-#'
-if(nride == 0){
-  bcond <- do_idle(framevector = fv.idle, logo = logo,
-                   mprob, rprob, bcond)
-  # retrieve ride duration
-  rt <- sample(optl, 1)
+#' This does main app calls for idle phase and ride phase.
+#' @param fv.idle Frame vector for idle mode animation
+#' @param logo Logo JPEG for idle mode display
+#' @param mprob Maintenance probability success
+#' @param rprob Repair probability success
+#' @param bcond Bike condition
+#' @param nobst Number of obstacles
+#' @return su.ride, list of updated usrstats
+app.fun <- function(fv.idle, logo,
+                    mprob = 0.1, rprob = 0.2, 
+                    bcond = 0.5, nobst = 10){
+  bcond <- do_idle(fv.idle, logo, mprob, 
+                   rprob, bcond)
+  rt <- sample(optl, 1) # ride time
   ride.dur <- get_ride.dur(rt, ru)
-  # new ride sequence data
   ride.seq <- seq(1, ride.dur, 1)
-  n.obstacles <- sample(10, 1)
+  n.obstacles <- sample(nobst, 1)
   o.seq <- sample(ride.seq, n.obstacles)
-  # run ride
   su.ride <- ride(ride.seq, ride.dur,
-                  o.seq, bcond, tdist, onum)
-  # option to quit
-  stopoption <- dlg_message("Do you want to ",
-                            "stop the game?", 
-                            "yesno")$res
-  nride = 1 + nride
-} else{
-  bcond <- su.ride[["bcond"]]
-  tdist <- su.ride[["tdist"]]
-  onum <- su.ride[["onum"]]
+                  o.seq, bcond, tdist, 
+                  onum)
+  # stop option
+  so <- dlg_message("Do you want to ",
+                    "stop the game?",
+                    "yesno")$res
+  list("stopoption" = so)
+  return(su.ride)
 }

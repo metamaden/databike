@@ -19,13 +19,13 @@ The app data is contained in 2 main scripts, `params.R` and `functions.R`. The f
 
 Starting using parameters include `tdist`, `bcond`, and askndaslkdn
 
-[params.R flowchart]()
+[params.R flowchart](params_workflow.jpg)
 
 ## functions.R
 
 Functions do two principle tasks: 1. manage frames for app sequence; 2. handle user options through dialogue windows.
 
-[function.R flowchart]()
+[function.R flowchart](ride_workflow.jpg)
 
 # Running the app
 

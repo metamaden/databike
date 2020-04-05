@@ -67,7 +67,7 @@ ascii_obstacle_fv <- function(osym = sample(ossl, 1)){
 #' @param bcond Bike condition
 #' @param dmssg Message first strings
 #' @return Task outcome
-get_task_outcome <- function(task.prob, bcond, dmmsg = ""){
+get_task_outcome <- function(task.prob, bcond, dmssg = ""){
   # parses maintenance and repair tasks
   v <- 100*task.prob
   s1 = rep("fix", v)
@@ -95,11 +95,15 @@ get_task_outcome <- function(task.prob, bcond, dmmsg = ""){
 #' @return NULL
 idle_ani <- function(fv.idle, logo, 
                      alabel = "idle mode", 
-                     loops = 10, sleepint = si.idle){
+                     loops = 3, sleepint = si.idle){
   grid.newpage()
+  grid.raster(logo, width = 0.35, height = 0.25, 
+              hjust = -0.2, vjust = 1.7)
   for(l in 1:loops){
     for(f in fv.idle){
       grid.text(f)
+      grid.raster(logo, width = 0.35, height = 0.25, 
+                  hjust = -0.2, vjust = 1.7)
       Sys.sleep(sleepint)
       grid.newpage()
     }
@@ -365,8 +369,9 @@ ride <- function(ride.seq, ride.dur, o.seq,
 app.fun <- function(fv.idle, logo,
                     mprob = 0.1, rprob = 0.2, 
                     bcond = 0.5, nobst = 10){
-  bcond <- do_idle(fv.idle, logo, mprob, 
-                   rprob, bcond)
+  bcond <- do_idle(fv.idle, logo, mprob, rprob,
+                   sleepint = si.stationary, 
+                   bcond, alabel = "mode: idle")
   rt <- sample(optl, 1) # ride time
   ride.dur <- get_ride.dur(rt, ru)
   ride.seq <- seq(1, ride.dur, 1)

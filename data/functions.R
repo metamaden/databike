@@ -65,20 +65,20 @@ ascii_obstacle_fv <- function(osym = sample(ossl, 1)){
 #' Parse repair/maintain task.
 #' @param task.prob Probability of task success (else "break")
 #' @param bcond Bike condition
+#' @param dmssg Message first strings
 #' @return Task outcome
-get_task_outcome <- function(task.prob, bcond){
+get_task_outcome <- function(task.prob, bcond, dmmsg = ""){
   # parses maintenance and repair tasks
   v <- 100*task.prob
   s1 = rep("fix", v)
   s2 = rep("break", 100 - v)
   outcome <- sample(c(s1, s2), 1)
-  dmssg <- paste0("Task complete! ")
   if(outcome == "fix"){
     dmssg <- paste0(dmssg, " Bike condition has increased :)")
-    dmssg <- paste0(dmssg, " new bcond = ", bcond)
+    dmssg <- paste0(dmssg, " , new bcond = ", bcond)
   } else{
     dmssg <- paste0(dmssg, " Bike condition has decreased :(")
-    dmssg <- paste0(dmssg, " new bcond = ", bcond)
+    dmssg <- paste0(dmssg, " , new bcond = ", bcond)
   }
   dlgMessage(dmssg, "ok")
   return(outcome)
@@ -321,28 +321,26 @@ ride <- function(ride.seq, ride.dur, o.seq,
       } else{
         ride.normal(msgperc = msgperc)
       }
-      if(ride.status == 0){
-        # triggers end of ride, returns usr stats
-        tdnew <- tdist + c
-        onew <- onum + oride
-        messagestr <- paste0("the ride has ended!! \n",
-                         "your current usr stats:\n ",
-                         "mileage = ", tdnew, "\n ", 
-                         "obstacles = ", onew, "\n ",
-                         "bike.cond = ", bcond, "\n ")
-        # update user stats
-        tdist = tdnew
-        onum = onew
-        dlg_message(messagestr, 
-                    type = "ok")
-        return(list("tdist" = tdist,
-                    "onum" = onum,
-                    "bcond" = bcond))
-      }
     }
+    stop("How did we get here?", 
+         "Stopped inside while loop on ride")
   }
+  # update usr stats
+  tdist <- tdist + c
+  onum <- onum + oride
+  # end-of-ride message
+  messagestr <- paste0("the ride has ended!! \n",
+                       "your current usr stats:\n ",
+                       "mileage = ", tdist, "\n ", 
+                       "obstacles = ", onew, "\n ",
+                       "bike.cond = ", bcond, "\n ")
+  dlg_message(messagestr, 
+              type = "ok")
   grid.newpage()
-  return(bc)
+  lr <- list("tdist" = tdist,
+             "onum" = onum,
+             "bcond" = bcond)
+  return(lr)
 }
 
 #' app function

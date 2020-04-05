@@ -96,16 +96,20 @@ get_task_outcome <- function(task.prob, bcond, dmssg = ""){
 idle_ani <- function(fv.idle, logo, 
                      alabel = "idle mode", 
                      loops = 3, sleepint = si.idle){
+  require(magick)
+  
+  plot.new()
+  rasterImage(image_read(logo), 0.5, -1, 1, 1)
   for(l in 1:loops){
     for(f in fv.idle){
-      grid.newpage()
-      gtf <- grid.text(f)
-      gtl <- grid.raster(logo, width = 0.35, height = 0.25, 
-                         hjust = -0.2, vjust = 1.7)
-      grid.draw(gtf, gtl)
+      
+      grid.text(f, gp = gpar(col = "black"))
+      grid.text(f, gp = gpar(col = "white"))
+      
       Sys.sleep(sleepint)
     }
   }
+  grid.newpage()
   return(NULL)
 }
 

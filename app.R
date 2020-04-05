@@ -33,17 +33,13 @@ fvl <- list("drive" = fv.drive,
 # main app loop
 #---------------
 while(bcond > 0 & stopoption == "no"){
-  if(nride == 0){
-    su.ride <- app.fun(fv.idle, logo, mprob, 
-                       rprob, bcond, nobst)
-    stopoption <- su.ride[["stopoption"]]
-    bcond <- su.ride[["su.ride"]][["bcond"]]
-    nride = nride + 1
-  } else{
-    su.ride <- app.fun(fv.idle, logo, mprob, 
-                       rprob, bcond, nobst)
-  }
-  stop("How did we get here?")
+  su.ride <- app.fun(fv.idle, logo, mprob, 
+                     rprob, bcond, nobst)
+  stopoption <- su.ride[["stopoption"]]
+  bcond <- su.ride[["su.ride"]][["bcond"]]
+  nobst <- su.ride[["su.ride"]][["onum"]]
+  tdist <- su.ride[["su.ride"]][["tdist"]]
+  nride = nride + 1
 }
 
 #------------------
@@ -51,4 +47,5 @@ while(bcond > 0 & stopoption == "no"){
 #------------------
 dlg_message(paste0("Game over!", " mileage = ", 
                    tdist, ", obstacles = ", 
-                   onum), "ok")
+                   onum, ", num. rides = ",
+                   nride), "ok")

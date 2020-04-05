@@ -102,7 +102,6 @@ idle_ani <- function(fv.idle, logo,
   pf2 <- fv.idle[1]
   pf1 <- paste0(c(pf2, alabel),
                 collapse = "")
-  
   for(l in 1:loops){
     grid.text(pf1, gp = gpar(col = "black"))
     Sys.sleep(sleepint)

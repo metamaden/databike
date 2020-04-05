@@ -1,42 +1,51 @@
 #!/usr/bin/env R
 
-require(svDialogs)
-require(grid)
-require(jpeg)
+# Main app script, to be run from command line
 
-# app.R
-# Main code for `databike` app.
+#-------------
+# dependencies
+#-------------
+require(svDialogs) # manages usr dialogues
+require(grid) # prints char strings for ani
+require(jpeg) # for loading databike logo
 
-# external dependencies
-fp.org <- "./org.R"
-source(fp.org)
+rdata.dir <- "."
+dn <- "data"
+fn.fun <- "functions"
+fn.params <- "params"
+fp.fun <- paste0(c(dn, paste0(fn.fun, ".R")), 
+                 collapse = "/")
+fn.params <- paste0(c(dn, paste0(fn.params, ".R")), 
+                    collapse = "/")
+source(fp.fun); source(fn.params)
 
-# bike ascii frames
+#-----------------
+# ani char strings
+#-----------------
 bike <- asciibike()
 fv.idle <- ascii_idle_fv(bike)
 fv.drive <- ascii_drive_fv(bike)
 fv.obstacle <- ascii_obstacle_fv()
 fvl <- list("drive" = fv.drive, 
             "idle" = fv.idle)
-stopoption <- "no"
-logo <- readJPEG("databike_logo.jpg")
+
+#---------------
+# main app loop
+#---------------
 while(bcond > 0 & stopoption == "no"){
-  do_idle(framevector = fv.idle, logo = logo,
-          mprob, rprob, bcond)
-  # retrieve ride duration
-  rt <- sample(optl, 1)
-  ride.dur <- get_ride.dur(rt, ru)
-  # new ride sequence data
-  ride.seq <- seq(1, ride.dur, 1)
-  n.obstacles <- sample(10, 1)
-  o.seq <- sample(ride.seq, n.obstacles)
-  # run ride
-  ride(ride.seq, ride.dur,
-       o.seq, bcond, tdist, onum)
-  # option to quit
-  stopoption <- dlg_message("Do you want to stop the game?", 
-                            "yesno")$res
+  su.ride <- app.fun(fv.idle, logo, mprob, 
+                     rprob, bcond, nobst)
+  stopoption <- su.ride[["stopoption"]]
+  bcond <- su.ride[["su.ride"]][["bcond"]]
+  nobst <- su.ride[["su.ride"]][["onum"]]
+  tdist <- su.ride[["su.ride"]][["tdist"]]
+  nride = nride + 1
 }
-# end game message
-dlg_message(paste0("Game over!", " mileage = ", tdist,
-                   ", obstacles = ", onum), "ok")
+
+#------------------
+# end-of-game stuff
+#------------------
+dlg_message(paste0("Game over!", " mileage = ", 
+                   tdist, ", obstacles = ", 
+                   onum, ", num. rides = ",
+                   nride), "ok")

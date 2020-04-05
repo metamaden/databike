@@ -1,3 +1,17 @@
+
+
+# Bugs
+. game over after first ride *** 
+.. returns error "How did we get here", check while loop conditions!!
+
+. game skips to game over when "no" for both idle tasks
+. idle animation wonkiness
+
+
+
+
+
+
 # databike
 # notes on `databike` app progress
 
@@ -9,6 +23,21 @@ and current app status
 #==================
 # todo short-term
 # generally ordred by decerasing importance ,by section
+
+# aesthetic stuff
+. draw background with grobs (lib grid)
+. do image effects (lib magick)
+. do some cool animations for transitions (lib magick)
+
+# animation improvements
+. print animation slides as JPEG frames
+. manage JPEG frame loads with magick
+
+# helpful links for graphics modifications
+https://www.rdocumentation.org/packages/multipanelfigure/versions/2.0.2
+https://cran.r-project.org/web/packages/magick/vignettes/intro.html
+https://stackoverflow.com/questions/48922873/how-to-change-color-to-a-textgrob-item
+
 
 # Graphical interface
 . make viewports with stats

@@ -8,14 +8,17 @@ output:
 abstract: |
   This is the main vignette outlining the `databike` app structure, including functions and data.
 ---
-
-![databike logo](imgs/logo.jpg)
+```{r logo-img, out.width = "100px", eval = T, echo = F, fig.align = "center"}
+knitr::include_graphics("imgs/logo.jpg")
+```
 
 # Outline
 
 The app data is contained in 2 main scripts, `params.R` and `functions.R`. The former consists of the main functions managing the app, and the latter defines starting parameters and user options.
 
-![flowchart.jpg](imgs/app_flowchart.jpg)
+```{r mainapp-img, out.width = "400px", eval = T, echo = F, fig.align = "center"}
+knitr::include_graphics("imgs/app_flowchart.jpg")
+```
 
 ## params.R
 
@@ -25,22 +28,23 @@ Starting using parameters include `tdist`, `bcond`, and askndaslkdn
 
 ### idle()
 
-![params.R flowchart](imgs/idle_workflow.jpg)
+```{r idlefun-img, out.width = "400px", eval = T, echo = F, fig.align = "center"}
+knitr::include_graphics("imgs/idle_flowchart.jpg")
+```
 
 ### ride()
 
 Functions do two principle tasks: 1. manage frames for app sequence; 2. handle user options through dialogue windows.
 
-![function.R flowchart](imgs/ride_workflow.jpg)
+```{r ridefun-img, out.width = "400px", eval = T, echo = F, fig.align = "center"}
+knitr::include_graphics("imgs/ride_flowchart.jpg")
+```
+
 
 # Running the app
 
 Currently, the app works within a standard R package format, with the exception of `app.R`, which lives in the main directory. To run the app, either run `app.R` from an Rsession or from command line with:
 
-```{bash, appcallcl--fixthis!!, eval = FALSE, echo = TRUE}
+```{bash, appcallcl--fixthis!!, eval = FALSE, echo = TRUE, fig.align = "center"}
 Rscript ./app.R
 ```
-
-
-
-

@@ -33,8 +33,17 @@ fvl <- list("drive" = fv.drive,
 # main app loop
 #---------------
 while(bcond > 0 & stopoption == "no"){
-  su.ride <- app.fun(fv.idle, logo, mprob, 
-                     rprob, bcond, nobst)
+  if(nride == 0){
+    su.ride <- app.fun(fv.idle, logo, mprob, 
+                       rprob, bcond, nobst)
+    stopoption <- su.ride[["stopoption"]]
+    bcond <- su.ride[["su.ride"]][["bcond"]]
+    nride = nride + 1
+  } else{
+    su.ride <- app.fun(fv.idle, logo, mprob, 
+                       rprob, bcond, nobst)
+  }
+  stop("How did we get here?")
 }
 
 #------------------

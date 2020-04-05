@@ -189,7 +189,8 @@ get_ride.dur <- function(rt, ru){
 #' @return If ride canceled, returns 0, else returns 1 after bcond modified
 obstacle.uifun <- function(mx.dmg.extent = 0.2){
   dmg.extent <- sample(seq(mx.dmg.extent, 0.01), 1)
-  dmg.message <- ifelse(dmg.extent > 0.1, "heavy", "light")
+  dmg.message <- ifelse(dmg.extent > 0.1, 
+                        "heavy", "light")
   ui.msg <- dlg_message(paste0("Cancel your ride?",
                                " If `no`, your bike could sustain ", 
                                dmg.message, " damage..."), "yesno")$res
@@ -211,6 +212,7 @@ obstacle.uifun <- function(mx.dmg.extent = 0.2){
   } else{
     stop("Error with obstacle encounter eval")
   }
+  return()
 }
 
 #' ride.normal
@@ -370,6 +372,5 @@ app.fun <- function(fv.idle, logo,
   so <- dlg_message("Do you want to ",
                     "stop the game?",
                     "yesno")$res
-  list("stopoption" = so)
-  return(su.ride)
+  return(list("stopoption" = so, "su.ride" = su.ride))
 }

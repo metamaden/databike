@@ -19,6 +19,12 @@ logo <- readJPEG("databike_logo.jpg")
 nride = 0 # ride quantity
 nobst = 0 # num obstacles
 
+# "frame speed" settings (sleepintts)
+si.stationary <- 0.2
+si.idle <- 0.1
+si.ridenorm <- 0.12
+si.rideobst <- 0.1
+
 # possible obstacle symbols (randomize on encounter)
 ossl <- c("#", "$", "@", ".", "")# ascii chars
 # possible ride durations (ascending length)

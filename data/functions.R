@@ -92,48 +92,46 @@ get_task_outcome <- function(task.prob, bcond, dmmsg = ""){
 #' @param alabel Main label.
 #' @param loops Total loop iters.
 #' @param ssint Sleep interval for frames.
-#' @return (none)
+#' @return NULL
 idle_ani <- function(fv.idle, logo, 
                      alabel = "idle mode", 
-                     loops = 10, ssint = 0.12){
+                     loops = 10, sleepint = si.idle){
+  grid.newpage()
   for(l in 1:loops){
-    grid.newpage()
-    grid.raster(logo, width = 0.35, height = 0.25, 
-                hjust = -0.2, vjust = 1.7)
-    for(f in framevector){
+    for(f in fv.idle){
+      grid.text(f)
+      Sys.sleep(sleepint)
       grid.newpage()
-      
-      
-      Sys.sleep(ssint)
     }
   }
+  grid.text(fv.idle[1])
+  grid.raster(logo, width = 0.35, height = 0.25, 
+              hjust = -0.2, vjust = 1.7)
+  return(NULL)
 }
 
 #' manages idle mode options
 #'
 #' Main function for idle mode. Manages repair and maintain dialogs.
 #'
-#' @param framevector Char string data for graphic
+#' @param fv.idle Idle animation char string data.
 #' @param logo Game logo for graphic
 #' @param mprob Maintenance probability (likelihood to fix vs. break)
 #' @param rprob Repair probability (likelihood to fix vs. break)
 #' @param bcond Bike condition
-#' @param ssint Sleep interval for graphic
+#' @param sleepint Sleep interval for stationary graphic
 #' @param alabel Main label for graphic
 #' @return bcond, or modified bcond if task outcome is "break"
 #' @example 
 #' bcond <- do_idle(framevector = fv.idle, logo = logo, mprob, rprob, bcond)
-do_idle <- function(framevector, logo, mprob, 
-                    rprob, bcond, ssint = 1, 
-                    alabel = "mode: idle"){
-  grid.newpage()
-  grid.raster(logo, width = 0.35, height = 0.25, 
-              hjust = -0.2, vjust = 1.7)
-  framewithlabel <- paste0(c(alabel, framevector[1]), 
-                           collapse = "\n")
-  grid.text(framewithlabel)
-  Sys.sleep(ssint)
-  # add logo
+do_idle <- function(fv.idle, logo, mprob, rprob,
+                    sleepint = si.stationary, 
+                    bcond, alabel = "mode: idle"){
+  # displays idle animation "intro"
+  # freezes on bike stationary, with logo
+  idle_ani(fv.idle, logo)
+  Sys.sleep(sleepint) # allows stationary graphic to load
+  # handle main idle options
   idlechoice <- 0
   while(idlechoice == 0){
     itask <- dlg_message("maintain?", 
@@ -227,7 +225,7 @@ obstacle.uifun <- function(mx.dmg.extent = 0.2){
 ride.normal <- function(alabel = "ride mode: normal", 
                         ride.dur, mssgperc,
                         framevector = fv.drive, 
-                        sleepint = 0.1, loops = 1){
+                        sleepint = si.ridenorm, loops = 1){
   # this is code 
   # for normal ride seq animation
   # append ride dur to alabel
@@ -259,7 +257,7 @@ ride.normal <- function(alabel = "ride mode: normal",
 #' @return NULL
 ride.obstacle <- function(alabel = "ride mode: obstacle",
                           mssgperc, ride.dur, fv.idle, 
-                          sleepint = 0.2, loops = 3){
+                          sleepint = si.rideobst, loops = 3){
   # sequences the obstacle encounter animation
   # append ride info to alabel
   alabel <- paste0(alabel, "\nride duration: ", ride.dur)

@@ -90,7 +90,7 @@ idle_ani <- function(fv.idle, logo,
 # idle options
 do_idle <- function(framevector, logo, 
                     mprob, rprob, bcond, ssint = 1, 
-                    alabel = "stats: idle"){
+                    alabel = "mode: idle"){
   grid.newpage()
   grid.raster(logo, width = 0.35, height = 0.25, 
               hjust = -0.2, vjust = 1.7)
@@ -178,7 +178,7 @@ obstacle.uifun <- function(mx.dmg.extent = 0.2){
   }
 }
 
-ride.normal <- function(alabel = "ride: normal", msgperc,
+ride.normal <- function(alabel = "ride mode: normal", msgperc,
                         framevector = fv.drive, 
                         ssint = 0.1, loops = 1){
   # this is code 
@@ -196,7 +196,7 @@ ride.normal <- function(alabel = "ride: normal", msgperc,
     c = c + 1
   }
 }
-ride.obstacle <- function(alabel = "ride: obstacle!", 
+ride.obstacle <- function(alabel = "ride mode: obstacle", 
                           msgperc, framevector1 = fv.idle, 
                           ssint = ssint, loops = 2){
   # sequences the obstacle encounter animation

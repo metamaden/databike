@@ -1,21 +1,27 @@
 #!/usr/bin/env R
 
 # Main app functions
-# Called with load() in app.R
+# called by org.R in app.R
 
-#------------------
-# 1. load game data
-#------------------
-# 1A. load frame data
-# 1A1. bike data customization
-# 1A1A. prompt bike info
-asciibike <- function(msg = "customize your ride!", 
+#' asciibike
+#'
+#' Customize ride (enter character string)
+#' @param msg
+#' @param bike 
+#' @return Bike char string
+asciibike <- function(msg = "customize your ride (in 5 chars)", 
                       bike = "`=__%"){
   bike <- dlg_input(msg, default = bike)$res
   return(bike)
 }
-# 1B. "scene " data
+
 # 1B1. idle
+
+#' Idle animation data
+#' 
+#' Data for idle, shown on obstacle encounter.
+#' @param bike Char string for bike
+#' @return Bike frames (char strings)
 ascii_idle_fv <- function(bike = "`=__%"){
   stationary <- paste0(c("_______\n  ", 
                          bike," \n__0 0__"), collapse = "")
@@ -23,7 +29,12 @@ ascii_idle_fv <- function(bike = "`=__%"){
   fv <- c(stationary, blink)
   return(fv)
 }
-# 1B2. drive
+
+#' ascii_drive_fv
+#'
+#' Char strings for drive animation, shown during normal ride mode.
+#' @param bike
+#' @return Frame vector (char strings) for drive
 ascii_drive_fv <- function(bike = "`=__%"){
   drive1 <- paste0("     **\n ", bike, " \n__O o_-", collapse = '')
   drive2 <- paste0("   ** *\n", bike, "  \n__o O__", collapse = '')
@@ -32,7 +43,12 @@ ascii_drive_fv <- function(bike = "`=__%"){
   fv <- c(drive1, drive2, drive3, drive4)
   return(fv)
 }
-# 1BC. 'obstacle'
+
+#' ascii_obstacle_fv
+#'
+#' Obstacle animation (char strings), shown during ride.
+#' @param osym Obstacle symbol, randomized from ossl.
+#' @return Obstacle char strings for ride encounter
 ascii_obstacle_fv <- function(osym = sample(ossl, 1)){
   # osym <- "#"
   otop <- paste0(rep(" ", 7), collapse = "")
@@ -45,18 +61,14 @@ ascii_obstacle_fv <- function(osym = sample(ossl, 1)){
   return(fv)
 }
 
-#-----------
-# 3. idle UI
-#-----------
-# do_idle calls get_task_outcome
-# if player does work, update bcond (chance to fix or break)
-# maintenance bcond diff < repair bcond diff
+# main idle functions
 
-# 3B . task outcome
-# includes end-task message
-
-
-
+#' get_task_outcome
+#'
+#' Parse repair/maintain task.
+#' @param task.prob Probability of task success (else "break")
+#' @param bcond Bike condition
+#' @return Task outcome
 get_task_outcome <- function(task.prob, bcond){
   # parses maintenance and repair tasks
   v <- 100*task.prob
@@ -74,8 +86,6 @@ get_task_outcome <- function(task.prob, bcond){
   dlgMessage(dmssg, "ok")
   return(outcome)
 }
-
-# idle animation
 
 #' idle_ani
 #'
@@ -102,11 +112,7 @@ idle_ani <- function(fv.idle, logo,
   }
 }
 
-#----------
-# idle mode 
-#----------
-
-#' do_idle function
+#' manages idle mode options
 #'
 #' Main function for idle mode. Manages repair and maintain dialogs.
 #'
@@ -173,8 +179,15 @@ do_idle <- function(framevector, logo, mprob,
 
 # ride duration
 # this is num loops or distance of ride
+
+#'
+#'
+#'
+#' @param rt
+#' @param ru
+#' @return 
 get_ride.dur <- function(rt, ru){
-  # defines ride  numeric distance 
+  # defines ride numeric distance 
   ride.dur <- ifelse(rt == optl[1], ru[1], 
                      ifelse(rt == optl[2], ru[2], 
                             ifelse(rt == optl[3], ru[3], 

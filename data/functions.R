@@ -102,7 +102,7 @@ idle_ani <- function(fv.idle, logo,
   for(l in 1:loops){
     grid.text(fv.idle[1], gp = gpar(col = "black"))
     Sys.sleep(sleepint)
-    grid.text(fv.ifle[1], gp = gpar(col = "white"))
+    grid.text(fv.idle[1], gp = gpar(col = "white"))
   }
   grid.newpage()
   return(NULL)

@@ -54,6 +54,9 @@ ascii_obstacle_fv <- function(osym = sample(ossl, 1)){
 
 # 3B . task outcome
 # includes end-task message
+
+
+
 get_task_outcome <- function(task.prob, bcond){
   # parses maintenance and repair tasks
   v <- 100*task.prob
@@ -73,6 +76,16 @@ get_task_outcome <- function(task.prob, bcond){
 }
 
 # idle animation
+
+#' idle_ani
+#'
+#' Idle animation to play on obstacle encounter during ride.
+#' @param fv.idle Frame vector char strings for loop iters.
+#' @param logo Game logo JPEG.
+#' @param alabel Main label.
+#' @param loops Total loop iters.
+#' @param ssint Sleep interval for frames.
+#' @return (none)
 idle_ani <- function(fv.idle, logo, 
                      alabel = "idle mode", 
                      loops = 10, ssint = 0.12){
@@ -89,9 +102,27 @@ idle_ani <- function(fv.idle, logo,
   }
 }
 
-# idle options
-do_idle <- function(framevector, logo, 
-                    mprob, rprob, bcond, ssint = 1, 
+#----------
+# idle mode 
+#----------
+
+#' do_idle function
+#'
+#' Main function for idle mode. Manages repair and maintain dialogs.
+#'
+#' @param framevector Char string data for graphic
+#' @param logo Game logo for graphic
+#' @param mprob Maintenance probability (likelihood to fix vs. break)
+#' @param rprob Repair probability (likelihood to fix vs. break)
+#' @param bcond Bike condition
+#' @param ssint Sleep interval for graphic
+#' @param alabel Main label for graphic
+#' @return bcond, or modified bcond if task outcome is "break"
+#' @example 
+#' bcond <- do_idle(framevector = fv.idle, logo = logo, mprob, rprob, bcond)
+#'
+do_idle <- function(framevector, logo, mprob, 
+                    rprob, bcond, ssint = 1, 
                     alabel = "mode: idle"){
   grid.newpage()
   grid.raster(logo, width = 0.35, height = 0.25, 

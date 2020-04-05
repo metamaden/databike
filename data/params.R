@@ -12,6 +12,9 @@ rprob <- 0.5 # repair
 bdi <- 0.1 # bcond change increment
 rpm <- 1.5 # repair prob modifier to bdi
 ssint <- 0.15 # frame interval (game speed)
+stopoption <- "no"
+
+logo <- readJPEG("databike_logo.jpg")
 
 nride = 0 # ride quantity
 nobst = 0 # num obstacles

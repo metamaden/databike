@@ -1,40 +1,46 @@
 #!/usr/bin/env R
 
+# dependencies
 require(svDialogs)
 require(grid)
 require(jpeg)
 
-# app.R
-# Main code for `databike` app.
+rdata.dir <- "."
+dn <- "data"
+fn.fun <- "functions"
+fn.params <- "params"
+fp.fun <- paste0(c(dn, paste0(fn.fun, ".R")), collapse = "/")
+fn.params <- paste0(c(dn, paste0(fn.params, ".R")), collapse = "/")
+# load data scripts (use source())
+source(fp.fun)
+source(fn.params)
 
 # external dependencies
 fp.org <- "./org.R"
 source(fp.org)
 
-# bike ascii frames
+#-----------------
+# ani char strings
+#-----------------
 bike <- asciibike()
 fv.idle <- ascii_idle_fv(bike)
 fv.drive <- ascii_drive_fv(bike)
 fv.obstacle <- ascii_obstacle_fv()
 fvl <- list("drive" = fv.drive, 
             "idle" = fv.idle)
-stopoption <- "no"
-logo <- readJPEG("databike_logo.jpg")
+
+#---------------
+# main app loop
+#---------------
 while(bcond > 0 & stopoption == "no"){
-  
   su.ride <- app.fun(fv.idle, logo, 
                      mprob, rprob, 
                      bcond, nobst)
-  
-  #if(nride==0){
-  #  
-  #} else{
-  #  app.fun()
-  #}
-  
 }
-# end game message
+
+#------------------
+# end-of-game stuff
+#------------------
 dlg_message(paste0("Game over!", " mileage = ", 
-                   tdist,
-                   ", obstacles = ", onum), 
-            "ok")
+                   tdist, ", obstacles = ", 
+                   onum), "ok")

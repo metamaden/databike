@@ -1,23 +1,23 @@
 #!/usr/bin/env R
 
+# Main app script, to be run from command line
+
+#-------------
 # dependencies
-require(svDialogs)
-require(grid)
-require(jpeg)
+#-------------
+require(svDialogs) # manages usr dialogues
+require(grid) # prints char strings for ani
+require(jpeg) # for loading databike logo
 
 rdata.dir <- "."
 dn <- "data"
 fn.fun <- "functions"
 fn.params <- "params"
-fp.fun <- paste0(c(dn, paste0(fn.fun, ".R")), collapse = "/")
-fn.params <- paste0(c(dn, paste0(fn.params, ".R")), collapse = "/")
-# load data scripts (use source())
-source(fp.fun)
-source(fn.params)
-
-# external dependencies
-fp.org <- "./org.R"
-source(fp.org)
+fp.fun <- paste0(c(dn, paste0(fn.fun, ".R")), 
+                 collapse = "/")
+fn.params <- paste0(c(dn, paste0(fn.params, ".R")), 
+                    collapse = "/")
+source(fp.fun); source(fn.params)
 
 #-----------------
 # ani char strings
@@ -33,9 +33,8 @@ fvl <- list("drive" = fv.drive,
 # main app loop
 #---------------
 while(bcond > 0 & stopoption == "no"){
-  su.ride <- app.fun(fv.idle, logo, 
-                     mprob, rprob, 
-                     bcond, nobst)
+  su.ride <- app.fun(fv.idle, logo, mprob, 
+                     rprob, bcond, nobst)
 }
 
 #------------------

@@ -168,12 +168,11 @@ do_idle <- function(framevector, logo, mprob,
 
 #' get_ride.dur
 #' 
-#' 
+#' Returns ride length/duration (tdist units in ride loop).
 #' @param rt
 #' @param ru
 #' @return Returns ride.dur, or total tdist for ride "completion".
 get_ride.dur <- function(rt, ru){
-  # defines ride tdist 
   ride.dur <- ifelse(rt == optl[1], ru[1], 
                      ifelse(rt == optl[2], ru[2], 
                             ifelse(rt == optl[3], ru[3], 
@@ -195,7 +194,6 @@ obstacle.uifun <- function(mx.dmg.extent = 0.2){
                                " If `no`, your bike could sustain ", 
                                dmg.message, " damage..."), "yesno")$res
   if(ui.msg == "no"){
-    # whether damaged (50% default)
     dmg.roll <- sample(c("damaged", 
                          "undamaged"), 1)
     obstacle.outcome <- sample(dmg.roll, 1)
@@ -286,15 +284,15 @@ ride.obstacle <- function(alabel = "ride mode: obstacle",
 #' Main ride function
 #'
 #' Handles ride sequence and assesses for o.seq or ride end.
-#' @param ride.seq
-#' @param ride.dur
-#' @param o.seq
-#' @param bcond
-#' @param tdist
-#' @param onum
+#' @param ride.seq Ride sequence (numeric vector)
+#' @param ride.dur Ride duration in tdist units
+#' @param o.seq Numeric vector of obstacle encounter indices
+#' @param bcond Bike condition
+#' @param tdist Distance traveled/mileage
+#' @param onum Total obstacles encountered
 #' @return Updated usr stats
-ride <- function(ride.seq, ride.dur, 
-                 o.seq, bcond, tdist, onum){
+ride <- function(ride.seq, ride.dur, o.seq, 
+                 bcond, tdist, onum){
   require(grid)
   # message ride duration
   rd.message <- paste0("Beginning ride of ", rt, 

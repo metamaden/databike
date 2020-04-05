@@ -1,7 +1,6 @@
 #!/usr/bin/env R
 
-# Main app functions
-# called by org.R in app.R
+# Main app functions, called by org.R in app.R
 
 #' asciibike
 #'
@@ -14,8 +13,6 @@ asciibike <- function(msg = "customize your ride (in 5 chars)",
   bike <- dlg_input(msg, default = bike)$res
   return(bike)
 }
-
-# 1B1. idle
 
 #' Idle animation data
 #' 
@@ -126,7 +123,6 @@ idle_ani <- function(fv.idle, logo,
 #' @return bcond, or modified bcond if task outcome is "break"
 #' @example 
 #' bcond <- do_idle(framevector = fv.idle, logo = logo, mprob, rprob, bcond)
-#'
 do_idle <- function(framevector, logo, mprob, 
                     rprob, bcond, ssint = 1, 
                     alabel = "mode: idle"){
@@ -170,24 +166,14 @@ do_idle <- function(framevector, logo, mprob,
   return(bcond)
 }
 
-#--------------------------
-# 4. ride management and UI
-#--------------------------
-# ride sections
-# during ride, obstances an be encounterds 
-# obstacles have chance to reduce bcond
-
-# ride duration
-# this is num loops or distance of ride
-
-#'
-#'
-#'
+#' get_ride.dur
+#' 
+#' 
 #' @param rt
 #' @param ru
-#' @return 
+#' @return Returns ride.dur, or total tdist for ride "completion".
 get_ride.dur <- function(rt, ru){
-  # defines ride numeric distance 
+  # defines ride tdist 
   ride.dur <- ifelse(rt == optl[1], ru[1], 
                      ifelse(rt == optl[2], ru[2], 
                             ifelse(rt == optl[3], ru[3], 
@@ -195,13 +181,15 @@ get_ride.dur <- function(rt, ru){
   return(ride.dur)
 }
 
-# 3. obstacle UI
+# obstacle encounter functions
+
+#' obstacle.uifun
+#'
+#' Handles dialogue and ride options.
+#' @param mx.dmg.extent Maximum possible damage for oencounter (default = 0.2).
+#' @return If ride canceled, returns 0, else returns 1 after bcond modified
 obstacle.uifun <- function(mx.dmg.extent = 0.2){
-  # variable dmg chance
-  # damage extent
-  # mx.dmg.extent : max possible numeric amt by which to reduce bcond
-  # default 0.2
-  dmg.extent <- sample(seq(mx.dmg.extent, 0.01), 1) # possible amt to reduce bcond
+  dmg.extent <- sample(seq(mx.dmg.extent, 0.01), 1)
   dmg.message <- ifelse(dmg.extent > 0.1, "heavy", "light")
   ui.msg <- dlg_message(paste0("Cancel your ride?",
                                " If `no`, your bike could sustain ", 
@@ -213,17 +201,27 @@ obstacle.uifun <- function(mx.dmg.extent = 0.2){
     if(obstacle.outcome == "damaged"){
       bcond <- bcond - dmg.extent
     }
-    ooutcome.msg <- paste0("Your bike sustained some damage. (bcond reduced by ", dmg.extent,
+    ooutcome.msg <- paste0("Your bike sustained some damage. ",
+                           "(bcond reduced by ", dmg.extent,
                            " to ", bcond, ").")
     dlg_message(ooutcome.msg, "ok")
     return(1) # continues ride
   } else if(ui.msg == "yes"){
-    return(0)
+    return(0) # stops ride
   } else{
     return(NULL)
   }
 }
 
+#' ride.normal
+#'
+#' Handles normal ride mode animation.
+#' @param alabel Main title.
+#' @param msgperc Percent ride completed.
+#' @param framevector Frames for drive mode.
+#' @param ssint Sleep duration for animation frames.
+#' @param loops Animation loop iterations.
+#' @return NULL
 ride.normal <- function(alabel = "ride mode: normal", msgperc,
                         framevector = fv.drive, 
                         ssint = 0.1, loops = 1){
@@ -241,8 +239,19 @@ ride.normal <- function(alabel = "ride mode: normal", msgperc,
     }
     c = c + 1
   }
+  return(NULL)
 }
-ride.obstacle <- function(alabel = "ride mode: obstacle", 
+
+#' ride.obstacle
+#'
+#' Handles ridle obstacle encounter (dialogues and animations).
+#' @param alabel Main title.
+#' @param msgperc Percent ride completed.
+#' @param framevector1 Frame vector for idle animation.
+#' @param ssint Sleep interval
+#' @param loops Number of animation loops.
+#' @return NULL
+ride.obstacle <- function(alabel = "ride mode: obstacle",
                           msgperc, framevector1 = fv.idle, 
                           ssint = ssint, loops = 2){
   # sequences the obstacle encounter animation
@@ -269,19 +278,25 @@ ride.obstacle <- function(alabel = "ride mode: obstacle",
     }
     c = c + 1
   }
+  return(NULL)
 }
-# main ride function
-# 2B. main ride function
+
+#' Main ride function
+#'
+#' Handles ride sequence and assesses for o.seq or ride end.
+#' @param ride.seq
+#' @param ride.dur
+#' @param o.seq
+#' @param bcond
+#' @param tdist
+#' @param onum
+#' @return Updated usr stats
 ride <- function(ride.seq, ride.dur, 
                  o.seq, bcond, tdist, onum){
-  # global stats
-  # tdist # global mileage
-  # onum # global obstacle count
-  # bcond # bike condition
   require(grid)
   # message ride duration
-  rd.message <- paste0("Beginning ride of ", 
-                       rt, " duration!")
+  rd.message <- paste0("Beginning ride of ", rt, 
+                       " duration!")
   dlg_message(rd.message, "ok")
   # add bike condition stuff
   grid.newpage()

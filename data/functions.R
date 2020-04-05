@@ -109,6 +109,7 @@ do_idle <- function(framevector, logo,
       bcond = ifelse(outcome == "fix",
                          bcond + bdi, 
                          bcond - bdi)
+      break
     } else{
       itask <- dlg_message("repair?", "yesno")$res
       # parse repair task
@@ -118,12 +119,14 @@ do_idle <- function(framevector, logo,
                             bcond + bdi*rpm,
                             bcond - bdi*rpm)
         idlechoice <- 1
+        break
       }
       else{
         return(bcond)
       }
     }
     idlechoice <- 1
+    break
   }
   return(bcond)
 }

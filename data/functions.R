@@ -36,7 +36,7 @@ ascii_drive_fv <- function(bike = "`=__%"){
   drive1 <- paste0("     **\n ", bike, " \n__O o_-", collapse = '')
   drive2 <- paste0("   ** *\n", bike, "  \n__o O__", collapse = '')
   drive3 <- paste0("***     \n ", bike, " \n_-o o__", collapse = '')
-  drive4 <- paste0("       \n ", bike, " \n-_0 0__", collapse = '')
+  drive4 <- paste0("*      \n ", bike, " \n-_0 0__", collapse = '')
   fv <- c(drive1, drive2, drive3, drive4)
   return(fv)
 }

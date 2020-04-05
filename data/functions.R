@@ -295,13 +295,14 @@ ride.obstacle <- function(alabel = "ride mode: obstacle",
 #' Handles ride sequence and assesses for o.seq or ride end.
 #' @param ride.seq Ride sequence (numeric vector)
 #' @param ride.dur Ride duration in tdist units
+#' @param rt Ride time (category drawn from optl)
 #' @param o.seq Numeric vector of obstacle encounter indices
 #' @param bcond Bike condition
 #' @param tdist Distance traveled/mileage
 #' @param onum Total obstacles encountered
 #' @return Updated usr stats
-ride <- function(ride.seq, ride.dur, o.seq, 
-                 bcond, tdist, onum){
+ride <- function(ride.seq, ride.dur, rt, 
+                 o.seq, bcond, tdist, onum){
   require(grid)
   # message ride duration
   rd.message <- paste0("Beginning ride of ", rt, 
@@ -347,11 +348,9 @@ ride <- function(ride.seq, ride.dur, o.seq,
                        "mileage = ", tdist, "\n ", 
                        "obstacles = ", onew, "\n ",
                        "bike.cond = ", bcond, "\n ")
-  dlg_message(messagestr, 
-              type = "ok")
+  dlg_message(messagestr, type = "ok")
   grid.newpage()
-  lr <- list("tdist" = tdist,
-             "onum" = onum,
+  lr <- list("tdist" = tdist, "onum" = onum,
              "bcond" = bcond)
   return(lr)
 }
@@ -377,9 +376,8 @@ app.fun <- function(fv.idle, logo,
   ride.seq <- seq(1, ride.dur, 1)
   n.obstacles <- sample(nobst, 1)
   o.seq <- sample(ride.seq, n.obstacles)
-  su.ride <- ride(ride.seq, ride.dur,
-                  o.seq, bcond, tdist, 
-                  onum)
+  su.ride <- ride(ride.seq, ride.dur, rt, 
+                  o.seq, bcond, tdist, onum)
   # stop option
   so <- dlg_message("Do you want to ",
                     "stop the game?",

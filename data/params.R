@@ -27,7 +27,9 @@ si.rideobst <- 0.1
 
 # possible obstacle symbols (randomize on encounter)
 ossl <- c("#", "$", "@", ".", "")# ascii chars
+
 # possible ride durations (ascending length)
 optl = c("short", "medium", "long")
+
 # ride duration "units" (num. loops/value c)
 ru <- c(20, 50, 100)

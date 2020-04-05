@@ -1,7 +1,9 @@
 
 
 # Bugs
-. game over after first ride
+. game over after first ride *** 
+.. returns error "How did we get here", check while loop conditions!!
+
 . game skips to game over when "no" for both idle tasks
 . idle animation wonkiness
 

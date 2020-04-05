@@ -232,7 +232,7 @@ ride.normal <- function(alabel = "ride mode: normal",
   c = 1
   while(c <= loops){
     for(f in framevector){
-      framewithlabel <- paste0(c(alabel, f, mssgperc), 
+      framewithlabel <- paste0(c(f, alabel, mssgperc), 
                                collapse = "\n")
       grid.newpage()
       grid.text(framewithlabel)
@@ -270,7 +270,7 @@ ride.obstacle <- function(alabel = "ride mode: obstacle",
       grid.newpage()
       # print ride animation
       fs <- fv1.idle[i]
-      f1.idle <- paste0(c(alabel, fs, mssgperc), 
+      f1.idle <- paste0(c(fs, alabel, mssgperc), 
                        collapse = "\n")
       grid.text(fv1.idle)
       # print obstacle animation

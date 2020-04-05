@@ -7,31 +7,35 @@ abstract: >
   This is the main vignette outlining the `databike` app structure, including functions and data.
 ---
 
-[databike logo](`logo.tiff`)
+[databike logo](imgs/logo.tiff)
 
 # Outline
 
 The app data is contained in 2 main scripts, `params.R` and `functions.R`. The former consists of the main functions managing the app, and the latter defines starting parameters and user options.
 
-[flowchart.jpg](design_workflow.jpg)
+![flowchart.jpg](imgs/design_workflow.jpg)
 
 ## params.R
 
 Starting using parameters include `tdist`, `bcond`, and askndaslkdn
 
-[params.R flowchart](params_workflow.jpg)
-
 ## functions.R
+
+### idle()
+
+![params.R flowchart](imgs/idle_workflow.jpg)
+
+### ride()
 
 Functions do two principle tasks: 1. manage frames for app sequence; 2. handle user options through dialogue windows.
 
-[function.R flowchart](ride_workflow.jpg)
+![function.R flowchart](imgs/ride_workflow.jpg)
 
 # Running the app
 
 Currently, the app works within a standard R package format, with the exception of `app.R`, which lives in the main directory. To run the app, either run `app.R` from an Rsession or from command line with:
 
-```{bash, appcallcl--fixthis!!}
+```{bash, appcallcl--fixthis!!, eval = FALSE, echo = TRUE}
 Rscript ./app.R
 ```
 

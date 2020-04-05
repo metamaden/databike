@@ -196,7 +196,8 @@ obstacle.uifun <- function(mx.dmg.extent = 0.2){
                                dmg.message, " damage..."), "yesno")$res
   if(ui.msg == "no"){
     # whether damaged (50% default)
-    dmg.roll <- sample(c("damaged", "undamaged"), 1)
+    dmg.roll <- sample(c("damaged", 
+                         "undamaged"), 1)
     obstacle.outcome <- sample(dmg.roll, 1)
     if(obstacle.outcome == "damaged"){
       bcond <- bcond - dmg.extent
@@ -205,11 +206,12 @@ obstacle.uifun <- function(mx.dmg.extent = 0.2){
                            "(bcond reduced by ", dmg.extent,
                            " to ", bcond, ").")
     dlg_message(ooutcome.msg, "ok")
-    return(1) # continues ride
+    return(list("ridestatus" = 1, 
+                "bcond" = bcond)) # continues ride
   } else if(ui.msg == "yes"){
-    return(0) # stops ride
+    return(list("ridestatus" = 0)) # stops ride
   } else{
-    return(NULL)
+    stop("Error with obstacle encounter eval")
   }
 }
 
@@ -303,21 +305,24 @@ ride <- function(ride.seq, ride.dur,
   # baseline stats for ride
   ride.finished <- 0; ride.status <- 1
   perc.finished <- 0; oride <- 0
-  # bcchange <- bc # bike condition
-  while(perc.finished < 100 & ride.status > 0){
+  while(perc.finished < 100 & 
+        ride.status > 0){
     for(c in ride.seq){
       perc.finished <- round(100*(c/length(ride.seq)), 0)
-      msgperc <- paste0("ride progress = ", perc.finished, "%\n",
+      msgperc <- paste0("ride progress = ", 
+                        perc.finished, "%\n",
                         "mileage = ", tdist)
       ride.finished <- ifelse(c == max(ride.seq), 1, 0)
       if(c %in% o.seq){
         ride.obstacle(msgperc = msgperc)
-        ride.status <- obstacle.uifun()
+        ofun <- obstacle.uifun()
+        ride.status <- ofun[[1]]
+        bcond <- ofun[[2]]
       } else{
         ride.normal(msgperc = msgperc)
       }
       if(ride.status == 0){
-        # tdist updates
+        # triggers end of ride, returns usr stats
         tdnew <- tdist + c
         onew <- onum + oride
         messagestr <- paste0("the ride has ended!! \n",
@@ -328,11 +333,44 @@ ride <- function(ride.seq, ride.dur,
         # update user stats
         tdist = tdnew
         onum = onew
-        dlg_message(messagestr, type = "ok")
-        return(NULL)
+        dlg_message(messagestr, 
+                    type = "ok")
+        return(list("tdist" = tdist,
+                    "onum" = onum,
+                    "bcond" = bcond))
       }
     }
   }
   grid.newpage()
   return(bc)
+}
+
+#' app function
+#'
+#'
+#'
+#'
+#'
+if(nride == 0){
+  bcond <- do_idle(framevector = fv.idle, logo = logo,
+                   mprob, rprob, bcond)
+  # retrieve ride duration
+  rt <- sample(optl, 1)
+  ride.dur <- get_ride.dur(rt, ru)
+  # new ride sequence data
+  ride.seq <- seq(1, ride.dur, 1)
+  n.obstacles <- sample(10, 1)
+  o.seq <- sample(ride.seq, n.obstacles)
+  # run ride
+  su.ride <- ride(ride.seq, ride.dur,
+                  o.seq, bcond, tdist, onum)
+  # option to quit
+  stopoption <- dlg_message("Do you want to ",
+                            "stop the game?", 
+                            "yesno")$res
+  nride = 1 + nride
+} else{
+  bcond <- su.ride[["bcond"]]
+  tdist <- su.ride[["tdist"]]
+  onum <- su.ride[["onum"]]
 }

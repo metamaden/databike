@@ -20,22 +20,9 @@ fvl <- list("drive" = fv.drive,
             "idle" = fv.idle)
 stopoption <- "no"
 logo <- readJPEG("databike_logo.jpg")
+nride = 0
 while(bcond > 0 & stopoption == "no"){
-  bcond <- do_idle(framevector = fv.idle, logo = logo,
-          mprob, rprob, bcond)
-  # retrieve ride duration
-  rt <- sample(optl, 1)
-  ride.dur <- get_ride.dur(rt, ru)
-  # new ride sequence data
-  ride.seq <- seq(1, ride.dur, 1)
-  n.obstacles <- sample(10, 1)
-  o.seq <- sample(ride.seq, n.obstacles)
-  # run ride
-  ride(ride.seq, ride.dur,
-       o.seq, bcond, tdist, onum)
-  # option to quit
-  stopoption <- dlg_message("Do you want to stop the game?", 
-                            "yesno")$res
+  app.fun()
 }
 # end game message
 dlg_message(paste0("Game over!", " mileage = ", tdist,

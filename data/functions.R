@@ -224,20 +224,23 @@ obstacle.uifun <- function(mx.dmg.extent = 0.2){
 #' @param ssint Sleep duration for animation frames.
 #' @param loops Animation loop iterations.
 #' @return NULL
-ride.normal <- function(alabel = "ride mode: normal", msgperc,
+ride.normal <- function(alabel = "ride mode: normal", 
+                        ride.dur, mssgperc,
                         framevector = fv.drive, 
-                        ssint = 0.1, loops = 1){
+                        sleepint = 0.1, loops = 1){
   # this is code 
   # for normal ride seq animation
+  # append ride dur to alabel
+  alabel <- paste0(alabel, "\nride duration: ", ride.dur)
   grid.newpage()
   c = 1
   while(c <= loops){
     for(f in framevector){
-      framewithlabel <- paste0(c(alabel, f, msgperc), 
+      framewithlabel <- paste0(c(alabel, f, mssgperc), 
                                collapse = "\n")
       grid.newpage()
       grid.text(framewithlabel)
-      Sys.sleep(ssint)
+      Sys.sleep(sleepint)
     }
     c = c + 1
   }
@@ -308,18 +311,21 @@ ride <- function(ride.seq, ride.dur, o.seq,
   while(perc.finished < 100 & 
         ride.status > 0){
     for(c in ride.seq){
+      # get ride progress
+      tdist <- tdist + 1
       perc.finished <- round(100*(c/length(ride.seq)), 0)
-      msgperc <- paste0("ride progress = ", 
+      rc.mssgperc <- paste0("ride progress = ", 
                         perc.finished, "%\n",
                         "mileage = ", tdist)
       ride.finished <- ifelse(c == max(ride.seq), 1, 0)
       if(c %in% o.seq){
-        ride.obstacle(msgperc = msgperc)
+        ride.obstacle(mssgperc = rc.mssgperc, 
+                      ride.dur = rt)
         ofun <- obstacle.uifun()
         ride.status <- ofun[[1]]
         bcond <- ofun[[2]]
       } else{
-        ride.normal(msgperc = msgperc)
+        ride.normal(msgperc = msgperc, ride.dur = rt)
       }
     }
     stop("How did we get here?", 

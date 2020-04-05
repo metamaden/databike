@@ -22,6 +22,9 @@ and current app status
 # todo short-term
 # generally ordred by decerasing importance ,by section
 
+# aesthetic stuff
+. draw background with grobs
+
 # Graphical interface
 . make viewports with stats
 . run multiple tasks simultaneous

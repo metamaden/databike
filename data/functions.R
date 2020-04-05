@@ -96,21 +96,16 @@ get_task_outcome <- function(task.prob, bcond, dmssg = ""){
 idle_ani <- function(fv.idle, logo, 
                      alabel = "idle mode", 
                      loops = 3, sleepint = si.idle){
-  grid.newpage()
-  grid.raster(logo, width = 0.35, height = 0.25, 
-              hjust = -0.2, vjust = 1.7)
   for(l in 1:loops){
     for(f in fv.idle){
-      grid.text(f)
-      grid.raster(logo, width = 0.35, height = 0.25, 
-                  hjust = -0.2, vjust = 1.7)
-      Sys.sleep(sleepint)
       grid.newpage()
+      gtf <- grid.text(f)
+      gtl <- grid.raster(logo, width = 0.35, height = 0.25, 
+                         hjust = -0.2, vjust = 1.7)
+      grid.draw(gtf, gtl)
+      Sys.sleep(sleepint)
     }
   }
-  grid.text(fv.idle[1])
-  grid.raster(logo, width = 0.35, height = 0.25, 
-              hjust = -0.2, vjust = 1.7)
   return(NULL)
 }
 

@@ -10,41 +10,48 @@ tags:[R; Rstats; grid; jpeg; svDialogs; ascii]
 Here, I describe the process of designing `databike`, an interactive application about scooter upkeep. The app code is available at the [databike repository](https://raw.githubusercontent.com/metamaden/databike/). For myself, this was quite the novel undertaking. I will periodically share significant lessons learned as the app continues to develop.
 
 <img src="https://raw.githubusercontent.com/metamaden/databike/vignettes/imgs/logo.jpg" align = "center" alt="drawing" width="1800"/>
-**Figure 1.** <Databike logo>
+**Figure 1.** <`databike` logo>
 
 # App design
 
+## Goals
+
+There were several goals for the initial app. 
+
 The goal was to create a command line-runnable application the includes user interactivity and some form of a hook  or "gameplay loop." These goals should be met while adhering to principles of reproducible application development.
 
+## Workflow
 
+Relatively "late" into development, I started to diagram how the overall app manages functions and data, and how individual functions run. In retrospect, this is an important early step in the design process.
 
-Filename should be of format "YEAR-MO-DY-title.md"
+<img src="https://raw.githubusercontent.com/metamaden/databike/vignettes/imgs/app_flowchart.jpg" align = "center" alt="drawing" width="1800"/>
+**Figure 2.** <App flowchart>
 
- [Monty Hall problem](https://en.wikipedia.org/wiki/Monty_Hall_problem)
+Even if an early workflow diagram doesn't accurately reflect the ultimate product, reviewing such a diagram provides a vital opportunity to pause and reflect on the bigger picture and individual steps to take next.
 
-# Image examples
-<img src="<path_to_imgfile>" url="<url_for_img_hyperlink>" alt="<alt_text>" width="200" align = "right"/>
+I started with a vague notion of how the app would run, and I initially completed the ascii data for "animations" or image frames .
 
-<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_2lineplots.png" align = "center" alt="mh_2lineplots" width="900"/>
-
-<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_3runs.png" align = "center" alt="drawing" width="1800"/>
-**Figure Number.** <figure legend text>
-
-`some_function_format()`
-
-# Some header
-
-Here's a formulation of the steps in the classic Monty Hall problem, as described above:
-
-1. list item 1
-2. list item 2
-
+## Takeaways
+Takeways from this section include: 
 * bulleted list
-  + item 1
-  + item 2
+  + keep a log for goals, ideas, bugs, etc. and meticulously organize this. It can be helpful to simply have this in a text file or physical journal.
+  + draw workflow diagrams and review these frequently.
+  + take breaks often
 
-*emphasize text*
+# R code
+
+## The functions.R script
 
 ```
 # generic code chunk
 ```
+
+## The data.R script
+
+```
+# generic code chunk
+```
+
+## Repository and package outline
+
+# Conclusions

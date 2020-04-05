@@ -250,38 +250,40 @@ ride.normal <- function(alabel = "ride mode: normal",
 #' ride.obstacle
 #'
 #' Handles ridle obstacle encounter (dialogues and animations).
-#' @param alabel Main title.
-#' @param msgperc Percent ride completed.
-#' @param framevector1 Frame vector for idle animation.
-#' @param ssint Sleep interval
-#' @param loops Number of animation loops.
+#' @param alabel Main title and status text.
+#' @param mssgperc Percent ride completed (numeric).
+#' @param ride.dur Ride duration (char string).
+#' @param fv.idle Frame vector for idle animation.
+#' @param sleepint Sleep interval for obstacle animation.
+#' @param loops Total loops for animation (repeats).
 #' @return NULL
 ride.obstacle <- function(alabel = "ride mode: obstacle",
-                          msgperc, framevector1 = fv.idle, 
-                          ssint = ssint, loops = 2){
+                          mssgperc, ride.dur, fv.idle, 
+                          sleepint = 0.2, loops = 3){
   # sequences the obstacle encounter animation
+  # append ride info to alabel
+  alabel <- paste0(alabel, "\nride duration: ", ride.dur)
   fv.obstacle <- ascii_obstacle_fv()
   grid.newpage()
   c = 1
   # grab obstacle data
-  framevector1 <- rep(fv.idle, 2)
-  framevector2 <- ascii_obstacle_fv()
-  while(c <= loops){
+  fv1.idle <- rep(fv.idle, 2)
+  fv2.obst <- ascii_obstacle_fv()
+  for(c in 1:loops){
     for(i in 1:length(framevector1)){
       grid.newpage()
       # print ride animation
-      fs <- framevector1[i]
-      frame1 <- paste0(c(alabel, fs, msgperc), 
+      fs <- fv1.idle[i]
+      f1.idle <- paste0(c(alabel, fs, mssgperc), 
                        collapse = "\n")
-      grid.text(frame1)
+      grid.text(fv1.idle)
       # print obstacle animation
-      fo <- framevector2[i]
-      frame2 <- paste0(c(" ", fo),
+      fo <- fv2.obst[i]
+      f2.obst <- paste0(c(" ", fo),
                        collapse = "\n")
-      grid.text(frame2)
-      Sys.sleep(ssint)
+      grid.text(f2.obst)
+      Sys.sleep(sleepint)
     }
-    c = c + 1
   }
   return(NULL)
 }
@@ -313,11 +315,13 @@ ride <- function(ride.seq, ride.dur, o.seq,
     for(c in ride.seq){
       # get ride progress
       tdist <- tdist + 1
-      perc.finished <- round(100*(c/length(ride.seq)), 0)
+      perc.finished <- round(100*(c/length(ride.seq)), 
+                             0)
       rc.mssgperc <- paste0("ride progress = ", 
                         perc.finished, "%\n",
                         "mileage = ", tdist)
-      ride.finished <- ifelse(c == max(ride.seq), 1, 0)
+      ride.finished <- ifelse(c == max(ride.seq), 
+                              1, 0)
       if(c %in% o.seq){
         ride.obstacle(mssgperc = rc.mssgperc, 
                       ride.dur = rt)
@@ -325,7 +329,8 @@ ride <- function(ride.seq, ride.dur, o.seq,
         ride.status <- ofun[[1]]
         bcond <- ofun[[2]]
       } else{
-        ride.normal(msgperc = msgperc, ride.dur = rt)
+        ride.normal(mssgperc = rc.mssgperc, 
+                    ride.dur = rt)
       }
     }
     stop("How did we get here?", 

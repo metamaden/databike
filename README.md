@@ -7,7 +7,7 @@ Install this app from github with `devtools::install_github("metamaden/databike"
 Download this repository. Then, from Linux command line, run: 
 ```
 R
-source(app_cl.R)
+source(app.R)
 ```
 
 # Overview

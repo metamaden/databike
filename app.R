@@ -10,7 +10,7 @@ require(grid) # prints char strings for ani
 require(jpeg) # for loading databike logo
 
 rdata.dir <- "."
-dn <- "data"
+dn <- "R"
 fn.fun <- "functions"
 fn.params <- "params"
 fp.fun <- paste0(c(dn, paste0(fn.fun, ".R")), 

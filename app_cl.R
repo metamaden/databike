@@ -2,14 +2,19 @@
 
 # Main app script, to be run from command line
 
+
+# commmand line
+# R
+# source(app_cl.R)
+
+
+
 #-------------
 # dependencies
 #-------------
 require(svDialogs) # manages usr dialogues
 require(grid) # prints char strings for ani
 require(jpeg) # for loading databike logo
-# require(here) # gets path
-
 rdata.dir <- "."
 dn <- "R"
 fn.fun <- "functions"
@@ -18,8 +23,6 @@ fp.fun <- paste0(c(dn, paste0(fn.fun, ".R")),
                  collapse = "/")
 fn.params <- paste0(c(dn, paste0(fn.params, ".R")), 
                     collapse = "/")
-#source(here(fp.fun))
-#source(here(fn.params))
 source(fp.fun)
 source(fn.params)
 

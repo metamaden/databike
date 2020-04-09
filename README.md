@@ -2,6 +2,14 @@
 
 Install this app from github with `devtools::install_github("metamaden/databike")`. Run the app in an active R session using `app.R`.
 
+## Running the app
+
+Download this repository. Then, from Linux command line, run: 
+```
+R
+source(app_cl.R)
+```
+
 # Overview
 
 [<img style="float: center;" src = "/appnotes/imgs/drive.gif" height="100"/>]()

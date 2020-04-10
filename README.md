@@ -1,6 +1,6 @@
 # `databike`: an app about scooter upkeep
 
-Install this app from github with `devtools::install_github("metamaden/databike")`. Run the app in an active R session using `app.R`.
+In databike, the user makes decisions about maintenance (e.g. repair, maintain, or do nothing) and during obstacles encountered on rides (e.g. whether to quit or continue). These decisions impact the bike condition and total mileage or ride distance. The basic “user interface” consists of graphics (text/ascii art, printed in sequence), and user dialogues and notifications (pop-up windows with text and options buttons).
 
 # App run
 
@@ -12,10 +12,6 @@ Install this app from github with `devtools::install_github("metamaden/databike"
 R
 source(app.R)
 ```
-
-# Overview
-
-In databike, the user makes decisions about maintenance (e.g. repair, maintain, or do nothing) and during obstacles encountered on rides (e.g. whether to quit or continue). These decisions impact the bike condition and total mileage or ride distance. The basic “user interface” consists of graphics (text/ascii art, printed in sequence), and user dialogues and notifications (pop-up windows with text and options buttons).
 
 ## Blog posts
 

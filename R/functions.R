@@ -9,21 +9,21 @@ require(grid) # prints char strings for ani
 #'
 #' Customize ride (enter character string)
 #' @param msg
-#' @param bike 
+#' @param bike
 #' @return Bike char string
-asciibike <- function(msg = "customize your ride (in 5 chars)", 
+asciibike <- function(msg = "customize your ride (in 5 chars)",
                       bike = "`=__%"){
   bike <- dlg_input(msg, default = bike)$res
   return(bike)
 }
 
 #' Idle animation data
-#' 
+#'
 #' Data for idle, shown on obstacle encounter.
 #' @param bike Char string for bike
 #' @return Bike frames (char strings)
 ascii_idle_fv <- function(bike = "`=__%"){
-  stationary <- paste0(c("_______\n  ", 
+  stationary <- paste0(c("_______\n  ",
                          bike," \n__0 0__"), collapse = "")
   blink <- "_______\n       \n__   __"
   fv <- c(stationary, blink)
@@ -69,22 +69,29 @@ ascii_obstacle_fv <- function(osym = sample(ossl, 1)){
 #' @param task.prob Probability of task success (else "break")
 #' @param bcond Bike condition
 #' @param dmssg Message first strings
+#' @param binc Increment of bcond change
 #' @return Task outcome
-get_task_outcome <- function(task.prob, bcond, dmssg = ""){
+get_task_outcome <- function(task.prob, bcond, dmssg = "",
+                             binc = 0.1){
   # parses maintenance and repair tasks
   v <- 100*task.prob
   s1 = rep("fix", v)
   s2 = rep("break", 100 - v)
   outcome <- sample(c(s1, s2), 1)
+  # update bcond
   if(outcome == "fix"){
+    bcond.new <- bcond + binc
     dmssg <- paste0(dmssg, " Bike condition has increased :)")
-    dmssg <- paste0(dmssg, " , new bcond = ", bcond)
+    dmssg <- paste0(dmssg, " , old bcond = ", bcond)
+    dmssg <- paste0(dmssg, ", new bcond = ", bcond.new)
   } else{
+    bcond.new <- bcond - binc
     dmssg <- paste0(dmssg, " Bike condition has decreased :(")
-    dmssg <- paste0(dmssg, " , new bcond = ", bcond)
+    dmssg <- paste0(dmssg, " , old bcond = ", bcond)
+    dmssg <- paste0(dmssg, ", new bcond = ", bcond.new)
   }
   dlgMessage(dmssg, "ok")
-  return(outcome)
+  return(bcond.new)
 }
 
 #' idle_ani
@@ -96,11 +103,11 @@ get_task_outcome <- function(task.prob, bcond, dmssg = ""){
 #' @param loops Total loop iters.
 #' @param ssint Sleep interval for frames.
 #' @return NULL
-idle_ani <- function(fv.idle, logo, 
-                     alabel = "\nidle mode", 
+idle_ani <- function(fv.idle, logo,
+                     alabel = "\nidle mode",
                      loops = 5, sleepint = si.idle){
   grid.newpage()
-  grid.raster(logo, width = 0.35, height = 0.25, 
+  grid.raster(logo, width = 0.35, height = 0.25,
               hjust = -0.2, vjust = 1.7)
   pf2 <- fv.idle[1]
   pf1 <- paste0(c(pf2, alabel),
@@ -127,10 +134,10 @@ idle_ani <- function(fv.idle, logo,
 #' @param sleepint Sleep interval for stationary graphic
 #' @param alabel Main label for graphic
 #' @return bcond, or modified bcond if task outcome is "break"
-#' @example 
+#' @example
 #' bcond <- do_idle(framevector = fv.idle, logo = logo, mprob, rprob, bcond)
 do_idle <- function(fv.idle, logo, mprob, rprob,
-                    sleepint = si.stationary, 
+                    sleepint = si.stationary,
                     bcond, alabel = "mode: idle"){
   # displays idle animation "intro"
   # freezes on bike stationary, with logo
@@ -139,23 +146,17 @@ do_idle <- function(fv.idle, logo, mprob, rprob,
   # handle main idle options
   idlechoice <- 0
   while(idlechoice == 0){
-    itask <- dlg_message("maintain?", 
+    itask <- dlg_message("maintain?",
                          "yesno")$res
     # parse maintenance task
     if(itask == "yes"){
-      outcome <- get_task_outcome(mprob, bcond)
-      bcond = ifelse(outcome == "fix",
-                         bcond + bdi, 
-                         bcond - bdi)
+      bcond <- get_task_outcome(mprob, bcond)
       break
     } else{
       itask <- dlg_message("repair?", "yesno")$res
       # parse repair task
       if(itask == "yes"){
-        outcome <- get_task_outcome(rprob, bcond)
-        bcond <- ifelse(outcome == "fix",
-                            bcond + bdi*rpm,
-                            bcond - bdi*rpm)
+        bcond <- get_task_outcome(rprob, bcond)
         idlechoice <- 1
         break
       }
@@ -170,15 +171,15 @@ do_idle <- function(fv.idle, logo, mprob, rprob,
 }
 
 #' get_ride.dur
-#' 
+#'
 #' Returns ride length/duration (tdist units in ride loop).
 #' @param rt
 #' @param ru
 #' @return Returns ride.dur, or total tdist for ride "completion".
 get_ride.dur <- function(rt, ru){
-  ride.dur <- ifelse(rt == optl[1], ru[1], 
-                     ifelse(rt == optl[2], ru[2], 
-                            ifelse(rt == optl[3], ru[3], 
+  ride.dur <- ifelse(rt == optl[1], ru[1],
+                     ifelse(rt == optl[2], ru[2],
+                            ifelse(rt == optl[3], ru[3],
                                    "NA")))
   return(ride.dur)
 }
@@ -192,13 +193,13 @@ get_ride.dur <- function(rt, ru){
 #' @return If ride canceled, returns 0, else returns 1 after bcond modified
 obstacle.uifun <- function(mx.dmg.extent = 0.2){
   dmg.extent <- sample(seq(mx.dmg.extent, 0.01), 1)
-  dmg.message <- ifelse(dmg.extent > 0.1, 
+  dmg.message <- ifelse(dmg.extent > 0.1,
                         "heavy", "light")
   ui.msg <- dlg_message(paste0("Cancel your ride?",
-                               " If `no`, your bike could sustain ", 
+                               " If `no`, your bike could sustain ",
                                dmg.message, " damage..."), "yesno")$res
   if(ui.msg == "no"){
-    dmg.roll <- sample(c("damaged", 
+    dmg.roll <- sample(c("damaged",
                          "undamaged"), 1)
     obstacle.outcome <- sample(dmg.roll, 1)
     if(obstacle.outcome == "damaged"){
@@ -208,7 +209,7 @@ obstacle.uifun <- function(mx.dmg.extent = 0.2){
                            "(bcond reduced by ", dmg.extent,
                            " to ", bcond, ").")
     dlg_message(ooutcome.msg, "ok")
-    return(list("ridestatus" = 1, 
+    return(list("ridestatus" = 1,
                 "bcond" = bcond)) # continues ride
   } else if(ui.msg == "yes"){
     return(list("ridestatus" = 0)) # stops ride
@@ -227,11 +228,11 @@ obstacle.uifun <- function(mx.dmg.extent = 0.2){
 #' @param ssint Sleep duration for animation frames.
 #' @param loops Animation loop iterations.
 #' @return NULL
-ride.normal <- function(alabel = "ride mode: normal", 
+ride.normal <- function(alabel = "ride mode: normal",
                         ride.dur, mssgperc,
-                        framevector = fv.drive, 
+                        framevector = fv.drive,
                         sleepint = si.ridenorm, loops = 1){
-  # this is code 
+  # this is code
   # for normal ride seq animation
   # append ride dur to alabel
   alabel <- paste0(alabel, "\nride duration: ", ride.dur)
@@ -239,7 +240,7 @@ ride.normal <- function(alabel = "ride mode: normal",
   c = 1
   while(c <= loops){
     for(f in framevector){
-      framewithlabel <- paste0(c(f, alabel, mssgperc), 
+      framewithlabel <- paste0(c(f, alabel, mssgperc),
                                collapse = "\n")
       grid.newpage()
       grid.text(framewithlabel)
@@ -261,7 +262,7 @@ ride.normal <- function(alabel = "ride mode: normal",
 #' @param loops Total loops for animation (repeats).
 #' @return NULL
 ride.obstacle <- function(alabel = "ride mode: obstacle",
-                          mssgperc, ride.dur, fv.idle, 
+                          mssgperc, ride.dur, fv.idle,
                           sleepint = si.rideobst, loops = 3){
   # sequences the obstacle encounter animation
   # append ride info to alabel
@@ -277,7 +278,7 @@ ride.obstacle <- function(alabel = "ride mode: obstacle",
       grid.newpage()
       # print ride animation
       fs <- fv1.idle[i]
-      f1.idle <- paste0(c(fs, alabel, mssgperc), 
+      f1.idle <- paste0(c(fs, alabel, mssgperc),
                        collapse = "\n")
       grid.text(fv1.idle)
       # print obstacle animation
@@ -302,11 +303,11 @@ ride.obstacle <- function(alabel = "ride mode: obstacle",
 #' @param tdist Distance traveled/mileage
 #' @param onum Total obstacles encountered
 #' @return Updated usr stats
-ride <- function(ride.seq, ride.dur, rt, 
+ride <- function(ride.seq, ride.dur, rt,
                  o.seq, bcond, tdist, onum){
   require(grid)
   # message ride duration
-  rd.message <- paste0("Beginning ride of ", rt, 
+  rd.message <- paste0("Beginning ride of ", rt,
                        " duration!")
   dlg_message(rd.message, "ok")
   # add bike condition stuff
@@ -314,30 +315,30 @@ ride <- function(ride.seq, ride.dur, rt,
   # baseline stats for ride
   ride.finished <- 0; ride.status <- 1
   perc.finished <- 0; oride <- 0
-  while(perc.finished < 100 & 
+  while(perc.finished < 100 &
         ride.status > 0){
     for(c in ride.seq){
       # get ride progress
       tdist <- tdist + 1
-      perc.finished <- round(100*(c/length(ride.seq)), 
+      perc.finished <- round(100*(c/length(ride.seq)),
                              0)
-      rc.mssgperc <- paste0("ride progress = ", 
+      rc.mssgperc <- paste0("ride progress = ",
                         perc.finished, "%\n",
                         "mileage = ", tdist)
-      ride.finished <- ifelse(c == max(ride.seq), 
+      ride.finished <- ifelse(c == max(ride.seq),
                               1, 0)
       if(c %in% o.seq){
-        ride.obstacle(mssgperc = rc.mssgperc, 
+        ride.obstacle(mssgperc = rc.mssgperc,
                       ride.dur = rt)
         ofun <- obstacle.uifun()
         ride.status <- ofun[[1]]
         bcond <- ofun[[2]]
       } else{
-        ride.normal(mssgperc = rc.mssgperc, 
+        ride.normal(mssgperc = rc.mssgperc,
                     ride.dur = rt)
       }
     }
-    stop("How did we get here?", 
+    stop("How did we get here?",
          "Stopped inside while loop on ride")
   }
   # update usr stats
@@ -346,7 +347,7 @@ ride <- function(ride.seq, ride.dur, rt,
   # end-of-ride message
   messagestr <- paste0("the ride has ended!! \n",
                        "your current usr stats:\n ",
-                       "mileage = ", tdist, "\n ", 
+                       "mileage = ", tdist, "\n ",
                        "obstacles = ", onew, "\n ",
                        "bike.cond = ", bcond, "\n ")
   dlg_message(messagestr, type = "ok")
@@ -367,17 +368,17 @@ ride <- function(ride.seq, ride.dur, rt,
 #' @param nobst Number of obstacles
 #' @return su.ride, list of updated usrstats
 app.fun <- function(fv.idle, logo,
-                    mprob = 0.1, rprob = 0.2, 
+                    mprob = 0.1, rprob = 0.2,
                     bcond = 0.5, nobst = 10){
   bcond <- do_idle(fv.idle, logo, mprob, rprob,
-                   sleepint = si.stationary, 
+                   sleepint = si.stationary,
                    bcond, alabel = "mode: idle")
   rt <- sample(optl, 1) # ride time
   ride.dur <- get_ride.dur(rt, ru)
   ride.seq <- seq(1, ride.dur, 1)
   n.obstacles <- sample(nobst, 1)
   o.seq <- sample(ride.seq, n.obstacles)
-  su.ride <- ride(ride.seq, ride.dur, rt, 
+  su.ride <- ride(ride.seq, ride.dur, rt,
                   o.seq, bcond, tdist, onum)
   # stop option
   so <- dlg_message("Do you want to ",

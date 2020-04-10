@@ -1,2 +1,2 @@
 ap <- "app.R"
-try(source(ap))
+try(source(ap), silent = TRUE)

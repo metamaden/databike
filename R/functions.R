@@ -313,10 +313,11 @@ ride.enc.obstacle <- function(alabel = "ride mode: obstacle",
 #' @param bcond Bike condition
 #' @param tdist Distance traveled/mileage
 #' @param onum Total obstacles encountered
+#' @param fv.idle Frame vector for idle animation (played on obst enc)
 #' @return Updated usr stats
 ride <- function(ride.seq, ride.dur, rt,
                  o.seq, num.rides, bcond,
-                 tdist, onum){
+                 tdist, onum, fv.idle){
   require(grid)
   # message ride duration
   rd.message <- paste0("Beginning ride of ", rt,
@@ -340,7 +341,7 @@ ride <- function(ride.seq, ride.dur, rt,
                         "mileage = ", tdist)
       if(c %in% o.seq){
         ride.enc.obstacle(mssgperc = rc.mssgperc,
-                          ride.dur = rt)
+                          ride.dur = rt, fv.idle = fv.idle)
         ofun <- obstacle.uifun()
         bcond <- ofun[[2]] # eval bcond
         # eval ride.status, quits ride if bcond = 0
@@ -424,8 +425,9 @@ app.fun <- function(fv.idle, logo, minobst,
     obstq.ridenum <- sample(obstq.range, 1)
     o.seq <- sample(ride.seq, obstq.ridenum)
     if(verbose){message("Running main ride sequence")}
-    su.ride <- ride(ride.seq, ride.dur, rt,
-                    o.seq, bcond, tdist, onum)
+    su.ride <- ride(ride.seq=ride.seq, ride.dur=ride.dur, rt=rt,
+                    o.seq=o.seq, bcond=bcond, tdist=tdist, onum=onum,
+                    fv.idle=fv.idle)
     return(list("stopoption" = so, "su.ride" = su.ride))
   } else{
     return(list("stopoption" = so))

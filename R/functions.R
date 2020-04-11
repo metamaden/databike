@@ -192,14 +192,17 @@ get_ride.dur <- function(rt, ru){
 
 # obstacle encounter functions
 
-#' obstacle.uifun
+#' obstacle.ui
 #'
 #' Handles dialogue and ride options.
 #' @param mx.dmg.extent Maximum possible damage for oencounter (default = 0.2).
+#' @param mindmg.extent Min damage possible (decreases with nride, experience mechanic)
 #' @param rstat Ride status, current.
 #' @return If ride canceled, returns 0, else returns 1 after bcond modified
-obstacle.uifun <- function(mx.dmg.extent = 0.2, rstat = 1){
-  dmg.extent <- sample(seq(mx.dmg.extent, 0.01), 1)
+obstacle.ui <- function(max.dmg.extent = 0.3, mindmg.extent = 0.2,
+                        rstat = 1){
+  dmg.range <- seq(mindmg.extent, max.dmg.extent, 0.01)
+  dmg.extent <- sample(dmg.range, 1)
   dmg.message <- ifelse(dmg.extent > 0.1,
                         "heavy", "light")
   ui.msg <- dlg_message(paste0("Cancel your ride?",
@@ -236,7 +239,7 @@ obstacle.uifun <- function(mx.dmg.extent = 0.2, rstat = 1){
 #' @param ssint Sleep duration for animation frames.
 #' @param loops Animation loop iterations.
 #' @return NULL
-ride.normal <- function(alabel = "ride mode: normal",
+ride.ani.normal <- function(alabel = "ride mode: normal",
                         ride.dur, mssgperc,
                         framevector = fv.drive,
                         sleepint = si.ridenorm, loops = 1){
@@ -269,7 +272,7 @@ ride.normal <- function(alabel = "ride mode: normal",
 #' @param sleepint Sleep interval for obstacle animation.
 #' @param loops Total loops for animation (repeats).
 #' @return NULL
-ride.obstacle <- function(alabel = "ride mode: obstacle",
+ride.enc.obstacle <- function(alabel = "ride mode: obstacle",
                           mssgperc, ride.dur, fv.idle,
                           sleepint = si.rideobst, loops = 3){
   # sequences the obstacle encounter animation
@@ -331,30 +334,28 @@ ride <- function(ride.seq, ride.dur, rt,
     for(c in ride.seq){
       # get ride progress
       tdist <- tdist + 1
-      perc.finished <- round(100*(c/length(ride.seq)),
-                             0)
+      perc.finished <- round(100*(c/length(ride.seq)),0)
       rc.mssgperc <- paste0("ride progress = ",
                         perc.finished, "%\n",
                         "mileage = ", tdist)
-      ride.finished <- ifelse(c == max(ride.seq),
-                              1, 0)
       if(c %in% o.seq){
-        ride.obstacle(mssgperc = rc.mssgperc,
-                      ride.dur = rt)
+        ride.enc.obstacle(mssgperc = rc.mssgperc,
+                          ride.dur = rt)
         ofun <- obstacle.uifun()
         bcond <- ofun[[2]] # eval bcond
         # eval ride.status, quits ride if bcond = 0
         ride.status <- ofun[[1]]
       } else{
-        ride.normal(mssgperc = rc.mssgperc,
+        ride.ani.normal(mssgperc = rc.mssgperc,
                     ride.dur = rt)
       }
+      ride.status <- ifelse(c == max(ride.seq), 0, 1)
     }
     #stop("How did we get here?",
     #     "Stopped inside while loop on ride")
   }
-  # update usr stats
-  tdist <- tdist + c
+  # update mileage
+  #tdist <- tdist + c
   onum <- onum + oride
   # end-of-ride message
   messagestr <- paste0("the ride has ended!! \n",
@@ -364,7 +365,8 @@ ride <- function(ride.seq, ride.dur, rt,
                        "bike.cond = ", bcond, "\n ")
   dlg_message(messagestr, type = "ok")
   grid.newpage()
-  lr <- list("tdist" = tdist, "onum" = onum,
+  lr <- list("tdist" = tdist,
+             "onum" = onum,
              "bcond" = bcond)
   return(lr)
 }

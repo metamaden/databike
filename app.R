@@ -40,10 +40,10 @@ stopoption <- "no"
 while(bcond > 0 & stopoption == "no"){
   su.ride <- app.fun(fv.idle, logo, mprob,
                      rprob, bcond, nobst)
-  # eval so first, jumps to end if `yes`
-  stopoption <- su.ride[["stopoption"]]
   # eval bcond second, jumps to end if 0
   bcond <- su.ride[["su.ride"]][["bcond"]]
+  # eval so first, jumps to end if `yes`
+  stopoption <- su.ride[["stopoption"]]
   # track remaining stats before gameplay loop
   nobst <- su.ride[["su.ride"]][["onum"]]
   tdist <- su.ride[["su.ride"]][["tdist"]]

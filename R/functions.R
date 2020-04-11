@@ -386,3 +386,16 @@ app.fun <- function(fv.idle, logo,
                     "yesno")$res
   return(list("stopoption" = so, "su.ride" = su.ride))
 }
+
+
+#' save option
+#'
+#' Handles save option
+#' @param rname Ride name (corresponds to save file)
+#' @param overwrite Whether to overwrite existing save file
+#' @param
+#'
+
+save_ride <- function(rname, overwrite){
+
+}

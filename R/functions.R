@@ -387,6 +387,15 @@ app.fun <- function(fv.idle, logo, minobst,
                     mprob = 0.1, rprob = 0.2,
                     bcond = 0.5, onum = 0,
                     maxobst = 10){
+  # main app management
+
+  # parse difficulty, get starting metrics
+  dopt <- get_difficulty()
+  lstart <- parse_difficulty(usr.start = lstart, dopt = dopt)
+  bcond <- lstart[["bcond"]]
+  mprob <- lstart[["mprob"]]
+  rprob <- lstart[["rprob"]]
+
   bcond <- do_idle(fv.idle, logo, mprob, rprob,
                    sleepint = si.stationary,
                    bcond, alabel = "mode: idle")
@@ -428,24 +437,59 @@ save_ride <- function(rname, overwrite){
 
 }
 
+#---------------
+# handle difficulty settings
+#---------------
+
+#' dopt
+#'
+#'
+#'
+dopt <- function(dmssg = "Enter a game difficulty: ", opts){
+  uimsg <- paste0(dmssg, paste(opts, collapse = ", "))
+  dopt <- dlg_input(uimsg, default = "normal")$res
+  return(dopt)
+}
+
+#' copt
+#'
+#'
+#'
+copt <- function(cmssg = "Please enter a valid option, or click `cancel` to quit"){
+  cancelopt <- dlg_message(cmssg)$res
+  return(cancelopt)
+}
+
 #' get_difficulty()
 #'
 #'
 #'
 #'
-get_difficulty <- function(dmssg = "Enter game difficulty ",
-                           cmssg = "Please enter a valid option, or click `cancel` to quit",
-                           opts = c("easy", "normal", "difficult"),
-                           dpot = "", cancelopt = FALSE){
-  while(!dpot %in% opts & !cancelopt == "cancel"){
-    uimsg <- paste0(dmssg, paste(opts, collapse = "/"))
-    dopt <- dlg_input(uimsg, default = "normal")$res
-    if(!dopt %in% opts){
-      cancelopt <- dlg_message(cmssg)$res
-    }
+get_difficulty <- function(opts = c("easy", "normal", "difficult"),
+                           dopt = "", cancelopt = FALSE){
+  while(!dopt %in% opts){
+    dopt <- dopt(opts = opts)
+    if(dopt %in% opts){break}
+    copt <- copt()
+    if(copt == "cancel"){break}
   }
-  return(dpot)
+  if(dopt %in% opts){
+    return(dopt)
+  } else{return(NULL)}
 }
 
-get_difficulty()
-
+#' parse_difficulty
+#'
+#' Parse difficulty (if not "normal")
+#'
+parse_difficulty <- function(usr.start, dopt, mod.scale = 0.25){
+  if(dopt == "easy"){
+    usr.start <- lapply(usr.start, function(x){x + (x*0.25)})
+    return(usr.start)
+  }
+  if(dopt == "difficult"){
+    usr.start <- lapply(usr.start, function(x){x - (x*0.25)})
+    return(usr.start)
+  }
+  return(usr.start)
+}

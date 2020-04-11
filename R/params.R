@@ -20,13 +20,20 @@ logo.jpg <- readJPEG(paste(c(graphics.dir,
 # note, these may be modified by setting not-normal difficulty
 # see get_difficulty()
 
-# bike values
-tdist.start <- 0 # total mileage
-bcond.start <- 0.5 # bike condition
+# modifier for difficulty, modifies bcond, mstart, rstart
+# e.g. easy -> metric + metric*mod.scale
+# difficult -> metric - metric*mod.scale
+mod.scale = 0.25
 
-# idle task params
+# bike values
+bcond.start <- 0.5 # bike condition
 mprob.start <- 0.5 # maintenance probability "fix"
 rprob.start <- 0.5 # repair probability "fix"
+
+# usr start metrics, parsed by difficulty functions
+lstart <- list("bcond" = bcond.start,
+               "mprob" = mprob.start,
+               "rprob" = rprob.start)
 
 # modifiers
 bdi <- 0.1 # bcond change increment
@@ -35,7 +42,8 @@ ssint <- 0.15 # frame interval (game speed)
 minobst <- 6 # min obst, decreases as nrides increase ("experience mechanic)
 stopoption <- "no"
 
-# rides and obstacles
+# mileage, rides, and obstacle params
+tdist <- 0 # total mileage
 nride = 0 # ride quantity
 minobst = 10 # num obstacles
 onum = 0 # num obstacles encountered

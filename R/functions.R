@@ -377,13 +377,21 @@ app.fun <- function(fv.idle, logo,
   ride.dur <- get_ride.dur(rt, ru)
   ride.seq <- seq(1, ride.dur, 1)
   n.obstacles <- sample(nobst, 1)
-  o.seq <- sample(ride.seq, n.obstacles)
-  su.ride <- ride(ride.seq, ride.dur, rt,
-                  o.seq, bcond, tdist, onum)
+
   # stop option
   so <- dlg_message("Do you want to ",
                     "stop the game?",
                     "yesno")$res
+
+  o.seq <- sample(ride.seq, n.obstacles)
+  su.ride <- ride(ride.seq, ride.dur, rt,
+                  o.seq, bcond, tdist, onum)
+
+  # stop option
+  so <- dlg_message("Do you want to ",
+                    "stop the game?",
+                    "yesno")$res
+
   return(list("stopoption" = so, "su.ride" = su.ride))
 }
 

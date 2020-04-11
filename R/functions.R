@@ -222,13 +222,16 @@ obstacle.ui <- function(bcond, max.dmg.extent = 0.3,
     dlg_message(ooutcome.msg, "ok")
     # eval bcond, if 0, ride ends
     if(bcond.new == 0){rstat <- 0}
-    return(list("ridestatus" = rstat, "bcond" = bcond.new)) # continues ride
+    return(list("ridestatus" = rstat,
+                "bcond" = bcond.new)) # continues ride
   } else if(ui.msg == "yes"){
-    return(list("ridestatus" = 0, "bcond" = bcond.new)) # stops ride
+    return(list("ridestatus" = 0,
+                "bcond" = bcond.new)) # stops ride
   } else{
     stop("Error with obstacle encounter eval")
   }
-  return()
+  return(list("ridestatus" = rstat,
+              "bcond" = bcond.new))
 }
 
 #' ride.normal
@@ -321,10 +324,9 @@ ride.enc.obstacle <- function(alabel = "ride mode: obstacle",
 #' @param onum Total obstacles encountered
 #' @param fv.idle Frame vector for idle animation (played on obst enc)
 #' @return Updated usr stats
-ride <- function(ride.seq, ride.dur, rt,
+ride <- function(ride.seq, ride.dur, rt, rstat = 1,
                  o.seq, num.rides, bcond,
                  tdist, onum, fv.idle){
-  require(grid)
   # message ride duration
   rd.message <- paste0("Beginning ride of ", rt,
                        " duration!")
@@ -333,11 +335,10 @@ ride <- function(ride.seq, ride.dur, rt,
   grid.newpage()
   # baseline stats for ride
   ride.finished <- 0
-  ride.status <- 1
   perc.finished <- 0
   oride <- 0
   while(perc.finished < 100 &
-        ride.status > 0){
+        rstat > 0){
     for(c in ride.seq){
       # get ride progress
       tdist <- tdist + 1
@@ -347,12 +348,14 @@ ride <- function(ride.seq, ride.dur, rt,
                         "mileage = ", tdist)
       if(c %in% o.seq){
         ride.enc.obstacle(mssgperc = rc.mssgperc, bcond=bcond,
-                          ride.dur = rt, fv.idle = fv.idle,
+                          ride.dur = rt, rstat = ride.status,
+                          fv.idle = fv.idle,
                           verbose = TRUE)
-        ofun <- obstacle.uifun()
-        bcond <- ofun[[2]] # eval bcond
+        ofun <- obstacle.ui(bcond = bcond,
+                            rstat = rstat)
+        bcond <- ofun[["bcond"]] # eval bcond
         # eval ride.status, quits ride if bcond = 0
-        ride.status <- ofun[[1]]
+        rstat <- ofun[["ridestatus"]]
       } else{
         ride.ani.normal(mssgperc = rc.mssgperc,
                     ride.dur = rt)

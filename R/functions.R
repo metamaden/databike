@@ -199,8 +199,8 @@ get_ride.dur <- function(rt, ru){
 #' @param mindmg.extent Min damage possible (decreases with nride, experience mechanic)
 #' @param rstat Ride status, current.
 #' @return If ride canceled, returns 0, else returns 1 after bcond modified
-obstacle.ui <- function(max.dmg.extent = 0.3, mindmg.extent = 0.2,
-                        rstat = 1){
+obstacle.ui <- function(bcond, max.dmg.extent = 0.3,
+                        mindmg.extent = 0.2, rstat = 1){
   dmg.range <- seq(mindmg.extent, max.dmg.extent, 0.01)
   dmg.extent <- sample(dmg.range, 1)
   dmg.message <- ifelse(dmg.extent > 0.1,
@@ -208,22 +208,23 @@ obstacle.ui <- function(max.dmg.extent = 0.3, mindmg.extent = 0.2,
   ui.msg <- dlg_message(paste0("Cancel your ride?",
                                " If `no`, your bike could sustain ",
                                dmg.message, " damage..."), "yesno")$res
+  bcond.new <- bcond
   if(ui.msg == "no"){
     dmg.roll <- sample(c("damaged",
                          "undamaged"), 1)
     obstacle.outcome <- sample(dmg.roll, 1)
     if(obstacle.outcome == "damaged"){
-      bcond <- bcond - dmg.extent
+      bcond.new <- bcond - dmg.extent
     }
     ooutcome.msg <- paste0("Your bike sustained some damage. ",
                            "(bcond reduced by ", dmg.extent,
-                           " to ", bcond, ").")
+                           " to ", bcond.new, ").")
     dlg_message(ooutcome.msg, "ok")
     # eval bcond, if 0, ride ends
-    if(bcond == 0){rstat <- 0}
-    return(list("ridestatus" = rstat, "bcond" = bcond)) # continues ride
+    if(bcond.new == 0){rstat <- 0}
+    return(list("ridestatus" = rstat, "bcond" = bcond.new)) # continues ride
   } else if(ui.msg == "yes"){
-    return(list("ridestatus" = 0)) # stops ride
+    return(list("ridestatus" = 0, "bcond" = bcond.new)) # stops ride
   } else{
     stop("Error with obstacle encounter eval")
   }
@@ -273,7 +274,7 @@ ride.ani.normal <- function(alabel = "ride mode: normal",
 #' @param loops Total loops for animation (repeats).
 #' @return NULL
 ride.enc.obstacle <- function(alabel = "ride mode: obstacle",
-                          mssgperc, ride.dur, fv.idle,
+                          mssgperc, ride.dur, fv.idle, bcond=bcond,
                           sleepint = si.rideobst, loops = 3,
                           verbose = TRUE){
   # sequences the obstacle encounter animation
@@ -281,8 +282,10 @@ ride.enc.obstacle <- function(alabel = "ride mode: obstacle",
   alabel <- paste0(alabel, "\nride duration: ", ride.dur)
   c = 1
   # grab obstacle data
-  if(verbose){message("Getting idle and obst frame vectors")}
-  fv1.idle <- rep(fv.idle, 2)
+  if(verbose){message("Getting idle frames with alabel, mssgperc")}
+  fx <- paste0(fv.idle[1], "\n", alabel, "\n", mssgperc)
+  fx <- c(fx, paste0(fv.idle[2], "\n", alabel, "\n", mssgperc))
+  fv1.idle <- rep(fx, 2)
   fv2.obst <- ascii_obstacle_fv()
   grid.newpage()
   if(verbose){message("Printing animation frames")}
@@ -292,9 +295,7 @@ ride.enc.obstacle <- function(alabel = "ride mode: obstacle",
       # print ride animation
       if(verbose){"Printing idle frames"}
       fs <- fv1.idle[i]
-      f1.idle <- paste0(c(fs, alabel, mssgperc),
-                       collapse = "\n")
-      grid.text(fv1.idle)
+      grid.text(fs)
       # print obstacle animation
       if(verbose){message("Printing obst frames")}
       fo <- fv2.obst[i]
@@ -345,7 +346,7 @@ ride <- function(ride.seq, ride.dur, rt,
                         perc.finished, "%\n",
                         "mileage = ", tdist)
       if(c %in% o.seq){
-        ride.enc.obstacle(mssgperc = rc.mssgperc,
+        ride.enc.obstacle(mssgperc = rc.mssgperc, bcond=bcond,
                           ride.dur = rt, fv.idle = fv.idle,
                           verbose = TRUE)
         ofun <- obstacle.uifun()

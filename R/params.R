@@ -12,6 +12,7 @@ rprob <- 0.5 # repair probability "fix"
 bdi <- 0.1 # bcond change increment
 rpm <- 1.5 # repair prob modifier to bdi
 ssint <- 0.15 # frame interval (game speed)
+minobst <- 6 # min obst, decreases as nrides increase ("experience mechanic)
 stopoption <- "no"
 
 logo <- readJPEG("databike_logo.jpg")

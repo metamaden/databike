@@ -368,14 +368,16 @@ ride <- function(ride.seq, ride.dur, rt,
 #' This does main app calls for idle phase and ride phase.
 #' @param fv.idle Frame vector for idle mode animation
 #' @param logo Logo JPEG for idle mode display
+#' @param minobst function of rider "experience" (nrides), decreases as nrides increase.
 #' @param mprob Maintenance probability success
 #' @param rprob Repair probability success
 #' @param bcond Bike condition
-#' @param nobst Number of obstacles
+#' @param maxobst Number of obstacles (static at 10)
 #' @return su.ride, list of updated usrstats
-app.fun <- function(fv.idle, logo,
+app.fun <- function(fv.idle, logo, minobst,
                     mprob = 0.1, rprob = 0.2,
-                    bcond = 0.5, nobst = 10){
+                    bcond = 0.5,
+                    maxobst = 10){
   bcond <- do_idle(fv.idle, logo, mprob, rprob,
                    sleepint = si.stationary,
                    bcond, alabel = "mode: idle")
@@ -386,9 +388,11 @@ app.fun <- function(fv.idle, logo,
   if(so == "no"){
     rt <- sample(optl, 1) # ride time
     ride.dur <- get_ride.dur(rt, ru)
-    ride.seq <- seq(1, ride.dur, 1)
-    n.obstacles <- sample(nobst, 1)
-    o.seq <- sample(ride.seq, n.obstacles)
+    ride.seq <- seq(1, ride.dur)
+    # eval obstacles for ride
+    obstq.range <- seq(minobst, maxobst)
+    obstq.ridenum <- sample(obstq.range, 1)
+    o.seq <- sample(ride.seq, obstq.ridenum)
     su.ride <- ride(ride.seq, ride.dur, rt,
                     o.seq, bcond, tdist, onum)
     return(list("stopoption" = so, "su.ride" = su.ride))

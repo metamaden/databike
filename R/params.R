@@ -56,7 +56,8 @@ si.ridenorm <- 0.12
 si.rideobst <- 0.1
 
 # possible obstacle symbols (randomize on encounter)
-ossl <- c("#", "$", "@", ".", "")# ascii chars
+# ossl <- c("###", "$&*()", "@@@", "^^^", "((((")# ascii chars
+ossl <- paste(sample(c("@","#","$","^","&","*"),4), collapse = "")
 
 # possible ride durations (ascending length)
 optl = c("short", "medium", "long")

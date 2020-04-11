@@ -44,19 +44,38 @@ ascii_drive_fv <- function(bike = "`=__%"){
   return(fv)
 }
 
+#'
+#'
+ossl <- function(){
+  return(paste(sample(c("@","#","$",
+                        "^","&","*"),4),
+               collapse = ""))
+}
+
 #' ascii_obstacle_fv
 #'
 #' Obstacle animation (char strings), shown during ride.
 #' @param osym Obstacle symbol, randomized from ossl.
 #' @return Obstacle char strings for ride encounter
-ascii_obstacle_fv <- function(osym = sample(ossl, 1)){
-  # osym <- "#"
-  otop <- paste0(rep(" ", 7), collapse = "")
-  omid <- paste0(rep(" ", 7), collapse = "")
-  o1 <- paste0(c(otop, omid, c("      ", osym)), collapse = "\n")
-  o2 <- paste0(c(otop, omid, c("    ", osym, " ")), collapse = "\n")
-  o3 <- paste0(c(otop, omid, c("     ", osym, " ")), collapse = "\n")
-  o4 <- paste0(c(otop, omid, c("    ", osym, "  ")), collapse = "\n")
+ascii_obstacle_fv <- function(osym = ossl(),
+                              boffset = paste(rep("\n", 3),
+                                              collapse = "")){
+  otop <- omid <- paste(rep(" ", 7), collapse = "")
+  o1 <- paste(c(paste(c(otop, omid, c("    ", osym)),
+                      collapse = "\n"),
+                boffset),
+              collapse = "")
+  o2 <- paste(c(paste(c(otop, omid, c("   ", osym, " ")),
+                       collapse = "\n"),
+                 boffset),
+               collapse = "")
+  o3 <- paste(c(paste(c(otop, omid, c("  ", osym, " ")),
+                        collapse = "\n"),
+               boffset),
+          collapse = "")
+  o4 <- paste(c(paste(c(otop, omid, c(" ", osym, "   ")),
+               collapse = "\n"), boffset),
+               collapse = "")
   fv <- c(o1, o2, o3, o4)
   return(fv)
 }
@@ -224,11 +243,9 @@ obstacle.ui <- function(bcond, max.dmg.extent = 0.3,
     if(bcond.new == 0){rstat <- 0}
     return(list("ridestatus" = rstat,
                 "bcond" = bcond.new)) # continues ride
-  } else if(ui.msg == "yes"){
+  } else{
     return(list("ridestatus" = 0,
                 "bcond" = bcond.new)) # stops ride
-  } else{
-    stop("Error with obstacle encounter eval")
   }
   return(list("ridestatus" = rstat,
               "bcond" = bcond.new))
@@ -348,14 +365,13 @@ ride <- function(ride.seq, ride.dur, rt, rstat = 1,
                         "mileage = ", tdist)
       if(c %in% o.seq){
         ride.enc.obstacle(mssgperc = rc.mssgperc, bcond=bcond,
-                          ride.dur = rt, rstat = ride.status,
-                          fv.idle = fv.idle,
+                          ride.dur = rt, fv.idle = fv.idle,
                           verbose = TRUE)
-        ofun <- obstacle.ui(bcond = bcond,
+        ostat <- obstacle.ui(bcond = bcond,
                             rstat = rstat)
-        bcond <- ofun[["bcond"]] # eval bcond
+        bcond <- ostat[["bcond"]] # eval bcond
         # eval ride.status, quits ride if bcond = 0
-        rstat <- ofun[["ridestatus"]]
+        rstat <- ostat[["ridestatus"]]
       } else{
         ride.ani.normal(mssgperc = rc.mssgperc,
                     ride.dur = rt)
@@ -372,7 +388,7 @@ ride <- function(ride.seq, ride.dur, rt, rstat = 1,
   messagestr <- paste0("the ride has ended!! \n",
                        "your current usr stats:\n ",
                        "mileage = ", tdist, "\n ",
-                       "obstacles = ", onew, "\n ",
+                       "obstacles = ", onum, "\n ",
                        "bike.cond = ", bcond, "\n ")
   dlg_message(messagestr, type = "ok")
   grid.newpage()

@@ -38,7 +38,7 @@ fvl <- list("drive" = fv.drive,
 #--------------
 stopoption <- "no"
 while(bcond > 0 & stopoption == "no"){
-  if(nride = 0){
+  if(nride == 0){
     su.ride <- app.fun(fv.idle = fv.idle, logo = logo, # data for ani
                        mprob = mprob.start, rprob = rprob.start, # idle params
                        bcond = bcond.start, onum = onum.start) # usr stats

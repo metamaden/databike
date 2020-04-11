@@ -390,7 +390,7 @@ app.fun <- function(fv.idle, logo, minobst,
   # main app management
 
   # parse difficulty, get starting metrics
-  if(nride = 0){
+  if(nride == 0){
     dopt <- get_difficulty()
     lstart <- parse_difficulty(usr.start = lstart, dopt = dopt)
     bcond <- lstart[["bcond"]]

@@ -396,6 +396,12 @@ app.fun <- function(fv.idle, logo, minobst,
   mprob <- lstart[["mprob"]]
   rprob <- lstart[["rprob"]]
 
+  # show stats
+  dlg_message(paste0("Starting stats: ",
+                     "bcond = ", bcond,
+                     ", mrpob = ", mprob,
+                     ", rprob = ", rprob), "ok")
+
   bcond <- do_idle(fv.idle, logo, mprob, rprob,
                    sleepint = si.stationary,
                    bcond, alabel = "mode: idle")

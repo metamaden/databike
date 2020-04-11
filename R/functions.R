@@ -48,7 +48,8 @@ ascii_drive_fv <- function(bike = "`=__%"){
 #'
 #' Code for obstacle symbol. Makes random obstacle symbol of 4 chars.
 #' @param symlist Symbols list to draw from.
-ossl <- function(symlist = c("@","#","$", "^","&","*")){
+ossl <- function(symlist = c("@","#","$",
+                             "^","&","*")){
   return(paste(sample(symlist, 4), collapse = ""))
 }
 
@@ -59,19 +60,16 @@ ossl <- function(symlist = c("@","#","$", "^","&","*")){
 #' @param osym Obstacle symbol, randomized from ossl (NULL)
 #' @param boffset Bottom lines offset (num. bottom labels - 1)
 #' @return Obstacle char strings for ride encounter
-ascii_obstacle_fv <- function(symlist = c("@","#","$", "^","&","*"),
+ascii_obstacle_fv <- function(symlist = c("@","#","$",
+                                          "^","&","*"),
                               osym = NULL){
   if(is.null(osym)){osym <- ossl(symlist)}
   otop <- omid <- "\n"
   # xaxis movement
-  sline1 <- paste0(c(rep(" ", 5), osym, rep(" ", 0)),
-                   collapse = "")
-  sline2 <- paste0(c(rep(" ", 4), osym, rep(" ", 1)),
-                   collapse = "")
-  sline3 <- paste0(c(rep(" ", 2), osym, rep(" ", 3)),
-                   collapse = "")
-  sline4 <- paste0(c(rep(" ", 1), osym, rep(" ", 4)),
-                   collapse = "")
+  sline1 <- paste0(c(rep(" ", 5), osym, rep(" ", 0)), collapse = "")
+  sline2 <- paste0(c(rep(" ", 4), osym, rep(" ", 1)), collapse = "")
+  sline3 <- paste0(c(rep(" ", 2), osym, rep(" ", 3)), collapse = "")
+  sline4 <- paste0(c(rep(" ", 1), osym, rep(" ", 4)), collapse = "")
   # yaxis movement
   #ymint <- 1; ymrate <- 0.2; nframes <- 4; nbufftot <- 10
   f1 <- paste0(c(rep("\n", 6), sline1, rep("\n", 1)), collapse = "")
@@ -408,15 +406,16 @@ ride <- function(ride.seq, ride.dur, rt, rstat = 1,
 #' @param mprob Maintenance probability success
 #' @param rprob Repair probability success
 #' @param bcond Bike condition
-#' @param obum Number of obstacles encountered on rides
+#' @param onum Number of obstacles encountered on rides
+#' @param tdist Distance bike has traveled
 #' @param maxobst Number of obstacles (static at 10)
 #' @param verbose Whether to print verbose status messages.
 #' @return su.ride, list of updated usrstats
 app.fun <- function(fv.idle, logo, minobst,
                     mprob = NULL, rprob = NULL,
                     bcond = NULL, onum = 0,
-                    maxobst = 10, nride = 0,
-                    verbose = TRUE){
+                    tdist = 0, maxobst = 10,
+                    nride = 0, verbose = TRUE){
   # main app management
   if(verbose){message("Starting app.fun")}
   # parse difficulty, get starting metrics
@@ -472,21 +471,19 @@ app.fun <- function(fv.idle, logo, minobst,
 #' Handles save option
 #' @param rname Ride name (corresponds to save file)
 #' @param overwrite Whether to overwrite existing save file
-#' @param
-#'
-
+#' @return Stuff
 save_ride <- function(rname, overwrite){
-
 }
 
-#---------------
+#---------------------------
 # handle difficulty settings
-#---------------
+#---------------------------
 
 #' dopt
 #'
-#'
-#'
+#' @param dmssg Dialogue message
+#' @param opts Difficulty options
+#' @return dopt, difficulty options dialogue
 dopt <- function(dmssg = "Enter a game difficulty: ", opts){
   uimsg <- paste0(dmssg, paste(opts, collapse = ", "))
   dopt <- dlg_input(uimsg, default = "normal")$res
@@ -495,8 +492,8 @@ dopt <- function(dmssg = "Enter a game difficulty: ", opts){
 
 #' copt
 #'
-#'
-#'
+#' @param cmssg Message for cancel game dialogue
+#' @return cancelopt, dialogue with option to cancel game
 copt <- function(cmssg = "Please enter a valid option, or click `cancel` to quit"){
   cancelopt <- dlg_message(cmssg)$res
   return(cancelopt)
@@ -504,9 +501,11 @@ copt <- function(cmssg = "Please enter a valid option, or click `cancel` to quit
 
 #' get_difficulty()
 #'
-#'
-#'
-#'
+#' Difficulty options
+#' @param opts Difficulty options to be entered/parsed
+#' @param dopt Difficulty option selected
+#' @param cancelopt Option to cancel
+#' @return dopt difficulty option, or NULL
 get_difficulty <- function(opts = c("easy", "normal", "difficult"),
                            dopt = "", cancelopt = FALSE){
   while(!dopt %in% opts){
@@ -523,7 +522,10 @@ get_difficulty <- function(opts = c("easy", "normal", "difficult"),
 #' parse_difficulty
 #'
 #' Parse difficulty (if not "normal")
-#'
+#' @param usr.start Starting user stats
+#' @param dopt Difficulty option
+#' @param mod.scale Scale modifier (for 'easy' and 'difficult')
+#' @return User starting stats
 parse_difficulty <- function(usr.start, dopt, mod.scale = 0.25){
   if(dopt == "easy"){
     usr.start <- lapply(usr.start, function(x){x + (x*0.25)})

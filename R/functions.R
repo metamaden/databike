@@ -382,14 +382,17 @@ ride <- function(ride.seq, ride.dur, rt,
 #' @param bcond Bike condition
 #' @param obum Number of obstacles encountered on rides
 #' @param maxobst Number of obstacles (static at 10)
+#' @param verbose Whether to print verbose status messages.
 #' @return su.ride, list of updated usrstats
 app.fun <- function(fv.idle, logo, minobst,
-                    mprob = 0.1, rprob = 0.2,
-                    bcond = 0.5, onum = 0,
-                    maxobst = 10, nride = 0){
+                    mprob = NULL, rprob = NULL,
+                    bcond = NULL, onum = 0,
+                    maxobst = 10, nride = 0,
+                    verbose = TRUE){
   # main app management
-
+  if(verbose){message("Starting app.fun")}
   # parse difficulty, get starting metrics
+  if(verbose){message("Evaluating difficulty")}
   if(nride == 0){
     dopt <- get_difficulty()
     lstart <- parse_difficulty(usr.start = lstart, dopt = dopt)
@@ -397,21 +400,22 @@ app.fun <- function(fv.idle, logo, minobst,
     mprob <- lstart[["mprob"]]
     rprob <- lstart[["rprob"]]
   }
-
   # show stats
   dlg_message(paste0("Current bike stats: ",
                      "bcond = ", bcond,
                      ", mrpob = ", mprob,
                      ", rprob = ", rprob), "ok")
-
+  if(verbose){message("Doing idle phase")}
   bcond <- do_idle(fv.idle, logo, mprob, rprob,
                    sleepint = si.stationary,
                    bcond, alabel = "mode: idle")
   # stop option
+  if(verbose){message("Doing cancel option")}
   so <- dlg_message(paste0("Do you want to ",
                            "stop the game?"),
                     "yesno")$res
   if(so == "no"){
+    if(verbose){message("Doing ride sequence")}
     rt <- sample(optl, 1) # ride time
     ride.dur <- get_ride.dur(rt, ru)
     ride.seq <- seq(1, ride.dur)
@@ -419,6 +423,7 @@ app.fun <- function(fv.idle, logo, minobst,
     obstq.range <- seq(minobst, maxobst)
     obstq.ridenum <- sample(obstq.range, 1)
     o.seq <- sample(ride.seq, obstq.ridenum)
+    if(verbose){message("Running main ride sequence")}
     su.ride <- ride(ride.seq, ride.dur, rt,
                     o.seq, bcond, tdist, onum)
     return(list("stopoption" = so, "su.ride" = su.ride))

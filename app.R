@@ -37,16 +37,22 @@ fvl <- list("drive" = fv.drive,
 # main app loop
 #--------------
 stopoption <- "no"
+# first ride
+su.ride <- app.fun(fv.idle = fv.idle, logo = logo, # data for ani
+                   onum = onum.start, verbose = TRUE) # usr stats
+# eval bcond second, jumps to end if 0
+bcond <- su.ride[["su.ride"]][["bcond"]]
+# eval so first, jumps to end if `yes`
+stopoption <- su.ride[["stopoption"]]
+# track remaining stats before gameplay loop
+nobst <- su.ride[["su.ride"]][["onum"]]
+tdist <- su.ride[["su.ride"]][["tdist"]]
+# second ride and beyond
 while(bcond > 0 & stopoption == "no"){
-  if(nride == 0){
-    su.ride <- app.fun(fv.idle = fv.idle, logo = logo, # data for ani
-                       onum = onum.start, verbose = TRUE) # usr stats
-  } else{
-    su.ride <- app.fun(fv.idle = fv.idle, logo = logo, # data for ani
-                       mprob = mprob, rprob = rprob, # idle params
-                       bcond = bcond, onum = onum, nride = nride,
-                       verbose = TRUE) # usr stats
-  }
+  su.ride <- app.fun(fv.idle = fv.idle, logo = logo, # data for ani
+                     mprob = mprob, rprob = rprob, # idle params
+                     bcond = bcond, onum = onum, nride = nride,
+                     verbose = TRUE) # usr stats
   # eval bcond second, jumps to end if 0
   bcond <- su.ride[["su.ride"]][["bcond"]]
   # eval so first, jumps to end if `yes`

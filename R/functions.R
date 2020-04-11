@@ -274,25 +274,29 @@ ride.ani.normal <- function(alabel = "ride mode: normal",
 #' @return NULL
 ride.enc.obstacle <- function(alabel = "ride mode: obstacle",
                           mssgperc, ride.dur, fv.idle,
-                          sleepint = si.rideobst, loops = 3){
+                          sleepint = si.rideobst, loops = 3,
+                          verbose = TRUE){
   # sequences the obstacle encounter animation
   # append ride info to alabel
   alabel <- paste0(alabel, "\nride duration: ", ride.dur)
-  fv.obstacle <- ascii_obstacle_fv()
-  grid.newpage()
   c = 1
   # grab obstacle data
+  if(verbose){message("Getting idle and obst frame vectors")}
   fv1.idle <- rep(fv.idle, 2)
   fv2.obst <- ascii_obstacle_fv()
+  grid.newpage()
+  if(verbose){message("Printing animation frames")}
   for(c in 1:loops){
-    for(i in 1:length(framevector1)){
+    for(i in 1:length(fv1.idle)){
       grid.newpage()
       # print ride animation
+      if(verbose){"Printing idle frames"}
       fs <- fv1.idle[i]
       f1.idle <- paste0(c(fs, alabel, mssgperc),
                        collapse = "\n")
       grid.text(fv1.idle)
       # print obstacle animation
+      if(verbose){message("Printing obst frames")}
       fo <- fv2.obst[i]
       f2.obst <- paste0(c(" ", fo),
                        collapse = "\n")
@@ -300,6 +304,7 @@ ride.enc.obstacle <- function(alabel = "ride mode: obstacle",
       Sys.sleep(sleepint)
     }
   }
+  if(verbose){message("Returning from ride.enc.obstacle")}
   return(NULL)
 }
 
@@ -341,7 +346,8 @@ ride <- function(ride.seq, ride.dur, rt,
                         "mileage = ", tdist)
       if(c %in% o.seq){
         ride.enc.obstacle(mssgperc = rc.mssgperc,
-                          ride.dur = rt, fv.idle = fv.idle)
+                          ride.dur = rt, fv.idle = fv.idle,
+                          verbose = TRUE)
         ofun <- obstacle.uifun()
         bcond <- ofun[[2]] # eval bcond
         # eval ride.status, quits ride if bcond = 0

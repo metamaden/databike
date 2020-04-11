@@ -306,8 +306,8 @@ ride.obstacle <- function(alabel = "ride mode: obstacle",
 #' @param onum Total obstacles encountered
 #' @return Updated usr stats
 ride <- function(ride.seq, ride.dur, rt,
-                 o.seq,
-                 num.rides, bcond, tdist, onum){
+                 o.seq, num.rides, bcond,
+                 tdist, onum){
   require(grid)
   # message ride duration
   rd.message <- paste0("Beginning ride of ", rt,
@@ -344,8 +344,8 @@ ride <- function(ride.seq, ride.dur, rt,
                     ride.dur = rt)
       }
     }
-    stop("How did we get here?",
-         "Stopped inside while loop on ride")
+    #stop("How did we get here?",
+    #     "Stopped inside while loop on ride")
   }
   # update usr stats
   tdist <- tdist + c

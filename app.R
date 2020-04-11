@@ -33,9 +33,10 @@ fv.obstacle <- ascii_obstacle_fv()
 fvl <- list("drive" = fv.drive,
             "idle" = fv.idle)
 
-#---------------
+#--------------
 # main app loop
-#---------------
+#--------------
+stopoption <- "no"
 while(bcond > 0 & stopoption == "no"){
   su.ride <- app.fun(fv.idle, logo, mprob,
                      rprob, bcond, nobst)
@@ -52,7 +53,8 @@ while(bcond > 0 & stopoption == "no"){
 #------------------
 # end-of-game stuff
 #------------------
-dlg_message(paste0("Game over!", " mileage = ",
-                   tdist, ", obstacles = ",
-                   onum, ", num. rides = ",
-                   nride), "ok")
+dlg_message(paste0("Game over!",
+                   " mileage = ", tdist,
+                   ", obstacles = ", onum,
+                   ", num. rides = ", nride),
+            "ok")

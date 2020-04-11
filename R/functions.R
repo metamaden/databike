@@ -100,25 +100,31 @@ get_task_outcome <- function(task.prob, bcond, dmssg = "",
 #' @param fv.idle Frame vector char strings for loop iters.
 #' @param logo Game logo JPEG.
 #' @param alabel Main label.
-#' @param loops Total loop iters.
+#' @param nloop Total loop iters.
 #' @param ssint Sleep interval for frames.
 #' @return NULL
 idle_ani <- function(fv.idle, logo,
                      alabel = "\nidle mode",
-                     loops = 5, sleepint = si.idle){
-  grid.newpage()
-  grid.raster(logo, width = 0.35, height = 0.25,
-              hjust = -0.2, vjust = 1.7)
+                     nloop = 5, sleepint = si.idle){
+  # frame for print
   pf2 <- fv.idle[1]
   pf1 <- paste0(c(pf2, alabel),
                 collapse = "")
-  for(l in 1:loops){
+  # do "blink"
+  for(l in 1:nloop){
+    grid.newpage()
     grid.text(pf1, gp = gpar(col = "black"))
-    Sys.sleep(sleepint)
-    grid.text(pf2, gp = gpar(col = "white"))
+    grid.raster(logo, width = 0.35, height = 0.25,
+                hjust = -0.2, vjust = 1.7)
     Sys.sleep(sleepint)
   }
-  grid.text(pf1, gp = gpar(col = "black"))
+  #for(l in 1:loops){
+  #  grid.text(pf1, gp = gpar(col = "black"))
+  #  Sys.sleep(sleepint)
+  #  grid.text(pf2, gp = gpar(col = "white"))
+  #  Sys.sleep(sleepint)
+  #}
+  #grid.text(pf1, gp = gpar(col = "black"))
   return(NULL)
 }
 

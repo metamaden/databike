@@ -380,11 +380,12 @@ ride <- function(ride.seq, ride.dur, rt,
 #' @param mprob Maintenance probability success
 #' @param rprob Repair probability success
 #' @param bcond Bike condition
+#' @param obum Number of obstacles encountered on rides
 #' @param maxobst Number of obstacles (static at 10)
 #' @return su.ride, list of updated usrstats
 app.fun <- function(fv.idle, logo, minobst,
                     mprob = 0.1, rprob = 0.2,
-                    bcond = 0.5,
+                    bcond = 0.5, onum = 0,
                     maxobst = 10){
   bcond <- do_idle(fv.idle, logo, mprob, rprob,
                    sleepint = si.stationary,

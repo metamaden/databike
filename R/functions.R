@@ -386,18 +386,20 @@ ride <- function(ride.seq, ride.dur, rt,
 app.fun <- function(fv.idle, logo, minobst,
                     mprob = 0.1, rprob = 0.2,
                     bcond = 0.5, onum = 0,
-                    maxobst = 10){
+                    maxobst = 10, nride = 0){
   # main app management
 
   # parse difficulty, get starting metrics
-  dopt <- get_difficulty()
-  lstart <- parse_difficulty(usr.start = lstart, dopt = dopt)
-  bcond <- lstart[["bcond"]]
-  mprob <- lstart[["mprob"]]
-  rprob <- lstart[["rprob"]]
+  if(nride = 0){
+    dopt <- get_difficulty()
+    lstart <- parse_difficulty(usr.start = lstart, dopt = dopt)
+    bcond <- lstart[["bcond"]]
+    mprob <- lstart[["mprob"]]
+    rprob <- lstart[["rprob"]]
+  }
 
   # show stats
-  dlg_message(paste0("Starting stats: ",
+  dlg_message(paste0("Current bike stats: ",
                      "bcond = ", bcond,
                      ", mrpob = ", mprob,
                      ", rprob = ", rprob), "ok")

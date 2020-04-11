@@ -45,7 +45,7 @@ while(bcond > 0 & stopoption == "no"){
   } else{
     su.ride <- app.fun(fv.idle = fv.idle, logo = logo, # data for ani
                        mprob = mprob, rprob = rprob, # idle params
-                       bcond = bcond, onum = onum) # usr stats
+                       bcond = bcond, onum = onum, nride = nride) # usr stats
   }
   # eval bcond second, jumps to end if 0
   bcond <- su.ride[["su.ride"]][["bcond"]]

@@ -13,13 +13,20 @@ logo.jpg <- readJPEG(paste(c(graphics.dir,
                            collapse = sys.sep))
 # logo.gif <- readGIF()
 
+#--------------------
+# starting usr stats (normal)
+#--------------------
+# base stats to start
+# note, these may be modified by setting not-normal difficulty
+# see get_difficulty()
+
 # bike values
-tdist <- 0 # total mileage
-bcond <- 0.5 # bike condition
+tdist.start <- 0 # total mileage
+bcond.start <- 0.5 # bike condition
 
 # idle task params
-mprob <- 0.5 # maintenance probability "fix"
-rprob <- 0.5 # repair probability "fix"
+mprob.start <- 0.5 # maintenance probability "fix"
+rprob.start <- 0.5 # repair probability "fix"
 
 # modifiers
 bdi <- 0.1 # bcond change increment
@@ -30,7 +37,7 @@ stopoption <- "no"
 
 # rides and obstacles
 nride = 0 # ride quantity
-nobst = 0 # num obstacles
+minobst = 10 # num obstacles
 onum = 0 # num obstacles encountered
 
 # sys.slepp intervals,

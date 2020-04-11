@@ -412,6 +412,9 @@ app.fun <- function(fv.idle, logo, minobst,
        "Processed finished outside of ifelse")
 }
 
+#-----------------------
+# new functions, to test
+#-----------------------
 
 #' save option
 #'
@@ -424,3 +427,25 @@ app.fun <- function(fv.idle, logo, minobst,
 save_ride <- function(rname, overwrite){
 
 }
+
+#' get_difficulty()
+#'
+#'
+#'
+#'
+get_difficulty <- function(dmssg = "Enter game difficulty ",
+                           cmssg = "Please enter a valid option, or click `cancel` to quit",
+                           opts = c("easy", "normal", "difficult"),
+                           dpot = "", cancelopt = FALSE){
+  while(!dpot %in% opts & !cancelopt == "cancel"){
+    uimsg <- paste0(dmssg, paste(opts, collapse = "/"))
+    dopt <- dlg_input(uimsg, default = "normal")$res
+    if(!dopt %in% opts){
+      cancelopt <- dlg_message(cmssg)$res
+    }
+  }
+  return(dpot)
+}
+
+get_difficulty()
+

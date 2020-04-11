@@ -3,10 +3,11 @@
 # script to store data for scootsim
 # called with load() in app.R
 
+# system path separator symbol
 sys.sep <- "/"
 
 # main logo image
-graphics.dir = ""
+graphics.dir = "graphics"
 logo.jpg <- readJPEG(paste(c(graphics.dir,
                              "databike_logo.jpg"),
                            collapse = sys.sep))

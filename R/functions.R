@@ -190,8 +190,9 @@ get_ride.dur <- function(rt, ru){
 #'
 #' Handles dialogue and ride options.
 #' @param mx.dmg.extent Maximum possible damage for oencounter (default = 0.2).
+#' @param rstat Ride status, current.
 #' @return If ride canceled, returns 0, else returns 1 after bcond modified
-obstacle.uifun <- function(mx.dmg.extent = 0.2){
+obstacle.uifun <- function(mx.dmg.extent = 0.2, rstat = 1){
   dmg.extent <- sample(seq(mx.dmg.extent, 0.01), 1)
   dmg.message <- ifelse(dmg.extent > 0.1,
                         "heavy", "light")
@@ -209,8 +210,9 @@ obstacle.uifun <- function(mx.dmg.extent = 0.2){
                            "(bcond reduced by ", dmg.extent,
                            " to ", bcond, ").")
     dlg_message(ooutcome.msg, "ok")
-    return(list("ridestatus" = 1,
-                "bcond" = bcond)) # continues ride
+    # eval bcond, if 0, ride ends
+    if(bcond == 0){rstat <- 0}
+    return(list("ridestatus" = rstat, "bcond" = bcond)) # continues ride
   } else if(ui.msg == "yes"){
     return(list("ridestatus" = 0)) # stops ride
   } else{
@@ -304,7 +306,8 @@ ride.obstacle <- function(alabel = "ride mode: obstacle",
 #' @param onum Total obstacles encountered
 #' @return Updated usr stats
 ride <- function(ride.seq, ride.dur, rt,
-                 o.seq, bcond, tdist, onum){
+                 o.seq,
+                 num.rides, bcond, tdist, onum){
   require(grid)
   # message ride duration
   rd.message <- paste0("Beginning ride of ", rt,
@@ -333,8 +336,9 @@ ride <- function(ride.seq, ride.dur, rt,
         ride.obstacle(mssgperc = rc.mssgperc,
                       ride.dur = rt)
         ofun <- obstacle.uifun()
+        bcond <- ofun[[2]] # eval bcond
+        # eval ride.status, quits ride if bcond = 0
         ride.status <- ofun[[1]]
-        bcond <- ofun[[2]]
       } else{
         ride.normal(mssgperc = rc.mssgperc,
                     ride.dur = rt)

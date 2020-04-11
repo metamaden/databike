@@ -3,6 +3,15 @@
 # script to store data for scootsim
 # called with load() in app.R
 
+sys.sep <- "/"
+
+# main logo image
+graphics.dir = ""
+logo.jpg <- readJPEG(paste(c(graphics.dir,
+                             "databike_logo.jpg"),
+                           collapse = sys.sep))
+# logo.gif <- readGIF()
+
 # bike values
 tdist <- 0 # total mileage
 bcond <- 0.5 # bike condition
@@ -18,14 +27,13 @@ ssint <- 0.15 # frame interval (game speed)
 minobst <- 6 # min obst, decreases as nrides increase ("experience mechanic)
 stopoption <- "no"
 
-logo <- readJPEG("databike_logo.jpg")
-
 # rides and obstacles
 nride = 0 # ride quantity
 nobst = 0 # num obstacles
 onum = 0 # num obstacles encountered
 
-# "frame speed" settings (sleepintts)
+# sys.slepp intervals,
+# controls ani frmaerate
 si.stationary <- 0.05
 si.idle <- 0.05
 si.ridenorm <- 0.12

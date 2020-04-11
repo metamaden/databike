@@ -313,8 +313,10 @@ ride <- function(ride.seq, ride.dur, rt,
   # add bike condition stuff
   grid.newpage()
   # baseline stats for ride
-  ride.finished <- 0; ride.status <- 1
-  perc.finished <- 0; oride <- 0
+  ride.finished <- 0
+  ride.status <- 1
+  perc.finished <- 0
+  oride <- 0
   while(perc.finished < 100 &
         ride.status > 0){
     for(c in ride.seq){
@@ -373,16 +375,15 @@ app.fun <- function(fv.idle, logo,
   bcond <- do_idle(fv.idle, logo, mprob, rprob,
                    sleepint = si.stationary,
                    bcond, alabel = "mode: idle")
-  rt <- sample(optl, 1) # ride time
-  ride.dur <- get_ride.dur(rt, ru)
-  ride.seq <- seq(1, ride.dur, 1)
-  n.obstacles <- sample(nobst, 1)
-
   # stop option
-  so <- dlg_message("Do you want to ",
-                    "stop the game?",
+  so <- dlg_message(paste0("Do you want to ",
+                           "stop the game?"),
                     "yesno")$res
   if(so == "no"){
+    rt <- sample(optl, 1) # ride time
+    ride.dur <- get_ride.dur(rt, ru)
+    ride.seq <- seq(1, ride.dur, 1)
+    n.obstacles <- sample(nobst, 1)
     o.seq <- sample(ride.seq, n.obstacles)
     su.ride <- ride(ride.seq, ride.dur, rt,
                     o.seq, bcond, tdist, onum)

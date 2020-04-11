@@ -44,40 +44,41 @@ ascii_drive_fv <- function(bike = "`=__%"){
   return(fv)
 }
 
+#' ossl
 #'
-#'
-ossl <- function(){
-  return(paste(sample(c("@","#","$",
-                        "^","&","*"),4),
-               collapse = ""))
+#' Code for obstacle symbol. Makes random obstacle symbol of 4 chars.
+#' @param symlist Symbols list to draw from.
+ossl <- function(symlist = c("@","#","$", "^","&","*")){
+  return(paste(sample(symlist, 4), collapse = ""))
 }
 
 #' ascii_obstacle_fv
 #'
 #' Obstacle animation (char strings), shown during ride.
-#' @param osym Obstacle symbol, randomized from ossl.
+#' @param symlist Symbols list for obstacle draw.
+#' @param osym Obstacle symbol, randomized from ossl (NULL)
+#' @param boffset Bottom lines offset (num. bottom labels - 1)
 #' @return Obstacle char strings for ride encounter
-ascii_obstacle_fv <- function(osym = ossl(),
-                              boffset = paste(rep("\n", 3),
-                                              collapse = "")){
-  otop <- omid <- paste(rep(" ", 7), collapse = "")
-  o1 <- paste(c(paste(c(otop, omid, c("    ", osym)),
-                      collapse = "\n"),
-                boffset),
-              collapse = "")
-  o2 <- paste(c(paste(c(otop, omid, c("   ", osym, " ")),
-                       collapse = "\n"),
-                 boffset),
-               collapse = "")
-  o3 <- paste(c(paste(c(otop, omid, c("  ", osym, " ")),
-                        collapse = "\n"),
-               boffset),
-          collapse = "")
-  o4 <- paste(c(paste(c(otop, omid, c(" ", osym, "   ")),
-               collapse = "\n"), boffset),
-               collapse = "")
-  fv <- c(o1, o2, o3, o4)
-  return(fv)
+ascii_obstacle_fv <- function(symlist = c("@","#","$", "^","&","*"),
+                              osym = NULL){
+  if(is.null(osym)){osym <- ossl(symlist)}
+  otop <- omid <- "\n"
+  # xaxis movement
+  sline1 <- paste0(c(rep(" ", 5), osym, rep(" ", 0)),
+                   collapse = "")
+  sline2 <- paste0(c(rep(" ", 4), osym, rep(" ", 1)),
+                   collapse = "")
+  sline3 <- paste0(c(rep(" ", 2), osym, rep(" ", 3)),
+                   collapse = "")
+  sline4 <- paste0(c(rep(" ", 1), osym, rep(" ", 4)),
+                   collapse = "")
+  # yaxis movement
+  #ymint <- 1; ymrate <- 0.2; nframes <- 4; nbufftot <- 10
+  f1 <- paste0(c(rep("\n", 6), sline1, rep("\n", 1)), collapse = "")
+  f2 <- paste0(c(rep("\n", 4), sline2, rep("\n", 3)), collapse = "")
+  f3 <- paste0(c(rep("\n", 3), sline3, rep("\n", 4)), collapse = "")
+  f4 <- paste0(c(rep("\n", 2), sline4, rep("\n", 5)), collapse = "")
+  return(c(f1, f2, f3, f4))
 }
 
 # main idle functions

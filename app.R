@@ -12,15 +12,20 @@ require(jpeg) # for loading databike logo
 
 rdata.dir <- "."
 dn <- "R"
-fn.fun <- "functions"
+
+# source functions scripts
+fun.fnv <- c("ani_fun", "ride_fun", "idle_fun", 
+             "difficulty_fun", "app_fun")
+for(funfn in fun.fnv){
+  fnpath <- paste0(c(dn, paste0(funfn, ".R")),
+                   collapse = "/")
+  source(fnpath)
+}
+
+# source params script
 fn.params <- "params"
-fp.fun <- paste0(c(dn, paste0(fn.fun, ".R")),
-                 collapse = "/")
 fn.params <- paste0(c(dn, paste0(fn.params, ".R")),
                     collapse = "/")
-#source(here(fp.fun))
-#source(here(fn.params))
-source(fp.fun)
 source(fn.params)
 
 #-----------------

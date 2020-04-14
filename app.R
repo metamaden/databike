@@ -14,9 +14,9 @@ rdata.dir <- "."
 dn <- "R"
 fn.fun <- "functions"
 fn.params <- "params"
-fp.fun <- paste0(c(dn, paste0(fn.fun, ".R")), 
+fp.fun <- paste0(c(dn, paste0(fn.fun, ".R")),
                  collapse = "/")
-fn.params <- paste0(c(dn, paste0(fn.params, ".R")), 
+fn.params <- paste0(c(dn, paste0(fn.params, ".R")),
                     collapse = "/")
 #source(here(fp.fun))
 #source(here(fn.params))
@@ -30,17 +30,35 @@ bike <- asciibike()
 fv.idle <- ascii_idle_fv(bike)
 fv.drive <- ascii_drive_fv(bike)
 fv.obstacle <- ascii_obstacle_fv()
-fvl <- list("drive" = fv.drive, 
+fvl <- list("drive" = fv.drive,
             "idle" = fv.idle)
 
-#---------------
+#--------------
 # main app loop
-#---------------
+#--------------
+stopoption <- "no"
+# first ride
+su.ride <- app.fun(fv.idle = fv.idle, logo = logo.jpg, # data for ani
+                   minobst = minobst, onum = onum, nride = 1,
+                   tdist = tdist, verbose = TRUE) # usr stats
+# eval bcond second, jumps to end if 0
+bcond <- su.ride[["su.ride"]][["bcond"]]
+# eval so first, jumps to end if `yes`
+stopoption <- su.ride[["stopoption"]]
+# track remaining stats before gameplay loop
+nobst <- su.ride[["su.ride"]][["onum"]]
+tdist <- su.ride[["su.ride"]][["tdist"]]
+# second ride and beyond
 while(bcond > 0 & stopoption == "no"){
-  su.ride <- app.fun(fv.idle, logo, mprob, 
-                     rprob, bcond, nobst)
-  stopoption <- su.ride[["stopoption"]]
+  su.ride <- app.fun(fv.idle = fv.idle, logo = logo.jpg, # data for ani
+                     minobst = minobst, mprob = mprob, rprob = rprob, # idle params
+                     bcond = bcond, onum = onum, nride = nride,
+                     verbose = TRUE) # usr stats
+  # eval bcond second, jumps to end if 0
   bcond <- su.ride[["su.ride"]][["bcond"]]
+  # eval so first, jumps to end if `yes`
+  stopoption <- su.ride[["stopoption"]]
+  # track remaining stats before gameplay loop
   nobst <- su.ride[["su.ride"]][["onum"]]
   tdist <- su.ride[["su.ride"]][["tdist"]]
   nride = nride + 1
@@ -49,7 +67,8 @@ while(bcond > 0 & stopoption == "no"){
 #------------------
 # end-of-game stuff
 #------------------
-dlg_message(paste0("Game over!", " mileage = ", 
-                   tdist, ", obstacles = ", 
-                   onum, ", num. rides = ",
-                   nride), "ok")
+dlg_message(paste0("Game over!",
+                   " mileage = ", tdist,
+                   ", obstacles = ", onum,
+                   ", num. rides = ", nride),
+            "ok")

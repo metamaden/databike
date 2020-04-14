@@ -38,7 +38,7 @@ fvl <- list("drive" = fv.drive,
 #--------------
 stopoption <- "no"
 # first ride
-su.ride <- app.fun(fv.idle = fv.idle, logo = logo, # data for ani
+su.ride <- app.fun(fv.idle = fv.idle, logo = logo.jpg, # data for ani
                    minobst = minobst, onum = onum, nride = 1,
                    tdist = tdist, verbose = TRUE) # usr stats
 # eval bcond second, jumps to end if 0
@@ -50,7 +50,7 @@ nobst <- su.ride[["su.ride"]][["onum"]]
 tdist <- su.ride[["su.ride"]][["tdist"]]
 # second ride and beyond
 while(bcond > 0 & stopoption == "no"){
-  su.ride <- app.fun(fv.idle = fv.idle, logo = logo, # data for ani
+  su.ride <- app.fun(fv.idle = fv.idle, logo = logo.jpg, # data for ani
                      minobst = minobst, mprob = mprob, rprob = rprob, # idle params
                      bcond = bcond, onum = onum, nride = nride,
                      verbose = TRUE) # usr stats

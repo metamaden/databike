@@ -174,13 +174,13 @@ do_idle <- function(fv.idle, logo, mprob, rprob,
                          "yesno")$res
     # parse maintenance task
     if(itask == "yes"){
-      bcond <- get_task_outcome(mprob, bcond)
+      bcond <- get_task_outcome(task.prob = mprob, bcond)
       break
     } else{
       itask <- dlg_message("repair?", "yesno")$res
       # parse repair task
       if(itask == "yes"){
-        bcond <- get_task_outcome(rprob, bcond)
+        bcond <- get_task_outcome(task.prob = rprob, bcond)
         idlechoice <- 1
         break
       }

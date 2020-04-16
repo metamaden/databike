@@ -69,3 +69,51 @@ idle_ani <- function(fv.idle, logo,
   #grid.text(pf1, gp = gpar(col = "black"))
   return(NULL)
 }
+
+#' manages idle mode options
+#'
+#' Main function for idle mode. Manages repair and maintain dialogs.
+#'
+#' @param fv.idle Idle animation char string data.
+#' @param logo Game logo for graphic
+#' @param mprob Maintenance probability (likelihood to fix vs. break)
+#' @param rprob Repair probability (likelihood to fix vs. break)
+#' @param bcond Bike condition
+#' @param sleepint Sleep interval for stationary graphic
+#' @param alabel Main label for graphic
+#' @return bcond, or modified bcond if task outcome is "break"
+#' @example
+#' bcond <- do_idle(framevector = fv.idle, logo = logo, mprob, rprob, bcond)
+do_idle <- function(fv.idle, logo, mprob, rprob,
+                    sleepint = si.stationary,
+                    bcond, alabel = "mode: idle"){
+  # displays idle animation "intro"
+  # freezes on bike stationary, with logo
+  idle_ani(fv.idle, logo)
+  Sys.sleep(sleepint) # allows stationary graphic to load
+  # handle main idle options
+  idlechoice <- 0
+  while(idlechoice == 0){
+    itask <- dlg_message("maintain?",
+                         "yesno")$res
+    # parse maintenance task
+    if(itask == "yes"){
+      bcond <- get_task_outcome(task.prob = mprob, bcond)
+      break
+    } else{
+      itask <- dlg_message("repair?", "yesno")$res
+      # parse repair task
+      if(itask == "yes"){
+        bcond <- get_task_outcome(task.prob = rprob, bcond)
+        idlechoice <- 1
+        break
+      }
+      else{
+        return(bcond)
+      }
+    }
+    idlechoice <- 1
+    break
+  }
+  return(bcond)
+}

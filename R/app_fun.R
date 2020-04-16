@@ -23,14 +23,16 @@ app.fun <- function(fv.idle, logo, minobst,
                     mprob = NULL, rprob = NULL,
                     bcond = NULL, onum = 0,
                     tdist = 0, maxobst = 10,
-                    nride = 0, verbose = TRUE){
+                    nride = 0, lstart = NULL,
+                    verbose = TRUE){
   # main app management
   if(verbose){message("Starting app.fun")}
   # parse difficulty, get starting metrics
   if(verbose){message("Evaluating difficulty")}
   if(nride == 0){
     dopt <- get_difficulty()
-    lstart <- parse_difficulty(usr.start = lstart, dopt = dopt)
+    lstart <- parse_difficulty(usr.start = lstart, 
+                               dopt = dopt)
     bcond <- lstart[["bcond"]]
     mprob <- lstart[["mprob"]]
     rprob <- lstart[["rprob"]]

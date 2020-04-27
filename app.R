@@ -15,7 +15,8 @@ dn <- "R"
 
 # source functions scripts
 fun.fnv <- c("ani_fun", "ride_fun", "idle_fun", 
-             "difficulty_fun", "app_fun", "savedat")
+             "difficulty_fun", "app_fun", "savedat",
+             "asciibike-classes")
 for(funfn in fun.fnv){
   fnpath <- paste0(c(dn, paste0(funfn, ".R")),
                    collapse = "/")

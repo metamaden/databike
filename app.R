@@ -15,7 +15,7 @@ dn <- "R"
 
 # source functions scripts
 fun.fnv <- c("ani_fun", "ride_fun", "idle_fun", 
-             "difficulty_fun", "app_fun")
+             "difficulty_fun", "app_fun", "savedat")
 for(funfn in fun.fnv){
   fnpath <- paste0(c(dn, paste0(funfn, ".R")),
                    collapse = "/")
@@ -31,8 +31,9 @@ source(fn.params)
 #-----------------
 # ani char strings
 #-----------------
-bike <- asciibike()
-fv.idle <- ascii_idle_fv(bike)
+bike <- asciibike() # customize ride
+bikename <- getbikename() # name ride
+fv.idle <- ascii_idle_fv(bike) #
 fv.drive <- ascii_drive_fv(bike)
 fv.obstacle <- ascii_obstacle_fv()
 fvl <- list("drive" = fv.drive,
